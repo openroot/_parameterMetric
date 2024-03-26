@@ -40,8 +40,6 @@
 
 	echo "<hr />";
 
-
-
 	$iKnowAnother = new DDoS\Friend(
 		"dev.openroot@live.com",
 		"Debaprasad Tapader",
