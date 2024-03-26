@@ -31,7 +31,7 @@
 		"debcyberboy@gmail.com",
 		"D Tapader",
 		"Aviator Sun-glass",
-		array("sketching", "programming"),
+		array("sketching", "programming", "learning"),
 		"bore",
 		"engineer",
 		"his"
