@@ -6,26 +6,6 @@
 <?php
 	use \parametermetric\home\Dhop\Des as DDoS;
 
-	echo "<hr />";
-
-	//$youThinkI = new DDoS\Me();
-	$youThinkI = new DDoS\Me(
-		"dev.openroot@gmail.com",
-		"Dev",
-		"Egg omelette",
-		"Yamaha FZ-S"
-	);
-
-	echo "I " . implode(", ", $youThinkI->Know()) . ".";
-	echo "<br /><br />";
-	echo "When I ride {$youThinkI->Ride()}.";
-	echo "<br />";
-	echo "I have a friend " . implode(" ", $youThinkI->Explain()) . " with me.";
-	echo "<br /><br />";
-	echo "- regards, " . $youThinkI->Identity();
-
-	echo "<hr />";
-
 	//$callForHelp = new DDoS\Friend();
 	$callForHelp = new DDoS\Friend(
 		"debcyberboy@gmail.com",
@@ -36,6 +16,27 @@
 		"engineer",
 		"his"
 	);
+
+	//$youThinkI = new DDoS\Me();
+	$youThinkI = new DDoS\Me(
+		"dev.openroot@gmail.com",
+		"Dev",
+		"Egg omelette",
+		"Yamaha FZ-S",
+		$callForHelp
+	);
+
+	echo "<hr />";
+
+	echo "I " . implode(", ", $youThinkI->Know()) . ".";
+	echo "<br /><br />";
+	echo "When I ride {$youThinkI->Ride()}.";
+	echo "<br />";
+	echo "I have a friend " . implode(" ", $youThinkI->Explain()) . " with me.";
+	echo "<br /><br />";
+	echo "- regards, " . $youThinkI->Identity();
+
+	echo "<hr />";
 
 	echo ucfirst(implode(" ", $callForHelp->Explain())) . ".";
 

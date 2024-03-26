@@ -9,7 +9,7 @@
 
 		public function __construct(string $id, string $recognize, string $eat, string $vehicle, Friend $friend = null) {
 			if ($friend != null) {
-				parent::__construct();
+				//parent::__construct();
 			}
 			$this->id = $id;
 			$this->recognize = $recognize;
