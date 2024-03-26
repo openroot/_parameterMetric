@@ -13,7 +13,8 @@
 		array("sketching", "programming", "learning"),
 		"bore",
 		"engineer",
-		"his"
+		"his",
+		array("when", "do not")
 	);
 
 	$youThinkI = new DDoS\Me(
@@ -28,7 +29,7 @@
 
 	echo "I " . implode(", ", $youThinkI->Know()) . ".";
 	echo "<br /><br />";
-	echo implode(", ", $youThinkI->Ride()) . ".";
+	echo implode(", ", $youThinkI->Ride($iKnow)) . ".";
 	echo "<br /><br />";
 	echo "I have a friend " . implode(" ", $youThinkI->Explain($iKnow)) . " with me.";
 	echo "<br /><br />";
@@ -47,7 +48,8 @@
 		array("cooking"),
 		"late",
 		"researcher",
-		"above"
+		"above",
+		array("code", "style")
 	);
 
 	echo "<hr />";

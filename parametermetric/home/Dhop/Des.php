@@ -24,10 +24,10 @@
 			return array($this->recognize, "eat " . implode(", ", $this->eat), "have " . implode(", ", $this->vehicle) . " for transportation");
 		}
 
-		public function Ride() {
+		public function Ride(?Friend $friend = null) {
 			return array(
-				implode(" ", array("When", "I ride {$this->vehicle[0]}")),
-				implode(" ", array("do not", "entertain " . implode(" or ", $this->eat)))
+				implode(" ", array($friend != null ? ucfirst($friend->reason[0]) : "When", "I ride {$this->vehicle[0]}")),
+				implode(" ", array($friend != null ? $friend->reason[1] : "do not", "entertain " . implode(" or ", $this->eat)))
 			);
 		}
 	}
@@ -40,9 +40,10 @@
 		protected string $hate = "foobar";
 		private string $appeal = "FooBar";
 		private string $relate = "foo bar";
+		protected array $reason = array("Foo", "bar");
 		private ?Friend $friend = null;
 
-		public function __construct(string $id, string $name, string $rent, array $likes, string $hate, string $appeal, string $relate, ?Friend $friend = null) {
+		public function __construct(string $id, string $name, string $rent, array $likes, string $hate, string $appeal, string $relate, array $reason, ?Friend $friend = null) {
 			$this->id = $id;
 			$this->name = $name;
 			$this->rent = $rent;
@@ -50,6 +51,7 @@
 			$this->hate = $hate;
 			$this->appeal = $appeal;
 			$this->relate = $relate;
+			$this->reason = $reason;
 			$this->friend = $friend;
 		}
 
@@ -59,7 +61,12 @@
 
 		public function Explain(?Friend $friend = null) {
 			$this->Pipe($friend);
-			return array("{$this->friend->appeal} " . $this->friend->name, "mighty to: {$this->friend->rent}, ", "who likes " . implode(", ", $this->friend->likes), "- is never {$this->friend->hate}", "to share {$this->friend->relate} {$this->friend->rent}");
+			if ($friend == null) {
+				return array("{$this->friend->appeal} " . $this->friend->name, "mighty to: {$this->friend->rent}, ", "who likes " . implode(", ", $this->friend->likes), "- is never {$this->friend->hate}", "to share {$this->friend->relate} {$this->friend->rent}");
+			}
+			else {
+				return array();
+			}
 		}
 
 		private function Pipe(?Friend $friend = null) {
