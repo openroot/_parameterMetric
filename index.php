@@ -29,7 +29,7 @@
 
 	echo "I " . implode(", ", $youThinkI->Know()) . ".";
 	echo "<br /><br />";
-	echo implode(", ", $youThinkI->Ride($iKnow)) . ".";
+	echo implode("; ", $youThinkI->Ride($iKnow)) . ".";
 	echo "<br /><br />";
 	echo "I have a friend " . implode(" ", $youThinkI->Explain($iKnow)) . " with me.";
 	echo "<br /><br />";

@@ -26,7 +26,7 @@
 
 		public function Ride(?Friend $friend = null) {
 			return array(
-				implode(" ", array($friend != null ? ucfirst($friend->reason[0]) : "When", "I ride {$this->vehicle[0]}")),
+				implode(" ", array($friend != null ? ucfirst($friend->reason[0]) : "When", "I ride " . (count($this->vehicle) > 1 ? "either of " : "") . implode(", ", $this->vehicle))),
 				implode(" ", array($friend != null ? $friend->reason[1] : "do not", "entertain " . implode(" or ", $this->eat)))
 			);
 		}
