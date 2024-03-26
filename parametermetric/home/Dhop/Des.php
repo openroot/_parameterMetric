@@ -4,11 +4,11 @@
 	class Me extends Friend {
 		protected string $id = "";
 		protected string $recognize = "Lorem Ipsum";
-		private string $eat = "loremipsum";
-		private string $vehicle = "Lorem IPSUM";
+		private array $eat = array("loremipsum", "loremipsum", "loremipsum");
+		private array $vehicle = array("Lorem IPSUM", "LOREM Ipsum");
 		private ?Friend $friend = null;
 
-		public function __construct(string $id, string $recognize, string $eat, string $vehicle, ?Friend $friend = null) {
+		public function __construct(string $id, string $recognize, array $eat, array $vehicle, ?Friend $friend = null) {
 			$this->id = $id;
 			$this->recognize = $recognize;
 			$this->eat = $eat;
@@ -21,11 +21,14 @@
 		}
 
 		public function Know() {
-			return array($this->recognize, "eat {$this->eat}", "have {$this->vehicle}");
+			return array($this->recognize, "eat " . implode(", ", $this->eat), "have " . implode(", ", $this->vehicle) . " for transportation");
 		}
 
 		public function Ride() {
-			return "{$this->vehicle}, do not entertain {$this->eat}";
+			return array(
+				implode(" ", array("When", "I ride {$this->vehicle[0]}")),
+				implode(" ", array("do not", "entertain " . implode(" or ", $this->eat)))
+			);
 		}
 	}
 

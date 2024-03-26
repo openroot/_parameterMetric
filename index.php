@@ -19,8 +19,8 @@
 	$youThinkI = new DDoS\Me(
 		"dev.openroot@gmail.com",
 		"Dev",
-		"Egg omelette",
-		"Yamaha FZ-S",
+		array("Masala Dosa", "Milk Coffee", "Egg omelette"),
+		array("Yamaha FZ-S", "HERCULES cycle"),
 		$iKnow
 	);
 
@@ -28,8 +28,8 @@
 
 	echo "I " . implode(", ", $youThinkI->Know()) . ".";
 	echo "<br /><br />";
-	echo "When I ride {$youThinkI->Ride()}.";
-	echo "<br />";
+	echo implode(", ", $youThinkI->Ride()) . ".";
+	echo "<br /><br />";
 	echo "I have a friend " . implode(" ", $youThinkI->Explain($iKnow)) . " with me.";
 	echo "<br /><br />";
 	echo "- regards, " . $youThinkI->Identity();
