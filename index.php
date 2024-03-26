@@ -22,12 +22,12 @@
 	echo "<br />";
 	echo "I have a friend " . implode(" ", $youThinkI->Explain()) . " with me.";
 	echo "<br /><br />";
-	echo "- regards, " . $youThinkI->id;
+	echo "- regards, " . $youThinkI->Identity();
 
 	echo "<hr />";
 
 	//$callForHelp = new DDoS\Friend();
-	/*$callForHelp = new DDoS\Friend(
+	$callForHelp = new DDoS\Friend(
 		"debcyberboy@gmail.com",
 		"D Tapader",
 		"Aviator Sun-glass",
@@ -35,9 +35,9 @@
 		"bore",
 		"engineer",
 		"his"
-	);*/
+	);
 
-	//echo ucfirst(implode(" ", $callForHelp->Explain())) . ".";
+	echo ucfirst(implode(" ", $callForHelp->Explain())) . ".";
 
 	echo "<hr />";
 ?>

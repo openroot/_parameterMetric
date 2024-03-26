@@ -2,7 +2,7 @@
 	namespace parametermetric\home\Dhop\Des;
 
 	class Me extends Friend {
-		public string $id = "dev.openroot@gmail.com";
+		protected string $id = "dev.openroot@gmail.com";
 		protected string $recognize = "D Tapader";
 		private string $eat = "egg";
 		private string $vehicle = "Yamaha FZ-S";
@@ -12,6 +12,10 @@
 			$this->recognize = $recognize;
 			$this->eat = $eat;
 			$this->vehicle = $vehicle;
+		}
+
+		public function Identity() {
+			return $this->id;
 		}
 
 		public function Know() {
