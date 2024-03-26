@@ -2,19 +2,18 @@
 	namespace parametermetric\home\Dhop\Des;
 
 	class Me extends Friend {
-		protected string $id = "dev.openroot@gmail.com";
-		protected string $recognize = "D Tapader";
-		private string $eat = "egg";
-		private string $vehicle = "Yamaha FZ-S";
+		protected string $id = "";
+		protected string $recognize = "Lorem Ipsum";
+		private string $eat = "loremipsum";
+		private string $vehicle = "Lorem IPSUM";
+		private ?Friend $friend = null;
 
-		public function __construct(string $id, string $recognize, string $eat, string $vehicle, Friend $friend = null) {
-			if ($friend != null) {
-				//parent::__construct();
-			}
+		public function __construct(string $id, string $recognize, string $eat, string $vehicle, ?Friend $friend = null) {
 			$this->id = $id;
 			$this->recognize = $recognize;
 			$this->eat = $eat;
 			$this->vehicle = $vehicle;
+			$this->friend = $friend;
 		}
 
 		public function Identity() {
@@ -31,15 +30,16 @@
 	}
 
 	class Friend {
-		protected string $id = "debcyberboy@gmail.com";
-		protected string $name = "D Tapader";
-		protected string $rent = "Aviator Sun-glass";
-		protected array $likes = array("sketching", "programming");
-		protected string $hate = "bore";
-		private string $appeal = "engineer";
-		private string $relate = "his";
+		protected string $id = "";
+		protected string $name = "Foo Bar";
+		protected string $rent = "Foo bar";
+		protected array $likes = array("foo", "bar");
+		protected string $hate = "foobar";
+		private string $appeal = "FooBar";
+		private string $relate = "foo bar";
+		private ?Friend $friend = null;
 
-		public function __construct(string $id, string $name, string $rent, array $likes, string $hate, string $appeal, string $relate) {
+		public function __construct(string $id, string $name, string $rent, array $likes, string $hate, string $appeal, string $relate, ?Friend $friend = null) {
 			$this->id = $id;
 			$this->name = $name;
 			$this->rent = $rent;
@@ -47,10 +47,25 @@
 			$this->hate = $hate;
 			$this->appeal = $appeal;
 			$this->relate = $relate;
+			$this->friend = $friend;
 		}
 
-		public function Explain() {
-			return array("{$this->appeal} " . $this->name, "mighty to '{$this->rent}', ", "who likes " . implode(", ", $this->likes), "- is never {$this->hate}", "to share {$this->relate} {$this->rent}");
+		public function Identity() {
+			return $this->id;
+		}
+
+		public function Explain(?Friend $friend = null) {
+			$this->Pipe($friend);
+			return array("{$this->friend->appeal} " . $this->friend->name, "mighty to: {$this->friend->rent}, ", "who likes " . implode(", ", $this->friend->likes), "- is never {$this->friend->hate}", "to share {$this->friend->relate} {$this->friend->rent}");
+		}
+
+		private function Pipe(?Friend $friend = null) {
+			if ($friend != null) {
+				$this->friend = $friend;
+			}
+			else {
+				$this->friend = $this;
+			}
 		}
 	}
 ?>
