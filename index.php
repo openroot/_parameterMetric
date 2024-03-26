@@ -1,40 +1,19 @@
 <?php
-	namespace Dhop\Des;
-
-	class Me extends Friend {
-		public const id = "dev.openroot@gmail.com";
-		private $eat = "egg";
-		private $vehicle = "Yamaha FZ-S";
-
-		public function Know() {
-			return array(Me::id, "eat {$this->eat}", "have {$this->vehicle}");
-		}
-
-		public function Ride() {
-			return "{$this->vehicle}, do not entertain {$this->eat}";
-		}
-	}
-
-	class Friend {
-		protected const id = "debcyberboy@gmail.com";
-		protected $rent = "Aviator Sun-glass";
-		protected $likes = array("sketching", "programming");
-		protected $hate = "bore";
-		private $appeal = "engineer";
-		private $relation = "his";
-
-		public function Explain() {
-			return array("{$this->appeal} " . Friend::id, "mighty to '{$this->rent}', ", "who likes " . implode(", ", $this->likes), "- is never {$this->hate}", "to share {$this->relation} {$this->rent}");
-		}
-	}
+	require_once("parametermetric/home/entrance/boot.php");
+	require_once("parametermetric/home/Dhop/Des.php");
 ?>
 
 <?php
-	use \Dhop\Des as DDoS;
+	use \parametermetric\home\Dhop\Des as DDoS;
 
 	echo "<hr />";
 
-	$youThinkI = new DDoS\Me();
+	$youThinkI = new DDoS\Me(
+		"dev.openroot@gmail.com",
+		"Dev",
+		"Egg omelette",
+		"Yamaha FZ-S"
+	);
 
 	echo "I " . implode(", ", $youThinkI->Know()) . ".";
 	echo "<br /><br />";
@@ -46,7 +25,15 @@
 
 	echo "<hr />";
 
-	$callForHelp = new DDoS\Friend();
+	$callForHelp = new DDoS\Friend(
+		"debcyberboy@gmail.com",
+		"D Tapader",
+		"Aviator Sun-glass",
+		array("sketching", "programming"),
+		"bore",
+		"engineer",
+		"his"
+	);
 
 	echo ucfirst(implode(" ", $callForHelp->Explain())) . ".";
 
