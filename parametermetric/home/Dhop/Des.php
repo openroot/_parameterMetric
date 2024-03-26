@@ -7,7 +7,10 @@
 		private string $eat = "egg";
 		private string $vehicle = "Yamaha FZ-S";
 
-		public function __construct(string $id, string $recognize, string $eat, string $vehicle) {
+		public function __construct(string $id, string $recognize, string $eat, string $vehicle, Friend $friend = null) {
+			if ($friend != null) {
+				parent::__construct();
+			}
 			$this->id = $id;
 			$this->recognize = $recognize;
 			$this->eat = $eat;
