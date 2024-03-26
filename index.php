@@ -6,7 +6,7 @@
 <?php
 	use \parametermetric\home\Dhop\Des as DDoS;
 
-	$callForHelp = new DDoS\Friend(
+	$iKnow = new DDoS\Friend(
 		"debcyberboy@gmail.com",
 		"D Tapader",
 		"Aviator Sun-glass",
@@ -21,7 +21,7 @@
 		"Dev",
 		"Egg omelette",
 		"Yamaha FZ-S",
-		$callForHelp
+		$iKnow
 	);
 
 	echo "<hr />";
@@ -30,19 +30,19 @@
 	echo "<br /><br />";
 	echo "When I ride {$youThinkI->Ride()}.";
 	echo "<br />";
-	echo "I have a friend " . implode(" ", $youThinkI->Explain($callForHelp)) . " with me.";
+	echo "I have a friend " . implode(" ", $youThinkI->Explain($iKnow)) . " with me.";
 	echo "<br /><br />";
 	echo "- regards, " . $youThinkI->Identity();
 
 	echo "<hr />";
 
-	echo ucfirst(implode(" ", $callForHelp->Explain())) . ".";
+	echo ucfirst(implode(" ", $iKnow->Explain())) . ".";
 
 	echo "<hr />";
 
 
 
-	$callForHelpAnother = new DDoS\Friend(
+	$iKnowAnother = new DDoS\Friend(
 		"dev.openroot@live.com",
 		"Debaprasad Tapader",
 		"Higher Education",
@@ -54,7 +54,7 @@
 
 	echo "<hr />";
 
-	echo ucfirst(implode(" ", $callForHelpAnother->Explain())) . ".";
+	echo ucfirst(implode(" ", $iKnowAnother->Explain())) . ".";
 
 	echo "<hr />";
 ?>
