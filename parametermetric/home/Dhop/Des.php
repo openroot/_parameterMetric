@@ -27,8 +27,6 @@
 		}
 	}
 
-	//class YouThinkI
-
 	class Friend {
 		protected string $id = "debcyberboy@gmail.com";
 		protected string $name = "D Tapader";
