@@ -1,9 +1,9 @@
 <?php
 	namespace parametermetric\home\entrance;
 
-	class Boot {
+	class Platform {
 		public function __construct() {
-			echo "Boot Response";
+			echo "Platform Response";
 		}
 	}
 ?>
