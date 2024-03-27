@@ -44,7 +44,7 @@
 	echo "<br /><br />";
 	echo $youThinkI->Explain($iKnow);
 	echo "<br /><br />";
-	echo "- regards, " . $youThinkI->baseIdentity();
+	echo "- regards, {$youThinkI->identify()} [{$youThinkI->baseIdentity()}]";
 
 	echo "<h4>Friend</h4>";
 

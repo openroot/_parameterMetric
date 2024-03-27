@@ -20,6 +20,10 @@
 			return $this->baseId;
 		}
 
+		public function identify() {
+			return $this->recognize;
+		}
+
 		public function Know() {
 			return "I " . implode(", ", array(
 				$this->recognize, "eat " . implode(", ", $this->eat), "have " . implode(", ", $this->vehicle) . " for transportation"
@@ -61,13 +65,24 @@
 			return $this->baseId;
 		}
 
+		public function identify() {
+			return $this->name;
+		}
+
 		public function Explain(?Friend $friend = null) {
 			$this->Pipe($friend);
 
 			if ($friend == null) {
+				$stream = "";
+				if (count($this->friend->likes) > 1) {
+					$stream = " interests are " . implode(", ", array_slice($this->friend->likes, 0, count($this->friend->likes) - 1)) . " and " . array_slice($this->friend->likes, -1)[0] . ".";
+				}
+				else {
+					$stream = " interest is {$this->friend->likes[0]}.";
+				}
 				return ucfirst(implode(" ", array(
 					"{$this->friend->appeal} " . $this->friend->name, "mighty to: {$this->friend->rent}, ", "who likes " . implode(", ", $this->friend->likes), "- is never {$this->friend->hate}", "to share {$this->friend->relate} {$this->friend->rent}."
-				)));
+				))) . " " . ucfirst($this->friend->reason[0]) . " or {$this->friend->reason[1]} {$this->friend->hate} {$this->friend->relate}{$stream}";
 			}
 			else {
 				return implode(" ", array(
@@ -79,12 +94,7 @@
 		}
 
 		private function Pipe(?Friend $friend = null) {
-			if ($friend != null) {
-				$this->friend = $friend;
-			}
-			else {
-				$this->friend = $this;
-			}
+			$this->friend = $friend != null ? $friend : $this;
 		}
 	}
 ?>
