@@ -16,11 +16,11 @@
 			$this->friend = $friend;
 		}
 
-		public function baseIdentity() {
+		public function BaseIdentity() {
 			return $this->baseId;
 		}
 
-		public function identify() {
+		public function Identify() {
 			return $this->recognize;
 		}
 
@@ -61,11 +61,11 @@
 			$this->friend = $friend;
 		}
 
-		public function baseIdentity() {
+		public function BaseIdentity() {
 			return $this->baseId;
 		}
 
-		public function identify() {
+		public function Identify() {
 			return $this->name;
 		}
 
@@ -140,7 +140,7 @@
 			echo "<br /><br />";
 			echo $youThinkI->Explain($iKnow);
 			echo "<br /><br />";
-			echo "- regards, {$youThinkI->identify()} [{$youThinkI->baseIdentity()}]";
+			echo "- regards, " . $youThinkI->Identify() . " [ " . $youThinkI->BaseIdentity() . " ]";
 
 			echo "<h4>Friend</h4>";
 
