@@ -151,6 +151,4 @@
 			echo $iKnowAnother->Explain();
 		}
 	}
-
-
 ?>
