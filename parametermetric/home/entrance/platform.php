@@ -8,7 +8,7 @@
 			$this->primaryDirectoryPath = "./parametermetric";
 		}
 
-		public function DirectoryScan () {
+		public function DirectoryScan() {
 			$files = scandir($this->primaryDirectoryPath);
 			var_dump($files);
 		}
