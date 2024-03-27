@@ -27,9 +27,9 @@
 
 	echo "<hr />";
 
-	echo "I " . implode(", ", $youThinkI->Know()) . ".";
+	echo $youThinkI->Know();
 	echo "<br /><br />";
-	echo implode("; ", $youThinkI->Ride($iKnow)) . ".";
+	echo $youThinkI->Ride($iKnow);
 	echo "<br /><br />";
 	echo $youThinkI->Explain($iKnow);
 	echo "<br /><br />";

@@ -2,14 +2,14 @@
 	namespace parametermetric\home\Dhop\Des;
 
 	class Me extends Friend {
-		protected string $id = "";
+		protected string $baseId = "";
 		protected string $recognize = "Lorem Ipsum";
 		private array $eat = array("loremipsum", "loremipsum", "loremipsum");
 		private array $vehicle = array("Lorem IPSUM", "LOREM Ipsum");
 		private ?Friend $friend = null;
 
-		public function __construct(string $id, string $recognize, array $eat, array $vehicle, ?Friend $friend = null) {
-			$this->id = $id;
+		public function __construct(string $baseId, string $recognize, array $eat, array $vehicle, ?Friend $friend = null) {
+			$this->baseId = $baseId;
 			$this->recognize = $recognize;
 			$this->eat = $eat;
 			$this->vehicle = $vehicle;
@@ -17,23 +17,25 @@
 		}
 
 		public function Identity() {
-			return $this->id;
+			return $this->baseId;
 		}
 
 		public function Know() {
-			return array($this->recognize, "eat " . implode(", ", $this->eat), "have " . implode(", ", $this->vehicle) . " for transportation");
+			return "I " . implode(", ", array(
+				$this->recognize, "eat " . implode(", ", $this->eat), "have " . implode(", ", $this->vehicle) . " for transportation"
+			)) . ".";
 		}
 
 		public function Ride(?Friend $friend = null) {
-			return array(
+			return implode("; ", array(
 				implode(" ", array($friend != null ? ucfirst($friend->reason[0]) : "When", "I ride " . (count($this->vehicle) > 1 ? "either of " : "") . implode(", ", $this->vehicle))),
 				implode(" ", array($friend != null ? $friend->reason[1] : "do not", "entertain " . implode(" or ", $this->eat)))
-			);
+			)) . ".";
 		}
 	}
 
 	class Friend {
-		protected string $id = "";
+		protected string $baseId = "";
 		protected string $name = "Foo Bar";
 		protected string $rent = "Foo bar";
 		protected array $likes = array("foo", "bar");
@@ -43,8 +45,8 @@
 		protected array $reason = array("Foo", "bar");
 		private ?Friend $friend = null;
 
-		public function __construct(string $id, string $name, string $rent, array $likes, string $hate, string $appeal, string $relate, array $reason, ?Friend $friend = null) {
-			$this->id = $id;
+		public function __construct(string $baseId, string $name, string $rent, array $likes, string $hate, string $appeal, string $relate, array $reason, ?Friend $friend = null) {
+			$this->baseId = $baseId;
 			$this->name = $name;
 			$this->rent = $rent;
 			$this->likes = $likes;
@@ -56,7 +58,7 @@
 		}
 
 		public function Identity() {
-			return $this->id;
+			return $this->baseId;
 		}
 
 		public function Explain(?Friend $friend = null) {
