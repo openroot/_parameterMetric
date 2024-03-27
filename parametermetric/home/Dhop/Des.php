@@ -16,7 +16,7 @@
 			$this->friend = $friend;
 		}
 
-		public function Identity() {
+		public function baseIdentity() {
 			return $this->baseId;
 		}
 
@@ -57,7 +57,7 @@
 			$this->friend = $friend;
 		}
 
-		public function Identity() {
+		public function baseIdentity() {
 			return $this->baseId;
 		}
 

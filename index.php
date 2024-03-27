@@ -33,7 +33,7 @@
 	echo "<br /><br />";
 	echo $youThinkI->Explain($iKnow);
 	echo "<br /><br />";
-	echo "- regards, " . $youThinkI->Identity();
+	echo "- regards, " . $youThinkI->baseIdentity();
 
 	echo "<hr />";
 
