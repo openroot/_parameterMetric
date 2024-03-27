@@ -1,5 +1,5 @@
 <?php
-	namespace parametermetric\home\Dhop\Des;
+	namespace parametermetric\home\dhop\des;
 
 	class Me extends Friend {
 		protected string $baseId = "";
@@ -98,7 +98,7 @@
 		}
 	}
 
-	use parametermetric\home\Dhop\Des as DDoS;
+	use parametermetric\home\dhop\des as DDoS;
 
 	class Specimen {
 		public function __construct() {
