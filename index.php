@@ -5,7 +5,9 @@
 
 <?php
 	use parametermetric\home\entrance as entrance;
-	new entrance\Boot();
+	//new entrance\Boot();
+
+	// Unblock following code to view code in action in front-end.
 
 	// A demonstration of code convention in generic format.
 	new parametermetric\home\dhop\des\Specimen();
