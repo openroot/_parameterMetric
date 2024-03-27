@@ -31,13 +31,14 @@
 	echo "<br /><br />";
 	echo implode("; ", $youThinkI->Ride($iKnow)) . ".";
 	echo "<br /><br />";
-	echo "I have a friend " . implode(" ", $youThinkI->Explain($iKnow)) . " with me.";
+	//echo "I have a friend " . implode(" ", $youThinkI->Explain($iKnow)) . " with me.";
+	echo implode(" ", $youThinkI->Explain($iKnow));
 	echo "<br /><br />";
 	echo "- regards, " . $youThinkI->Identity();
 
 	echo "<hr />";
 
-	echo ucfirst(implode(" ", $iKnow->Explain())) . ".";
+	echo ucfirst(implode(" ", $iKnow->Explain()));
 
 	echo "<hr />";
 
@@ -54,7 +55,7 @@
 
 	echo "<hr />";
 
-	echo ucfirst(implode(" ", $iKnowAnother->Explain())) . ".";
+	echo ucfirst(implode(" ", $iKnowAnother->Explain()));
 
 	echo "<hr />";
 ?>
