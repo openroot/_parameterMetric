@@ -9,9 +9,7 @@
 ?>
 
 <?php
-	use parametermetric\home\entrance as entrance;
-
-	new entrance\Platform();
+	new parametermetric\home\entrance\Specimen();
 
 	// Unblock following code of sampling to view code in action in front-end or defined in respective.
 
