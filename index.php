@@ -9,6 +9,6 @@
 
 	// Unblock following code to view code in action in front-end.
 
-	// A demonstration of code convention in generic format.
+	// A demonstration of code convention used in this project in generic format.
 	new parametermetric\home\dhop\des\Specimen();
 ?>
