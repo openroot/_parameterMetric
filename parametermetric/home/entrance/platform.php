@@ -22,7 +22,7 @@
 		}
 
 		public function DirectoryListRefresh() {
-			$this->DirectoryListScan("{$this->directoryPathTop}");
+			$this->DirectoryListScan($this->directoryPathTop);
 		}
 
 		private function DirectoryListScan(string $directoryPath) {
