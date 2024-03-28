@@ -2,41 +2,30 @@
 	namespace parametermetric\home\entrance;
 
 	class Platform {
-		private string $primaryDirectoryPath = "";
-		private string $temporaryDirectoryPath = "";
+		private string $directoryPathTop = "";
 		private array $directoryList = array();
 
-		public function __construct() {
-			$this->primaryDirectoryPath = "parametermetric";
+		public function __construct(?string $directoryPathTop = null) {
+			$this->directoryPathTop = empty($directoryPathTop) ? "./parametermetric" : $directoryPathTop;
 
-
-
-			$this->DirectoryListRefresh();
+			$this->DirectoryListRefresh("{$this->directoryPathTop}");
 			print_r($this->directoryList);
 		}
 
-		public function DirectoryListRefresh() {
-			$this->DirectoryScan("./{$this->primaryDirectoryPath}");
-		}
-
-		private function DirectoryScan(string $directoryPath) {
-			if (is_dir($directoryPath)) {
-				$unfilteredList = scandir($directoryPath);
-				$filteredList = $this->DirectoryFilter($unfilteredList);
-				foreach ($filteredList as $index => $value) {
-					$directoryFullPath = substr("{$directoryPath}/{$value}", 2);
-					array_push($this->directoryList, $directoryFullPath);
-					$this->DirectoryScan("./{$directoryFullPath}");
-				}
+		private function DirectoryListRefresh(string $directoryPath) {
+			foreach ($this->DirectoryListFilter($directoryPath) as $index => $value) {
+				array_push($this->directoryList, substr("{$directoryPath}/{$value}", 2));
+				$this->DirectoryListRefresh("{$directoryPath}/{$value}");
 			}
 		}
 
-		private function DirectoryFilter(array $unfilteredList) {
+		private function DirectoryListFilter(string $directoryPath) {
 			$filteredList = array();
-			foreach ($unfilteredList as $index => $value) {
-				switch ($value) {
-					case ".": case "..": break;
-					default: array_push($filteredList, $value);
+			if (is_dir($directoryPath)) {
+				foreach (scandir($directoryPath) as $index => $value) {
+					if (!($value == "." || $value == "..") && is_dir("{$directoryPath}/{$value}")) {
+						array_push($filteredList, $value);
+					}
 				}
 			}
 			return $filteredList;
