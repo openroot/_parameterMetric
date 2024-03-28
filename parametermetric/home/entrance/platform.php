@@ -21,7 +21,7 @@
 
 		private function DirectoryScan(string $directoryPath) {
 			if (is_dir($directoryPath)) {
-				$unfilteredList = scandir($directoryPath);			
+				$unfilteredList = scandir($directoryPath);
 				$filteredList = $this->DirectoryFilter($unfilteredList);
 				foreach ($filteredList as $index => $value) {
 					$directoryFullPath = substr("{$directoryPath}/{$value}", 2);
