@@ -8,22 +8,22 @@
 		public function __construct(?string $directoryPathTop = null) {
 			$this->directoryPathTop = empty($directoryPathTop) ? "./parametermetric" : $directoryPathTop;
 
-			$this->ListRefresh();
+			$this->DirectoryListRefresh();
 			print_r($this->directoryList);
 		}
 
-		public function List() {
+		public function DirectoryList() {
 			return $this->directoryList;
 		}
 
-		public function ListRefresh() {
-			$this->DirectoryListRefresh("{$this->directoryPathTop}");
+		public function DirectoryListRefresh() {
+			$this->DirectoryListScan("{$this->directoryPathTop}");
 		}
 
-		private function DirectoryListRefresh(string $directoryPath) {
+		private function DirectoryListScan(string $directoryPath) {
 			foreach ($this->DirectoryListFilter($directoryPath) as $index => $value) {
 				array_push($this->directoryList, substr("{$directoryPath}/{$value}", 2));
-				$this->DirectoryListRefresh("{$directoryPath}/{$value}");
+				$this->DirectoryListScan("{$directoryPath}/{$value}");
 			}
 		}
 
