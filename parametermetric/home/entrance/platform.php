@@ -8,8 +8,16 @@
 		public function __construct(?string $directoryPathTop = null) {
 			$this->directoryPathTop = empty($directoryPathTop) ? "./parametermetric" : $directoryPathTop;
 
-			$this->DirectoryListRefresh("{$this->directoryPathTop}");
+			$this->ListRefresh();
 			print_r($this->directoryList);
+		}
+
+		public function List() {
+			return $this->directoryList;
+		}
+
+		public function ListRefresh() {
+			$this->DirectoryListRefresh("{$this->directoryPathTop}");
 		}
 
 		private function DirectoryListRefresh(string $directoryPath) {
