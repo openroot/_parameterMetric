@@ -9,18 +9,42 @@
 		}
 
 		public function RequireOnceDirectory(string $directoryPath) {
+			$scripts = array();
 			foreach ($this->directory->FileListRefresh($directoryPath) as $index => $value) {
 				$fileFullPath = "{$directoryPath}/{$value}";
 				if (!$this->CurrentScript($fileFullPath)) {
-					require_once($this->directory->DirectoryPathTop() . "/{$fileFullPath}");
+					array_push($scripts, $this->directory->DirectoryPathTop() . "/{$fileFullPath}");
 				}
 			}
+			$successCount = 0;
+			$scriptsCount = count($scripts);
+			if ($scriptsCount > 0) {
+				foreach ($scripts as $index => $value) {
+					if(require_once($value)) {
+						$successCount++;
+					}
+				}
+			}
+			else {
+				$scriptsCount = -1;
+			}
+			return $scriptsCount == $successCount ? true : false;
 		}
 
 		public function RequireOnceDirectoryArray(array $directoryPaths) {
-			foreach($directoryPaths as $index => $value) {
-				$this->RequireOnceDirectory($value);
+			$result = true;
+			if (count($directoryPaths) > 0) {
+				foreach($directoryPaths as $index => $value) {
+					if (!$this->RequireOnceDirectory($value)) {
+						$result = false;
+						break;
+					}
+				}
 			}
+			else {
+				$result = false;
+			}
+			return $result;
 		}
 
 		private function CurrentScript(string $scriptFile) {
@@ -94,7 +118,12 @@
 			$platform = new wand\Platform();
 			$directory = new wand\Directory();
 
-			$platform->RequireOnceDirectory("home/head");
+			if ($platform->RequireOnceDirectory("home/margosa")) {
+				echo "<pre>RequireOnceDirectory, successfull.</pre>";
+			}
+			else {
+				echo "<pre>RequireOnceDirectory, unsuccessfull.</pre>";
+			};
 
 			echo "<pre>"; print_r($directory->DirectoryList()); echo "</pre>";
 			echo "<pre>"; print_r($directory->DirectoryListRefresh("home/margosa")); echo "</pre>";
