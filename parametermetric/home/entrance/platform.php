@@ -6,7 +6,9 @@
 			$platformDirectory = new Directory();
 
 			echo "<pre>"; print_r($platformDirectory->DirectoryList()); echo "</pre>";
-			echo "<pre>"; print_r($platformDirectory->FileListScan("home/dhop")); echo "</pre>";
+			echo "<pre>"; print_r($platformDirectory->DirectoryListRefresh("home/dhop")); echo "</pre>";
+			echo "<pre>"; print_r($platformDirectory->DirectoryList()); echo "</pre>";
+			echo "<pre>"; print_r($platformDirectory->FileListRefresh("home/dhop")); echo "</pre>";
 		}
 	}
 
@@ -23,21 +25,13 @@
 			return $this->directoryList;
 		}
 
-		public function DirectoryListRefresh() {
-			$this->DirectoryListScan("");
+		public function DirectoryListRefresh(?string $directoryPath = null) {
+			array_splice($this->directoryList, 0, count($this->directoryList));
+			$this->DirectoryListScan(empty($directoryPath) ? "" : $directoryPath);
+			return $this->directoryList;
 		}
 
-		public function DirectoryListScan(string $directoryPath) {
-			$directoryFinePath = "{$this->directoryPathTop}/{$directoryPath}";
-			foreach ($this->DirectoryListFilter($directoryFinePath) as $index => $value) {
-				$directoryFound = "{$directoryPath}/{$value}";
-				$directoryFound = strpos($directoryFound, "/") == 0 ? substr("{$directoryFound}", 1) : $directoryFound;
-				array_push($this->directoryList, $directoryFound);
-				$this->DirectoryListScan("{$directoryPath}/{$value}");
-			}
-		}
-
-		public function FileListScan(string $directoryPath) {
+		public function FileListRefresh(string $directoryPath) {
 			$filteredList = array();
 			$directoryFinePath = "{$this->directoryPathTop}/{$directoryPath}";
 			if (is_dir($directoryFinePath)) {
@@ -48,6 +42,16 @@
 				}
 			}
 			return $filteredList;
+		}
+
+		private function DirectoryListScan(string $directoryPath) {
+			$directoryFinePath = "{$this->directoryPathTop}/{$directoryPath}";
+			foreach ($this->DirectoryListFilter($directoryFinePath) as $index => $value) {
+				$directoryFound = "{$directoryPath}/{$value}";
+				$directoryFound = strpos($directoryFound, "/") == 0 ? substr("{$directoryFound}", 1) : $directoryFound;
+				array_push($this->directoryList, $directoryFound);
+				$this->DirectoryListScan("{$directoryPath}/{$value}");
+			}
 		}
 
 		private function DirectoryListFilter(string $directoryPath) {
