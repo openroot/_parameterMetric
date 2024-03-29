@@ -4,7 +4,9 @@
 	class Platform {
 		public function __construct() {
 			$platformDirectory = new Directory();
+
 			print_r($platformDirectory->DirectoryList());
+			print_r($platformDirectory->FileListScan("home/dhop/flop"));
 		}
 	}
 
@@ -37,6 +39,19 @@
 			if (is_dir($directoryPath)) {
 				foreach (scandir($directoryPath) as $index => $value) {
 					if (!($value == "." || $value == "..") && is_dir("{$directoryPath}/{$value}")) {
+						array_push($filteredList, $value);
+					}
+				}
+			}
+			return $filteredList;
+		}
+
+		public function FileListScan(string $directoryPath) {
+			$filteredList = array();
+			$directoryFinePath = "{$this->directoryPathTop}/{$directoryPath}";
+			if (is_dir($directoryFinePath)) {
+				foreach (scandir($directoryFinePath) as $index => $value) {
+					if (!($value == "." || $value == "..") && is_file("{$directoryFinePath}/{$value}")) {
 						array_push($filteredList, $value);
 					}
 				}
