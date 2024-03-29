@@ -3,15 +3,9 @@
 
 	class Platform {
 		private Directory $directory;
+
 		public function __construct() {
 			$this->directory = new Directory();
-
-			echo "<pre>"; print_r($this->directory->DirectoryList()); echo "</pre>";
-			echo "<pre>"; print_r($this->directory->DirectoryListRefresh("home/dhop")); echo "</pre>";
-			echo "<pre>"; print_r($this->directory->DirectoryList()); echo "</pre>";
-			echo "<pre>"; print_r($this->directory->FileListRefresh("home/dhop")); echo "</pre>";
-
-			$this->RequireOnce("home/dhop");
 		}
 
 		public function RequireOnce(string $directoryPath) {
@@ -87,6 +81,14 @@
 	class Specimen {
 		public function __construct() {
 			$platform = new Platform();
+			$directory = new Directory();
+
+			$platform->RequireOnce("home/entrance");
+
+			echo "<pre>"; print_r($directory->DirectoryList()); echo "</pre>";
+			echo "<pre>"; print_r($directory->DirectoryListRefresh("home/dhop")); echo "</pre>";
+			echo "<pre>"; print_r($directory->DirectoryList()); echo "</pre>";
+			echo "<pre>"; print_r($directory->FileListRefresh("home/dhop")); echo "</pre>";
 		}
 	}
 ?>

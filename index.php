@@ -1,6 +1,9 @@
 <?php
 	require_once("parametermetric/home/entrance/platform.php");
 
+	$platform = new parametermetric\home\entrance\Platform();
+	$platform->RequireOnce("home/dhop");
+
 	$list = array(
 		1 => "parametermetric/home/dhop/des.php"
 	);
