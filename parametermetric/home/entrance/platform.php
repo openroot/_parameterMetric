@@ -12,7 +12,6 @@
 			foreach ($this->directory->FileListRefresh($directoryPath) as $index => $value) {
 				$fileFullPath = "{$directoryPath}/{$value}";
 				if (!$this->CurrentScript($fileFullPath)) {
-					echo $fileFullPath;
 					require_once($this->directory->DirectoryPathTop() . "/{$fileFullPath}");
 				}
 			}
