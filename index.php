@@ -4,6 +4,10 @@
 ?>
 
 <?php
+	// TODO: 1. Make A TODO 'section''. Unless, jotting down here.
+	// TODO: 2. Add 'section' counter.
+
+
 	// Unblock following code-blocks to view demonstration of code-in-action in front-end or defined in respective.
 
 	// A demonstration of parametermetric\home\well\heap.
