@@ -8,12 +8,20 @@
 			$this->directory = new Directory();
 		}
 
+		public function RequireOnceFile(string $directoryPath, string $fileName) {
+			$fileFullPath = $this->directory->DirectoryPathTop() . "/{$directoryPath}/{$fileName}";
+			if (!$this->CurrentScript($fileFullPath)) {
+				return require_once($fileFullPath);
+			}
+			return false;
+		}
+
 		public function RequireOnceDirectory(string $directoryPath) {
 			$scripts = array();
 			foreach ($this->directory->FileListRefresh($directoryPath) as $index => $value) {
-				$fileFullPath = "{$directoryPath}/{$value}";
+				$fileFullPath = $this->directory->DirectoryPathTop() . "/{$directoryPath}/{$value}";
 				if (!$this->CurrentScript($fileFullPath)) {
-					array_push($scripts, $this->directory->DirectoryPathTop() . "/{$fileFullPath}");
+					array_push($scripts, $fileFullPath);
 				}
 			}
 			$successCount = 0;
@@ -48,8 +56,7 @@
 		}
 
 		private function CurrentScript(string $scriptFile) {
-			$result = strpos($scriptFile, pathinfo(__FILE__, PATHINFO_FILENAME));
-			return $result > -1 ? true : false;
+			return str_contains(str_replace("\\", "/", __FILE__), $scriptFile) ? true : false;
 		}
 	}
 
@@ -93,7 +100,7 @@
 			$directoryFinePath = "{$this->directoryPathTop}/{$directoryPath}";
 			foreach ($this->DirectoryListFilter($directoryFinePath) as $index => $value) {
 				$directoryFound = "{$directoryPath}/{$value}";
-				$directoryFound = strpos($directoryFound, "/") == 0 ? substr("{$directoryFound}", 1) : $directoryFound;
+				$directoryFound = strpos($directoryFound, "/") == 0 ? substr($directoryFound, 1) : $directoryFound;
 				array_push($this->directoryList, $directoryFound);
 				$this->DirectoryListScan("{$directoryPath}/{$value}");
 			}
@@ -123,7 +130,23 @@
 			}
 			else {
 				echo "<pre>RequireOnceDirectory, unsuccessfull.</pre>";
-			};
+			}
+
+			
+
+			if ($platform->RequireOnceFile("", "water.php")) {
+				echo "<pre>RequireOnceFile, successfull.</pre>";
+			}
+			else {
+				echo "<pre>RequireOnceFile, unsuccessfull.</pre>";
+			}
+
+			if ($platform->RequireOnceFile("home/margosa/branch", "heap.php")) {
+				echo "<pre>RequireOnceFile, successfull.</pre>";
+			}
+			else {
+				echo "<pre>RequireOnceFile, unsuccessfull.</pre>";
+			}
 
 			echo "<pre>"; print_r($directory->DirectoryList()); echo "</pre>";
 			echo "<pre>"; print_r($directory->DirectoryListRefresh("home/margosa")); echo "</pre>";
