@@ -27,13 +27,6 @@
 			$this->DirectoryListScan($this->directoryPathTop);
 		}
 
-		private function DirectoryListScan(string $directoryPath) {
-			foreach ($this->DirectoryListFilter($directoryPath) as $index => $value) {
-				array_push($this->directoryList, substr("{$directoryPath}/{$value}", 2));
-				$this->DirectoryListScan("{$directoryPath}/{$value}");
-			}
-		}
-
 		private function DirectoryListFilter(string $directoryPath) {
 			$filteredList = array();
 			if (is_dir($directoryPath)) {
@@ -44,6 +37,13 @@
 				}
 			}
 			return $filteredList;
+		}
+
+		public function DirectoryListScan(string $directoryPath) {
+			foreach ($this->DirectoryListFilter($directoryPath) as $index => $value) {
+				array_push($this->directoryList, substr("{$directoryPath}/{$value}", 2));
+				$this->DirectoryListScan("{$directoryPath}/{$value}");
+			}
 		}
 
 		public function FileListScan(string $directoryPath) {
