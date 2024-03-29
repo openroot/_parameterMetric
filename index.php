@@ -5,8 +5,8 @@
 
 <?php
 	// TODO: 1. Add section-counter feature.
-	// TODO: 2. Add 'todo-section'. Till then, jot down here.
-	// TODO: 3. Add 'analyzer-section' for code of the project analysis.
+	// TODO: 2. Add 'task-section'. Till then, jot down here.
+	// TODO: 3. Add 'analyze-section' for code of the project analysis.
 
 
 	// Unblock following code-blocks to view demonstration of code-in-action in front-end or defined in respective.
