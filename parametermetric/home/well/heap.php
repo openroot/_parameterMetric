@@ -1,5 +1,5 @@
 <?php
-	namespace parametermetric\home\well\head;
+	namespace parametermetric\home\well\heap;
 
 	class Platform {
 		protected Directory $directory;
@@ -88,17 +88,18 @@
 		}
 	}
 
+	use parametermetric\home\well\heap as wand;
 	class Specimen {
 		public function __construct() {
-			$platform = new Platform();
-			$directory = new Directory();
+			$platform = new wand\Platform();
+			$directory = new wand\Directory();
 
 			$platform->RequireOnceDirectory("home/head");
 
 			echo "<pre>"; print_r($directory->DirectoryList()); echo "</pre>";
-			echo "<pre>"; print_r($directory->DirectoryListRefresh("home/dhop")); echo "</pre>";
+			echo "<pre>"; print_r($directory->DirectoryListRefresh("home/margosa")); echo "</pre>";
 			echo "<pre>"; print_r($directory->DirectoryList()); echo "</pre>";
-			echo "<pre>"; print_r($directory->FileListRefresh("home/dhop")); echo "</pre>";
+			echo "<pre>"; print_r($directory->FileListRefresh("home/margosa")); echo "</pre>";
 		}
 	}
 ?>

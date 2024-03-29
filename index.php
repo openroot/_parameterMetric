@@ -1,6 +1,6 @@
 <?php
-	require_once("parametermetric/home/well/head.php");
-	$platform = new parametermetric\home\well\head\Platform();
+	require_once("parametermetric/home/well/heap.php");
+	$platform = new parametermetric\home\well\heap\Platform();
 ?>
 
 <?php
@@ -11,5 +11,5 @@
 	new parametermetric\home\margosa\flower\Specimen();
 
 	// A demonstration of - parametermetric\home\well\head\Specimen().
-	new parametermetric\home\well\head\Specimen();
+	new parametermetric\home\well\heap\Specimen();
 ?>
