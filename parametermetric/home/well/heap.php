@@ -8,16 +8,6 @@
 			$this->directory = new Directory();
 		}
 
-		public function RequireOnceFile(string $directoryPath, string $fileName) {
-			$fileFullPath = $this->directory->DirectoryPathTop() . "/{$directoryPath}/{$fileName}";
-			if (!$this->CurrentScript($fileFullPath)) {
-				if (is_file($fileFullPath)) {
-					return require_once($fileFullPath);
-				}
-			}
-			return false;
-		}
-
 		public function RequireOnceDirectory(string $directoryPath) {
 			$scripts = array();
 			foreach ($this->directory->FileListRefresh($directoryPath) as $index => $value) {
@@ -42,6 +32,7 @@
 		}
 
 		public function RequireOnceDirectoryArray(array $directoryPaths) {
+			// TODO: This function is not verified yet, very after real implementation.
 			$result = true;
 			if (count($directoryPaths) > 0) {
 				foreach($directoryPaths as $index => $value) {
@@ -55,6 +46,16 @@
 				$result = false;
 			}
 			return $result;
+		}
+
+		public function RequireOnceFile(string $directoryPath, string $fileName) {
+			$fileFullPath = $this->directory->DirectoryPathTop() . "/{$directoryPath}/{$fileName}";
+			if (!$this->CurrentScript($fileFullPath)) {
+				if (is_file($fileFullPath)) {
+					return require_once($fileFullPath);
+				}
+			}
+			return false;
 		}
 
 		private function CurrentScript(string $scriptFile) {
