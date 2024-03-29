@@ -1,5 +1,5 @@
 <?php
-	namespace parametermetric\home\dhop\des;
+	namespace parametermetric\home\margosa\flower;
 
 	class Me extends Friend {
 		protected string $baseId = "";
@@ -98,11 +98,10 @@
 		}
 	}
 
-	use parametermetric\home\dhop\des as DDoS;
-
+	use parametermetric\home\margosa\flower as tattooartist;
 	class Specimen {
 		public function __construct() {
-			$iKnow = new DDoS\Friend(
+			$iKnow = new tattooartist\Friend(
 				"debcyberboy@gmail.com",
 				"D Tapader",
 				"Aviator Sun-glass",
@@ -113,7 +112,7 @@
 				array("when", "do not")
 			);
 
-			$iKnowAnother = new DDoS\Friend(
+			$iKnowAnother = new tattooartist\Friend(
 				"dev.openroot@live.com",
 				"Debaprasad Tapader",
 				"Higher Education",
@@ -124,7 +123,7 @@
 				array("code", "style")
 			);
 
-			$youThinkI = new DDoS\Me(
+			$youThinkI = new tattooartist\Me(
 				"dev.openroot@gmail.com",
 				"Dev",
 				array("Masala Dosa", "Milk Coffee", "Egg omelette"),
