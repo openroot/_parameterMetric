@@ -32,7 +32,7 @@
 		}
 
 		public function RequireOnceDirectoryArray(array $directoryPaths) {
-			// TODO: This function is not verified yet, very after real implementation.
+			// TODO: This function is not verified yet, verify after real implementation.
 			$result = true;
 			if (count($directoryPaths) > 0) {
 				foreach($directoryPaths as $index => $value) {
