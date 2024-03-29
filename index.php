@@ -1,7 +1,8 @@
 <?php
+	require_once("parametermetric/home/entrance/platform.php");
+
 	$list = array(
-		1 => "parametermetric/home/entrance/platform.php",
-		2 => "parametermetric/home/dhop/des.php"
+		1 => "parametermetric/home/dhop/des.php"
 	);
 	foreach ($list as $appendix => $value) {
 		require_once($value);
