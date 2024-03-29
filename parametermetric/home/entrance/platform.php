@@ -6,7 +6,7 @@
 			$platformDirectory = new Directory();
 
 			echo "<pre>"; print_r($platformDirectory->DirectoryList()); echo "</pre>";
-			echo "<pre>"; print_r($platformDirectory->FileListScan("home/dhop/flop")); echo "</pre>";
+			echo "<pre>"; print_r($platformDirectory->FileListScan("home/dhop")); echo "</pre>";
 		}
 	}
 
