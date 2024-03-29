@@ -2,7 +2,7 @@
 	namespace parametermetric\home\entrance;
 
 	class Platform {
-		private Directory $directory;
+		protected Directory $directory;
 
 		public function __construct() {
 			$this->directory = new Directory();
@@ -24,8 +24,8 @@
 	}
 
 	class Directory {
-		private string $directoryPathTop = "";
-		private array $directoryList = array();
+		protected string $directoryPathTop = "";
+		protected array $directoryList = array();
 
 		public function __construct(?string $directoryPathTop = null) {
 			$this->directoryPathTop = empty($directoryPathTop) ? "./parametermetric" : $directoryPathTop;
