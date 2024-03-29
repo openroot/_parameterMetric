@@ -2,13 +2,30 @@
 	namespace parametermetric\home\entrance;
 
 	class Platform {
+		private Directory $directory;
 		public function __construct() {
-			$platformDirectory = new Directory();
+			$this->directory = new Directory();
 
-			echo "<pre>"; print_r($platformDirectory->DirectoryList()); echo "</pre>";
-			echo "<pre>"; print_r($platformDirectory->DirectoryListRefresh("home/dhop")); echo "</pre>";
-			echo "<pre>"; print_r($platformDirectory->DirectoryList()); echo "</pre>";
-			echo "<pre>"; print_r($platformDirectory->FileListRefresh("home/dhop")); echo "</pre>";
+			echo "<pre>"; print_r($this->directory->DirectoryList()); echo "</pre>";
+			echo "<pre>"; print_r($this->directory->DirectoryListRefresh("home/dhop")); echo "</pre>";
+			echo "<pre>"; print_r($this->directory->DirectoryList()); echo "</pre>";
+			echo "<pre>"; print_r($this->directory->FileListRefresh("home/dhop")); echo "</pre>";
+
+			$this->RequireOnce("home/dhop");
+		}
+
+		public function RequireOnce(string $directoryPath) {
+			foreach ($this->directory->FileListRefresh($directoryPath) as $index => $value) {
+				$fileFullPath = "{$directoryPath}/{$value}";
+				if (!$this->CurrentScript($fileFullPath)) {
+					echo $fileFullPath;
+				}
+			}
+		}
+
+		private function CurrentScript(string $scriptFile) {
+			$result = strpos($scriptFile, pathinfo(__FILE__, PATHINFO_FILENAME));
+			return $result > -1 ? true : false;
 		}
 	}
 
