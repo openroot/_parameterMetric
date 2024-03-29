@@ -1,6 +1,6 @@
 <?php
-	require_once("parametermetric/home/entrance/platform.php");
-	$platform = new parametermetric\home\entrance\Platform();
+	require_once("parametermetric/home/head/platform.php");
+	$platform = new parametermetric\home\head\Platform();
 ?>
 
 <?php
@@ -11,5 +11,5 @@
 	new parametermetric\home\dhop\des\Specimen();
 
 	// A demonstration of - parametermetric\home\entrance\Specimen().
-	new parametermetric\home\entrance\Specimen();
+	new parametermetric\home\head\Specimen();
 ?>

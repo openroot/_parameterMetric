@@ -1,5 +1,5 @@
 <?php
-	namespace parametermetric\home\entrance;
+	namespace parametermetric\home\head;
 
 	class Platform {
 		protected Directory $directory;
@@ -93,7 +93,7 @@
 			$platform = new Platform();
 			$directory = new Directory();
 
-			$platform->RequireOnceDirectory("home/entrance");
+			$platform->RequireOnceDirectory("home/head");
 
 			echo "<pre>"; print_r($directory->DirectoryList()); echo "</pre>";
 			echo "<pre>"; print_r($directory->DirectoryListRefresh("home/dhop")); echo "</pre>";
