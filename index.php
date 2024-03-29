@@ -2,7 +2,7 @@
 	require_once("parametermetric/home/entrance/platform.php");
 	$platform = new parametermetric\home\entrance\Platform();
 
-	$platform->RequireOnce("home/dhop");
+	$platform->RequireOnceDirectory("home/dhop");
 ?>
 
 <?php

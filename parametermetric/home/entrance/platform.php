@@ -8,13 +8,19 @@
 			$this->directory = new Directory();
 		}
 
-		public function RequireOnce(string $directoryPath) {
+		public function RequireOnceDirectory(string $directoryPath) {
 			foreach ($this->directory->FileListRefresh($directoryPath) as $index => $value) {
 				$fileFullPath = "{$directoryPath}/{$value}";
 				if (!$this->CurrentScript($fileFullPath)) {
 					echo $fileFullPath;
 					require_once($this->directory->DirectoryPathTop() . "/{$fileFullPath}");
 				}
+			}
+		}
+
+		public function RequireOnceDirectoryArray(array $directoryPaths) {
+			foreach($directoryPaths as $index => $value) {
+				$this->RequireOnceDirectory($value);
 			}
 		}
 
@@ -88,7 +94,7 @@
 			$platform = new Platform();
 			$directory = new Directory();
 
-			$platform->RequireOnce("home/entrance");
+			$platform->RequireOnceDirectory("home/entrance");
 
 			echo "<pre>"; print_r($directory->DirectoryList()); echo "</pre>";
 			echo "<pre>"; print_r($directory->DirectoryListRefresh("home/dhop")); echo "</pre>";
