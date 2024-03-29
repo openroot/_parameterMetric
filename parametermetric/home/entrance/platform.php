@@ -13,6 +13,7 @@
 				$fileFullPath = "{$directoryPath}/{$value}";
 				if (!$this->CurrentScript($fileFullPath)) {
 					echo $fileFullPath;
+					require_once("./parametermetric/{$fileFullPath}");
 				}
 			}
 		}
