@@ -13,7 +13,7 @@
 				$fileFullPath = "{$directoryPath}/{$value}";
 				if (!$this->CurrentScript($fileFullPath)) {
 					echo $fileFullPath;
-					require_once("./parametermetric/{$fileFullPath}");
+					require_once($this->directory->DirectoryPathTop() . "/{$fileFullPath}");
 				}
 			}
 		}
@@ -31,6 +31,10 @@
 		public function __construct(?string $directoryPathTop = null) {
 			$this->directoryPathTop = empty($directoryPathTop) ? "./parametermetric" : $directoryPathTop;
 			$this->DirectoryListRefresh();
+		}
+
+		public function DirectoryPathTop() {
+			return $this->directoryPathTop;
 		}
 
 		public function DirectoryList() {

@@ -81,13 +81,13 @@
 					$stream = " interest is {$this->friend->likes[0]}.";
 				}
 				return ucfirst(implode(" ", array(
-					"{$this->friend->appeal} " . $this->friend->name, "mighty to: {$this->friend->rent}, ", "who likes " . implode(", ", $this->friend->likes), "- is never {$this->friend->hate}", "to share {$this->friend->relate} {$this->friend->rent}."
+					"{$this->friend->appeal} {$this->friend->name}", "mighty to: {$this->friend->rent}, ", "who likes " . implode(", ", $this->friend->likes), "- is never {$this->friend->hate}", "to share {$this->friend->relate} {$this->friend->rent}."
 				))) . " " . ucfirst($this->friend->reason[0]) . " or {$this->friend->reason[1]} {$this->friend->hate} {$this->friend->relate}{$stream}";
 			}
 			else {
 				return implode(" ", array(
 					ucfirst($this->friend->reason[0]) . " {$this->friend->reason[1]} ride or eat I accompany with ",
-					"{$this->friend->appeal} " . $this->friend->name, "mighty to: {$this->friend->rent}, ", "who likes " . implode(", ", $this->friend->likes), "- is never {$this->friend->hate}", "to share {$this->friend->relate} {$this->friend->rent}",
+					"{$this->friend->appeal} {$this->friend->name}", "mighty to: {$this->friend->rent}, ", "who likes " . implode(", ", $this->friend->likes), "- is never {$this->friend->hate}", "to share {$this->friend->relate} {$this->friend->rent}",
 					" with me."
 				));
 			}
