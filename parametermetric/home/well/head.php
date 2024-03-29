@@ -1,5 +1,5 @@
 <?php
-	namespace parametermetric\home\head;
+	namespace parametermetric\home\well\head;
 
 	class Platform {
 		protected Directory $directory;
