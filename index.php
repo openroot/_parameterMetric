@@ -3,13 +3,6 @@
 
 	$platform = new parametermetric\home\entrance\Platform();
 	$platform->RequireOnce("home/dhop");
-
-	$list = array(
-		1 => "parametermetric/home/dhop/des.php"
-	);
-	foreach ($list as $appendix => $value) {
-		require_once($value);
-	}
 ?>
 
 <?php
