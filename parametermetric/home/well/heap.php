@@ -11,7 +11,9 @@
 		public function RequireOnceFile(string $directoryPath, string $fileName) {
 			$fileFullPath = $this->directory->DirectoryPathTop() . "/{$directoryPath}/{$fileName}";
 			if (!$this->CurrentScript($fileFullPath)) {
-				return require_once($fileFullPath);
+				if (is_file($fileFullPath)) {
+					return require_once($fileFullPath);
+				}
 			}
 			return false;
 		}
@@ -128,24 +130,8 @@
 			if ($platform->RequireOnceDirectory("home/margosa")) {
 				echo "<pre>RequireOnceDirectory, successfull.</pre>";
 			}
-			else {
-				echo "<pre>RequireOnceDirectory, unsuccessfull.</pre>";
-			}
-
-			
-
 			if ($platform->RequireOnceFile("", "water.php")) {
 				echo "<pre>RequireOnceFile, successfull.</pre>";
-			}
-			else {
-				echo "<pre>RequireOnceFile, unsuccessfull.</pre>";
-			}
-
-			if ($platform->RequireOnceFile("home/margosa/branch", "heap.php")) {
-				echo "<pre>RequireOnceFile, successfull.</pre>";
-			}
-			else {
-				echo "<pre>RequireOnceFile, unsuccessfull.</pre>";
 			}
 
 			echo "<pre>"; print_r($directory->DirectoryList()); echo "</pre>";
