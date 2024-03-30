@@ -107,8 +107,28 @@
 			return false;
 		}
 
+		public function DeleteDirectory(string $directoryPath) {
+			$result = false;
+			$directoryFinePathAs = $this->DirectoryFinePathAs($directoryPath);
+			if (is_dir($directoryFinePathAs)) {
+				$directoryParentName = substr($directoryFinePathAs, 0, strrpos($directoryFinePathAs, "/"));
+
+				$this->DirectoryFoundAt($this->DirectoryListRefresh($this->DirectoryUnfinedPathAs($directoryParentName)));
+
+				$directoryOriginalName = substr($directoryFinePathAs, strrpos($directoryFinePathAs, "/") + 1);
+				$directoryNewName = "{$this->directoryPathTop}/home/margosa/spin/algebrafate/{$directoryOriginalName}" . $this->CurrentTimePlatformSafe();
+				echo $directoryParentName;
+				//return rename($directoryFinePathAs, $directoryNewName);
+			}
+			return $result;
+		}
+
 		protected function DirectoryFinePathAs(string $directoryPath) {
 			return "{$this->directoryPathTop}/{$directoryPath}";
+		}
+
+		protected function DirectoryUnfinedPathAs(string $directoryFinePathAs) {
+			return strpos($directoryFinePathAs, $this->directoryPathTop) == 0 ? substr($directoryFinePathAs, strlen($this->directoryPathTop) + 1) : false;
 		}
 
 		private function DirectoryListScan(string $directoryPath) {
@@ -131,6 +151,21 @@
 			}
 			return $filteredList;
 		}
+
+		private function DirectoryFoundAt(array $directoryPaths) {
+			foreach ($directoryPaths as $index => $value) {
+				echo $index . " -> " . $value . "<br>";
+			}
+		}
+
+		private function CurrentTimePlatformSafe(?string $timeZone = "Asia/Kolkata") {
+			$currentTime = new \DateTime("now", new \DateTimeZone($timeZone));
+			if ($currentTime != null) {
+				$timeZone = substr($currentTime->format("O"), 1);
+				return $currentTime->format("__H_i_s_u__d_m_Y__D__{$timeZone}");
+			}
+			return false;
+		}
 	}
 
 	use parametermetric\home\well\heap as wand;
@@ -146,13 +181,14 @@
 				echo "<pre>RequireOnceFile, successfull.</pre>";
 			}
 
-			echo "<pre>"; print_r($directory->DirectoryList()); echo "</pre>";
-			echo "<pre>"; print_r($directory->DirectoryListRefresh("home/margosa")); echo "</pre>";
-			echo "<pre>"; print_r($directory->DirectoryList()); echo "</pre>";
-			echo "<pre>"; print_r($directory->FileListRefresh("home/margosa/now")); echo "</pre>";
+			//echo "<pre>"; print_r($directory->DirectoryList()); echo "</pre>";
+			//echo "<pre>"; print_r($directory->DirectoryListRefresh("home/margosa")); echo "</pre>";
+			//echo "<pre>"; print_r($directory->DirectoryList()); echo "</pre>";
+			//echo "<pre>"; print_r($directory->FileListRefresh("home/margosa/now")); echo "</pre>";
 
 			echo "<pre>"; echo $directory->MakeDirectory("home/margosa/spin/algebrafate/delete") ? "Directory made." : "Directory not made or already exists."; echo "</pre>";
-			echo "<pre>"; print_r($directory->DirectoryListRefresh()); echo "</pre>";
+			echo "<pre>"; echo $directory->DeleteDirectory("home/margosa/spin/algebrafate/aRandomdirectory") ? "Directory deleted." : "Directory not deleted or not exists."; echo "</pre>";
+			//echo "<pre>"; print_r($directory->DirectoryListRefresh()); echo "</pre>";
 		}
 	}
 ?>
