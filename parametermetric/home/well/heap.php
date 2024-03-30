@@ -138,7 +138,7 @@
 			echo "<pre>"; print_r($directory->DirectoryList()); echo "</pre>";
 			echo "<pre>"; print_r($directory->DirectoryListRefresh("home/margosa")); echo "</pre>";
 			echo "<pre>"; print_r($directory->DirectoryList()); echo "</pre>";
-			echo "<pre>"; print_r($directory->FileListRefresh("home/margosa")); echo "</pre>";
+			echo "<pre>"; print_r($directory->FileListRefresh("home/margosa/now")); echo "</pre>";
 		}
 	}
 ?>
