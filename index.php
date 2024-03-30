@@ -15,7 +15,7 @@
 	new parametermetric\home\well\heap\Specimen();
 
 	// A demonstration of code convention used in this project in generic format.
-	if ($platform->RequireOnceDirectory("home/margosa")) {
-		new parametermetric\home\margosa\flower\Specimen();
+	if ($platform->RequireOnceDirectory("home/margosa/now")) {
+		new parametermetric\home\margosa\now\flower\Specimen();
 	}
 ?>

@@ -1,5 +1,5 @@
 <?php
-	namespace parametermetric\home\margosa\flower;
+	namespace parametermetric\home\margosa\now\flower;
 
 	class Me extends Friend {
 		protected string $baseId = "";
@@ -98,7 +98,7 @@
 		}
 	}
 
-	use parametermetric\home\margosa\flower as tattooartist;
+	use parametermetric\home\margosa\now\flower as tattooartist;
 	class Specimen {
 		public function __construct() {
 			$iKnow = new tattooartist\Friend(
