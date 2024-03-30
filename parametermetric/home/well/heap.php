@@ -112,10 +112,10 @@
 			$directoryFinePathAs = $this->DirectoryFinePathAs($directoryPath);
 			if (is_dir($directoryFinePathAs)) {
 				$directoryParentName = substr($directoryFinePathAs, 0, strrpos($directoryFinePathAs, "/"));
-
-				$this->DirectoryFoundAt($this->DirectoryListRefresh($this->DirectoryUnfinedPathAs($directoryParentName)));
-
 				$directoryOriginalName = substr($directoryFinePathAs, strrpos($directoryFinePathAs, "/") + 1);
+
+				echo "Directory matched = " . $this->DirectoryFoundAt($this->DirectoryListRefresh($this->DirectoryUnfinedPathAs($directoryParentName)), $directoryOriginalName) . "<br>";
+
 				$directoryNewName = "{$this->directoryPathTop}/home/margosa/spin/algebrafate/{$directoryOriginalName}" . $this->CurrentTimePlatformSafe();
 				echo $directoryParentName;
 				//return rename($directoryFinePathAs, $directoryNewName);
@@ -152,10 +152,14 @@
 			return $filteredList;
 		}
 
-		private function DirectoryFoundAt(array $directoryPaths) {
+		private function DirectoryFoundAt(array $directoryPaths, string $directoryName) {
+			$result = false;
 			foreach ($directoryPaths as $index => $value) {
-				echo $index . " -> " . $value . "<br>";
+				if (strcmp(substr($value, strrpos($value, "/") + 1), $directoryName) == 0) {
+					$result = true;
+				}
 			}
+			return $result;
 		}
 
 		private function CurrentTimePlatformSafe(?string $timeZone = "Asia/Kolkata") {
@@ -187,7 +191,7 @@
 			//echo "<pre>"; print_r($directory->FileListRefresh("home/margosa/now")); echo "</pre>";
 
 			echo "<pre>"; echo $directory->MakeDirectory("home/margosa/spin/algebrafate/delete") ? "Directory made." : "Directory not made or already exists."; echo "</pre>";
-			echo "<pre>"; echo $directory->DeleteDirectory("home/margosa/spin/algebrafate/aRandomdirectory") ? "Directory deleted." : "Directory not deleted or not exists."; echo "</pre>";
+			echo "<pre>"; echo $directory->DeleteDirectory("home/margosa/spin/algebrafate/aRandomDirectory") ? "Directory deleted." : "Directory not deleted or not exists."; echo "</pre>";
 			//echo "<pre>"; print_r($directory->DirectoryListRefresh()); echo "</pre>";
 		}
 	}
