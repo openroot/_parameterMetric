@@ -128,7 +128,7 @@
 			$platform = new wand\Platform();
 			$directory = new wand\Directory();
 
-			if ($platform->RequireOnceDirectory("home/margosa")) {
+			if ($platform->RequireOnceDirectory("home/margosa/now")) {
 				echo "<pre>RequireOnceDirectory, successfull.</pre>";
 			}
 			if ($platform->RequireOnceFile("", "water.php")) {
