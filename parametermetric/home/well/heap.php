@@ -101,9 +101,10 @@
 
 		public function MakeDirectory(string $directoryPath) {
 			$directoryFinePathAs = $this->DirectoryFinePathAs($directoryPath);
-			//if (!file_exists('path/to/directory')) {
-				//mkdir('path/to/directory', 0777, true);
-			//}
+			if (!file_exists($directoryFinePathAs)) {
+				return mkdir($directoryFinePathAs);
+			}
+			return false;
 		}
 
 		protected function DirectoryFinePathAs(string $directoryPath) {
@@ -149,6 +150,9 @@
 			echo "<pre>"; print_r($directory->DirectoryListRefresh("home/margosa")); echo "</pre>";
 			echo "<pre>"; print_r($directory->DirectoryList()); echo "</pre>";
 			echo "<pre>"; print_r($directory->FileListRefresh("home/margosa/now")); echo "</pre>";
+
+			echo "<pre>"; echo $directory->MakeDirectory("home/margosa/spin/algebrafate/delete") ? "Directory made." : "Directory not made or already exists."; echo "</pre>";
+			echo "<pre>"; print_r($directory->DirectoryListRefresh()); echo "</pre>";
 		}
 	}
 ?>
