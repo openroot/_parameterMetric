@@ -88,10 +88,10 @@
 
 		public function FileListRefresh(string $directoryPath) {
 			$filteredList = array();
-			$directoryFinePath = "{$this->directoryPathTop}/{$directoryPath}";
-			if (is_dir($directoryFinePath)) {
-				foreach (scandir($directoryFinePath) as $index => $value) {
-					if (!($value == "." || $value == "..") && is_file("{$directoryFinePath}/{$value}")) {
+			$directoryFinePathAs = $this->DirectoryFinePathAs($directoryPath);
+			if (is_dir($directoryFinePathAs)) {
+				foreach (scandir($directoryFinePathAs) as $index => $value) {
+					if (!($value == "." || $value == "..") && is_file("{$directoryFinePathAs}/{$value}")) {
 						array_push($filteredList, $value);
 					}
 				}
@@ -99,9 +99,19 @@
 			return $filteredList;
 		}
 
+		public function MakeDirectory(string $directoryPath) {
+			$directoryFinePathAs = $this->DirectoryFinePathAs($directoryPath);
+			//if (!file_exists('path/to/directory')) {
+				//mkdir('path/to/directory', 0777, true);
+			//}
+		}
+
+		protected function DirectoryFinePathAs(string $directoryPath) {
+			return "{$this->directoryPathTop}/{$directoryPath}";
+		}
+
 		private function DirectoryListScan(string $directoryPath) {
-			$directoryFinePath = "{$this->directoryPathTop}/{$directoryPath}";
-			foreach ($this->DirectoryListFilter($directoryFinePath) as $index => $value) {
+			foreach ($this->DirectoryListFilter($this->DirectoryFinePathAs($directoryPath)) as $index => $value) {
 				$directoryFound = "{$directoryPath}/{$value}";
 				$directoryFound = strpos($directoryFound, "/") == 0 ? substr($directoryFound, 1) : $directoryFound;
 				array_push($this->directoryList, $directoryFound);
