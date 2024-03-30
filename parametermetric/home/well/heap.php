@@ -133,6 +133,18 @@
 			return strpos($directoryFinePathAs, $this->directoryPathTop) == 0 ? substr($directoryFinePathAs, strlen($this->directoryPathTop) + 1) : false;
 		}
 
+		protected function DirectoryFoundAt(array $directoryPaths, string $directoryName) {
+			$result = false;
+			foreach ($directoryPaths as $index => $value) {
+				if (strcmp(substr($value, strrpos($value, "/") + 1), $directoryName) == 0) {
+					if (is_dir($this->DirectoryFinePathAs($value))) {
+						$result = true;
+					}
+				}
+			}
+			return $result;
+		}
+
 		private function DirectoryListScan(string $directoryPath) {
 			foreach ($this->DirectoryListFilter($this->DirectoryFinePathAs($directoryPath)) as $index => $value) {
 				$directoryFound = "{$directoryPath}/{$value}";
@@ -152,16 +164,6 @@
 				}
 			}
 			return $filteredList;
-		}
-
-		private function DirectoryFoundAt(array $directoryPaths, string $directoryName) {
-			$result = false;
-			foreach ($directoryPaths as $index => $value) {
-				if (strcmp(substr($value, strrpos($value, "/") + 1), $directoryName) == 0) {
-					$result = true;
-				}
-			}
-			return $result;
 		}
 
 		private function CurrentTimePlatformSafe(?string $timeZone = "Asia/Kolkata") {
