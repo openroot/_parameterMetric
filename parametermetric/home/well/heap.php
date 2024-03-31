@@ -166,7 +166,7 @@
 			return $filteredList;
 		}
 
-		private function CurrentTimePlatformSafe(?string $timeZone = "Asia/Delhi") {
+		private function CurrentTimePlatformSafe(?string $timeZone = "UTC") {
 			$currentTime = new \DateTime("now", new \DateTimeZone($timeZone));
 			if ($currentTime != null) {
 				$timeZone = substr($currentTime->format("O"), 1);
