@@ -65,7 +65,9 @@
 		}
 
 		private function CurrentScript(string $scriptFile) {
-			return str_contains(str_replace("\\", "/", __FILE__), $scriptFile) ? true : false;
+			$presentFile = str_replace("\\", "/", __FILE__);
+			$scriptFile = $scriptFile[0] == "." ? substr($scriptFile, 1) : $scriptFile;
+			return str_contains($presentFile, $scriptFile) ? true : false;
 		}
 	}
 
