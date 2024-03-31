@@ -11,15 +11,15 @@
 
 	// Unblock following code-blocks to view demonstration of code-in-action in front-end or defined in respective.
 
-	// A demonstration of parametermetric\home\well\heap.
+	// A demonstration of: parametermetric\home\well\heap.
 	//new parametermetric\home\well\heap\Specimen();
 
-	// A demonstration of code convention used in this project in generic format.
+	// A demonstration of: parametermetric\home\well\file
 	if ($platform->RequireonceFile("home/well", "file.php")) {
 		new parametermetric\home\well\file\Specimen();
 	}
 
-	// A demonstration of code convention used in this project in generic format.
+	// A demonstration of: code convention used in this project in generic format.
 	/*if ($platform->RequireonceDirectory("home/margosa/now")) {
 		new parametermetric\home\margosa\now\flower\Specimen();
 	}*/
