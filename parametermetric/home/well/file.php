@@ -26,8 +26,11 @@
 			return $filteredList;
 		}
 	}
+?>
 
+<?php
 	use parametermetric\home\well\file as pond;
+
 	class Specimen {
 		public function __construct() {
 			echo "use parametermetric\home\well\\file as pond;<br>\$file = new pond\File();<br><br>";
