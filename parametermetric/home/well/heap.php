@@ -166,7 +166,7 @@
 			return $filteredList;
 		}
 
-		private function CurrentTimePlatformSafe(?string $timeZone = "Asia/Kolkata") {
+		private function CurrentTimePlatformSafe(?string $timeZone = "Asia/Delhi") {
 			$currentTime = new \DateTime("now", new \DateTimeZone($timeZone));
 			if ($currentTime != null) {
 				$timeZone = substr($currentTime->format("O"), 1);
@@ -189,14 +189,14 @@
 				echo "<pre>RequireOnceFile, successfull.</pre>";
 			}
 
-			//echo "<pre>"; print_r($directory->DirectoryList()); echo "</pre>";
-			//echo "<pre>"; print_r($directory->DirectoryListRefresh("home/margosa")); echo "</pre>";
-			//echo "<pre>"; print_r($directory->DirectoryList()); echo "</pre>";
-			//echo "<pre>"; print_r($directory->FileListRefresh("home/margosa/now")); echo "</pre>";
+			echo "<pre>"; print_r($directory->DirectoryList()); echo "</pre>";
+			echo "<pre>"; print_r($directory->DirectoryListRefresh("home/margosa")); echo "</pre>";
+			echo "<pre>"; print_r($directory->DirectoryList()); echo "</pre>";
+			echo "<pre>"; print_r($directory->FileListRefresh("home/margosa/now")); echo "</pre>";
 
 			echo "<pre>"; echo $directory->MakeDirectory("home/margosa/spin/algebrafate/Delete") ? "Directory made." : "Directory not made or already exists."; echo "</pre>";
 			echo "<pre>"; echo $directory->DeleteDirectory("home/margosa/spin/algebrafate/ARandomDirectory") ? "Directory deleted." : "Directory not deleted or not exists."; echo "</pre>";
-			//echo "<pre>"; print_r($directory->DirectoryListRefresh()); echo "</pre>";
+			echo "<pre>"; print_r($directory->DirectoryListRefresh()); echo "</pre>";
 		}
 	}
 ?>
