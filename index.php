@@ -11,18 +11,21 @@
 
 	// Unblock following code-blocks to view demonstration of code-in-action in front-end or defined in respective.
 
-	// A demonstration of: parametermetric\home\well\heap.
-	//new parametermetric\home\well\heap\Specimen();
+	// A demonstration of: namespace 'parametermetric\home\well\heap'.
+	echo "<h3>new parametermetric\home\well\heap\Specimen();</h3>";
+	new parametermetric\home\well\heap\Specimen();
 
-	// A demonstration of: parametermetric\home\well\file
+	// A demonstration of: namespace 'parametermetric\home\well\file'.
 	if ($platform->RequireonceFile("home/well", "file.php")) {
+		echo "<h3>new parametermetric\home\well\\file\Specimen();</h3>";
 		new parametermetric\home\well\file\Specimen();
 	}
 
 	// A demonstration of: code convention used in this project in generic format.
-	/*if ($platform->RequireonceDirectory("home/margosa/now")) {
+	if ($platform->RequireonceDirectory("home/margosa/now")) {
+		echo "<h3>new parametermetric\home\margosa\now\\flower\Specimen();</h3>";
 		new parametermetric\home\margosa\now\flower\Specimen();
-	}*/
+	}/**/
 
 	
 	// TODO: 1. Add section-counter feature.
