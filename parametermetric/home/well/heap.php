@@ -5,7 +5,13 @@
 		protected Directory $directory;
 
 		public function __construct() {
-			$this->directory = new Directory();
+			try {
+				$this->directory = new Directory();
+				if (!($this->directory && $this->RequireOnceDirectory("home/well"))) {
+					die("ParameterMetric execution interrupted. Possibly it gets fixed on refresh.");
+				}
+			}
+			catch (Exception $exception) { }
 		}
 
 		public function RequireOnceDirectory(string $directoryPath) {
@@ -183,10 +189,10 @@
 			$directory = new wand\Directory();
 
 			if ($platform->RequireOnceDirectory("home/margosa/now")) {
-				echo "<pre>RequireOnceDirectory, successfull.</pre>";
+				echo "RequireOnceDirectory, successfull.<br>";
 			}
 			if ($platform->RequireOnceFile("", "water.php")) {
-				echo "<pre>RequireOnceFile, successfull.</pre>";
+				echo "RequireOnceFile, successfull.<br>";
 			}
 
 			echo "<pre>"; print_r($directory->DirectoryList()); echo "</pre>";
@@ -194,8 +200,8 @@
 			echo "<pre>"; print_r($directory->DirectoryList()); echo "</pre>";
 			echo "<pre>"; print_r($directory->FileListRefresh("home/margosa/now")); echo "</pre>";
 
-			echo "<pre>"; echo $directory->MakeDirectory("home/margosa/spin/algebrafate/Delete") ? "Directory made." : "Directory not made or already exists."; echo "</pre>";
-			echo "<pre>"; echo $directory->DeleteDirectory("home/margosa/spin/algebrafate/ARandomDirectory") ? "Directory deleted." : "Directory not deleted or not exists."; echo "</pre>";
+			echo $directory->MakeDirectory("home/margosa/spin/algebrafate/Delete") ? "Directory made." : "Directory not made or already exists."; echo "<br>";
+			echo $directory->DeleteDirectory("home/margosa/spin/algebrafate/ARandomDirectory") ? "Directory deleted." : "Directory not deleted or not exists."; echo "<br>";
 			echo "<pre>"; print_r($directory->DirectoryListRefresh()); echo "</pre>";
 		}
 	}
