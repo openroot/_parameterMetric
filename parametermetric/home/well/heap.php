@@ -82,7 +82,7 @@
 			return $this->directoryPathTop;
 		}
 
-		public function DirectoryList() {
+		public function DirectoryListRecent() {
 			return $this->directoryList;
 		}
 
@@ -188,20 +188,32 @@
 			$platform = new wand\Platform();
 			$directory = new wand\Directory();
 
+			echo "use parametermetric\home\well\heap as wand;<br>\$platform = new wand\Platform();<br>\$directory = new wand\Directory()<br><br>";
+
+			echo "\$platform->RequireOnceDirectory(\"home/margosa/now\");";
 			if ($platform->RequireOnceDirectory("home/margosa/now")) {
-				echo "RequireOnceDirectory, successfull.<br>";
+				echo "<pre>RequireOnceDirectory, successfull.</pre>";
 			}
+			echo "\$platform->RequireOnceFile(\"\", \"water.php\");";
 			if ($platform->RequireOnceFile("", "water.php")) {
-				echo "RequireOnceFile, successfull.<br>";
+				echo "<pre>RequireOnceFile, successfull.</pre>";
 			}
 
-			echo "<pre>"; print_r($directory->DirectoryList()); echo "</pre>";
+			echo "\$directory->DirectoryListRecent();";
+			echo "<pre>"; print_r($directory->DirectoryListRecent()); echo "</pre>";
+			echo "\$directory->DirectoryListRefresh(\"home/margosa\");";
 			echo "<pre>"; print_r($directory->DirectoryListRefresh("home/margosa")); echo "</pre>";
-			echo "<pre>"; print_r($directory->DirectoryList()); echo "</pre>";
+			echo "\$directory->DirectoryListRecent();";
+			echo "<pre>"; print_r($directory->DirectoryListRecent()); echo "</pre>";
+			echo "\$directory->FileListRefresh(\"home/margosa/now\");";
 			echo "<pre>"; print_r($directory->FileListRefresh("home/margosa/now")); echo "</pre>";
 
-			echo $directory->MakeDirectory("home/margosa/spin/algebrafate/Delete") ? "Directory made." : "Directory not made or already exists."; echo "<br>";
-			echo $directory->DeleteDirectory("home/margosa/spin/algebrafate/ARandomDirectory") ? "Directory deleted." : "Directory not deleted or not exists."; echo "<br>";
+			echo "\$directory->MakeDirectory(\"home/margosa/spin/algebrafate/Delete\");";
+			echo "<pre>"; echo $directory->MakeDirectory("home/margosa/spin/algebrafate/Delete") ? "Directory made." : "Directory not made or already exists."; echo "</pre>";
+			echo "\$directory->DeleteDirectory(\"home/margosa/spin/algebrafate/ARandomDirectory\");";
+			echo "<pre>"; echo $directory->DeleteDirectory("home/margosa/spin/algebrafate/ARandomDirectory") ? "Directory deleted." : "Directory not deleted or not exists."; echo "</pre>";
+			
+			echo "\$directory->DirectoryListRefresh();";
 			echo "<pre>"; print_r($directory->DirectoryListRefresh()); echo "</pre>";
 		}
 	}
