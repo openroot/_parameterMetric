@@ -15,10 +15,10 @@
 	echo "<h3>new parametermetric\home\well\heap\Specimen();</h3>";
 	new parametermetric\home\well\heap\Specimen();
 
-	// A demonstration of: namespace 'parametermetric\home\well\file'.
-	if ($platform->RequireonceFile("home/well", "file.php")) {
-		echo "<h3>new parametermetric\home\well\\file\Specimen();</h3>";
-		new parametermetric\home\well\file\Specimen();
+	// A demonstration of: namespace 'parametermetric\home\well\joint'.
+	if ($platform->RequireonceFile("home/well", "joint.php")) {
+		echo "<h3>new parametermetric\home\well\joint\Specimen();</h3>";
+		new parametermetric\home\well\joint\Specimen();
 	}
 
 	// A demonstration of: code convention used in this project in generic format.
