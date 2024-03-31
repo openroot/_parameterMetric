@@ -133,15 +133,15 @@
 			return $result;
 		}
 
-		protected function DirectoryFinePathAs(string $directoryPath) {
+		public function DirectoryFinePathAs(string $directoryPath) {
 			return "{$this->directoryPathTop}/{$directoryPath}";
 		}
 
-		protected function DirectoryUnfinedPathAs(string $directoryFinePathAs) {
+		public function DirectoryUnfinedPathAs(string $directoryFinePathAs) {
 			return strpos($directoryFinePathAs, $this->directoryPathTop) == 0 ? substr($directoryFinePathAs, strlen($this->directoryPathTop) + 1) : false;
 		}
 
-		protected function DirectoryFoundAt(array $directoryPaths, string $directoryName) {
+		public function DirectoryFoundAt(array $directoryPaths, string $directoryName) {
 			$result = false;
 			foreach ($directoryPaths as $index => $value) {
 				if (strcmp(substr($value, strrpos($value, "/") + 1), $directoryName) == 0) {
@@ -190,7 +190,7 @@
 			$platform = new wand\Platform();
 			$directory = new wand\Directory();
 
-			echo "use parametermetric\home\well\heap as wand;<br>\$platform = new wand\Platform();<br>\$directory = new wand\Directory()<br><br>";
+			echo "use parametermetric\home\well\heap as wand;<br>\$platform = new wand\Platform();<br>\$directory = new wand\Directory();<br><br>";
 
 			echo "\$platform->RequireonceDirectory(\"home/margosa/now\");";
 			if ($platform->RequireonceDirectory("home/margosa/now")) {

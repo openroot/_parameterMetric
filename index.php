@@ -15,6 +15,11 @@
 	//new parametermetric\home\well\heap\Specimen();
 
 	// A demonstration of code convention used in this project in generic format.
+	if ($platform->RequireonceFile("home/well", "file.php")) {
+		new parametermetric\home\well\file\Specimen();
+	}
+
+	// A demonstration of code convention used in this project in generic format.
 	/*if ($platform->RequireonceDirectory("home/margosa/now")) {
 		new parametermetric\home\margosa\now\flower\Specimen();
 	}*/
