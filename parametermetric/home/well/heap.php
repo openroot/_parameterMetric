@@ -183,8 +183,11 @@
 			return false;
 		}
 	}
+?>
 
+<?php
 	use parametermetric\home\well\heap as heap;
+
 	class Specimen {
 		public function __construct() {
 			echo "use parametermetric\home\well\heap as heap;<br>\$platform = new heap\Platform();<br>\$directory = new heap\Directory();<br><br>";
