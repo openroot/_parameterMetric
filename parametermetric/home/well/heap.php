@@ -3,11 +3,13 @@
 
 	class Platform {
 		protected Directory $directory;
+		protected File $file;
 
 		public function __construct() {
 			try {
 				$this->directory = new Directory();
-				if (!($this->directory && $this->RequireonceDirectory("home/well"))) {
+				$this->file = new File();
+				if (!($this->directory && $this->file && $this->RequireonceDirectory("home/well"))) {
 					die("ParameterMetric execution interrupted. Possibly it gets fixed on refresh.");
 				}
 			}
@@ -16,7 +18,7 @@
 
 		public function RequireonceDirectory(string $directoryPath) {
 			$scripts = array();
-			foreach ($this->directory->FileListRefresh($directoryPath) as $index => $value) {
+			foreach ($this->file->FileListRefresh($directoryPath) as $index => $value) {
 				$fileFullPath = $this->directory->DirectoryPathTop() . "/{$directoryPath}/{$value}";
 				if (!$this->CurrentScript($fileFullPath)) {
 					array_push($scripts, $fileFullPath);
@@ -92,19 +94,6 @@
 			array_splice($this->directoryList, 0, count($this->directoryList));
 			$this->DirectoryListScan(empty($directoryPath) ? "" : $directoryPath);
 			return $this->directoryList;
-		}
-
-		public function FileListRefresh(string $directoryPath) {
-			$filteredList = array();
-			$directoryFinePathAs = $this->DirectoryFinePathAs($directoryPath);
-			if (is_dir($directoryFinePathAs)) {
-				foreach (scandir($directoryFinePathAs) as $index => $value) {
-					if (!($value == "." || $value == "..") && is_file("{$directoryFinePathAs}/{$value}")) {
-						array_push($filteredList, $value);
-					}
-				}
-			}
-			return $filteredList;
 		}
 
 		public function MakeDirectory(string $directoryPath) {
@@ -183,6 +172,27 @@
 			return false;
 		}
 	}
+
+	class File {
+		private Directory $directory;
+
+		public function __construct() {
+			$this->directory = new Directory();
+		}
+
+		public function FileListRefresh(string $directoryPath) {
+			$filteredList = array();
+			$directoryFinePathAs = $this->directory->DirectoryFinePathAs($directoryPath);
+			if (is_dir($directoryFinePathAs)) {
+				foreach (scandir($directoryFinePathAs) as $index => $value) {
+					if (!($value == "." || $value == "..") && is_file("{$directoryFinePathAs}/{$value}")) {
+						array_push($filteredList, $value);
+					}
+				}
+			}
+			return $filteredList;
+		}
+	}
 ?>
 
 <?php
@@ -190,9 +200,10 @@
 
 	class Specimen {
 		public function __construct() {
-			echo "use parametermetric\home\well\heap as heap;<br>\$platform = new heap\Platform();<br>\$directory = new heap\Directory();<br><br>";
+			echo "use parametermetric\home\well\heap as heap;<br>\$platform = new heap\Platform();<br>\$directory = new heap\Directory();<br>\$file = new heap\File();<br><br>";
 			$platform = new heap\Platform();
 			$directory = new heap\Directory();
+			$file = new heap\File();
 
 			echo "\$platform->RequireonceDirectory(\"home/margosa/now\");";
 			if ($platform->RequireonceDirectory("home/margosa/now")) {
@@ -209,8 +220,6 @@
 			echo "<pre>"; print_r($directory->DirectoryListRefresh("home/margosa")); echo "</pre>";
 			echo "\$directory->DirectoryListRecent();";
 			echo "<pre>"; print_r($directory->DirectoryListRecent()); echo "</pre>";
-			echo "\$directory->FileListRefresh(\"home/margosa/now\");";
-			echo "<pre>"; print_r($directory->FileListRefresh("home/margosa/now")); echo "</pre>";
 
 			echo "\$directory->MakeDirectory(\"home/margosa/spin/algebrafate/Delete\");";
 			echo "<pre>"; echo $directory->MakeDirectory("home/margosa/spin/algebrafate/Delete") ? "Directory made." : "Directory not made or already exists."; echo "</pre>";
@@ -219,6 +228,9 @@
 			
 			echo "\$directory->DirectoryListRefresh();";
 			echo "<pre>"; print_r($directory->DirectoryListRefresh()); echo "</pre>";
+
+			echo "\$file->FileListRefresh(\"home/margosa/now\");";
+			echo "<pre>"; print_r($file->FileListRefresh("home/margosa/now")); echo "</pre>";
 		}
 	}
 ?>
