@@ -4,10 +4,13 @@
 ?>
 
 <?php
+	use parametermetric\home\well\heap as heap;
+
 	class File {
-		private $directory;
+		private heap\Directory $directory;
+
 		public function __construct() {
-			$this->directory = new \parametermetric\home\well\heap\Directory();
+			$this->directory = new heap\Directory();
 		}
 
 		public function FileListRefresh(string $directoryPath) {
