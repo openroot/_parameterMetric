@@ -7,14 +7,14 @@
 		public function __construct() {
 			try {
 				$this->directory = new Directory();
-				if (!($this->directory && $this->RequireOnceDirectory("home/well"))) {
+				if (!($this->directory && $this->RequireonceDirectory("home/well"))) {
 					die("ParameterMetric execution interrupted. Possibly it gets fixed on refresh.");
 				}
 			}
 			catch (Exception $exception) { }
 		}
 
-		public function RequireOnceDirectory(string $directoryPath) {
+		public function RequireonceDirectory(string $directoryPath) {
 			$scripts = array();
 			foreach ($this->directory->FileListRefresh($directoryPath) as $index => $value) {
 				$fileFullPath = $this->directory->DirectoryPathTop() . "/{$directoryPath}/{$value}";
@@ -37,12 +37,12 @@
 			return $scriptsCount == $successCount ? true : false;
 		}
 
-		public function RequireOnceDirectoryArray(array $directoryPaths) {
+		public function RequireonceDirectoryArray(array $directoryPaths) {
 			// TODO: This function is not verified yet, verify after real implementation.
 			$result = true;
 			if (count($directoryPaths) > 0) {
 				foreach($directoryPaths as $index => $value) {
-					if (!$this->RequireOnceDirectory($value)) {
+					if (!$this->RequireonceDirectory($value)) {
 						$result = false;
 						break;
 					}
@@ -54,7 +54,7 @@
 			return $result;
 		}
 
-		public function RequireOnceFile(string $directoryPath, string $fileName) {
+		public function RequireonceFile(string $directoryPath, string $fileName) {
 			$fileFullPath = $this->directory->DirectoryPathTop() . "/{$directoryPath}/{$fileName}";
 			if (!$this->CurrentScript($fileFullPath)) {
 				if (is_file($fileFullPath)) {
@@ -190,13 +190,13 @@
 
 			echo "use parametermetric\home\well\heap as wand;<br>\$platform = new wand\Platform();<br>\$directory = new wand\Directory()<br><br>";
 
-			echo "\$platform->RequireOnceDirectory(\"home/margosa/now\");";
-			if ($platform->RequireOnceDirectory("home/margosa/now")) {
-				echo "<pre>RequireOnceDirectory, successfull.</pre>";
+			echo "\$platform->RequireonceDirectory(\"home/margosa/now\");";
+			if ($platform->RequireonceDirectory("home/margosa/now")) {
+				echo "<pre>RequireonceDirectory, successfull.</pre>";
 			}
-			echo "\$platform->RequireOnceFile(\"\", \"water.php\");";
-			if ($platform->RequireOnceFile("", "water.php")) {
-				echo "<pre>RequireOnceFile, successfull.</pre>";
+			echo "\$platform->RequireonceFile(\"\", \"water.php\");";
+			if ($platform->RequireonceFile("", "water.php")) {
+				echo "<pre>RequireonceFile, successfull.</pre>";
 			}
 
 			echo "\$directory->DirectoryListRecent();";
