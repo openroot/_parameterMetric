@@ -97,8 +97,11 @@
 			$this->friend = $friend != null ? $friend : $this;
 		}
 	}
+?>
 
+<?php
 	use parametermetric\home\margosa\now\flower as tattooartist;
+
 	class Specimen {
 		public function __construct() {
 			$iKnow = new tattooartist\Friend(
