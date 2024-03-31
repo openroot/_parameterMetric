@@ -187,10 +187,9 @@
 	use parametermetric\home\well\heap as heap;
 	class Specimen {
 		public function __construct() {
+			echo "use parametermetric\home\well\heap as heap;<br>\$platform = new heap\Platform();<br>\$directory = new heap\Directory();<br><br>";
 			$platform = new heap\Platform();
 			$directory = new heap\Directory();
-
-			echo "use parametermetric\home\well\heap as heap;<br>\$platform = new heap\Platform();<br>\$directory = new heap\Directory();<br><br>";
 
 			echo "\$platform->RequireonceDirectory(\"home/margosa/now\");";
 			if ($platform->RequireonceDirectory("home/margosa/now")) {
