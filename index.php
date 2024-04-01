@@ -62,8 +62,8 @@
 	$launch = new Launch();
 	//$launch->Skeleton("margosa");
 	//$launch->Skeleton("heap");
-	$launch->Skeleton("joint");
-	$launch->Skeleton("joins");
+	//$launch->Skeleton("joint");
+	//$launch->Skeleton("joins");
 ?>
 
 <?php

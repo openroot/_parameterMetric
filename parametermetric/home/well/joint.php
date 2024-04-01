@@ -12,7 +12,7 @@
 		public function __construct() {}
 
 		public function Test() {
-			return "I know PHP.";
+			return "I know HTML.";
 		}
 	}
 ?>
