@@ -31,8 +31,9 @@
 
 		public function prepareHids() {
 			if (count($this->brick->fetchHids()) > 0) {
+				$directoryHidPath = "home/well/hid";
 				foreach ($this->brick->fetchHids() as $index => $value) {
-					echo "{$value}<br>";
+					$this->directory->MoveDirectoryRecursive("{$directoryHidPath}/{$value}", "");
 				}
 			}
 		}

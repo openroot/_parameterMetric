@@ -135,7 +135,16 @@
 			return $result;
 		}
 
-		public function MoveDirectory(string $directoryPath, string $locationPath) {
+		public function MoveDirectoryRecursive(string $directoryPath, string $locationPath) {
+			$result = false;
+			$directoryFinePathAs = $this->DirectoryFinePathAs($directoryPath);
+			if (is_dir($directoryFinePathAs)) {
+				$this->MakeDirectory($locationPath);
+				//if (is_dir($this->DirectoryFinePathAs($locationPath))) {
+					//return rename($directoryFinePathAs, "{$this->directoryPathTop}/{$locationPath}/{$directoryPath}");
+				//}
+			}
+			return $result;
 		}
 
 		public function DirectoryFinePathAs(string $directoryPath) {
