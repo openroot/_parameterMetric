@@ -8,16 +8,22 @@
 <?php
 	class Brick {
 		private array $flats;
+		private array $hids;
 
 		public function __construct() {
 			$this->figureFlats();
+			$this->figureHids();
 		}
 
 		public function fetchFlats() {
 			return $this->flats;
 		}
 
-		private function figureFlats() {
+		public function fetchHids() {
+			return $this->hids;
+		}
+
+		protected function figureFlats() {
 			$this->flats = array(
 				"home/margosa",
 				"home/margosa/now",
@@ -52,6 +58,12 @@
 				"home/machine/specimen",
 				"home/machine/dice",
 				"home/machine/switch"
+			);
+		}
+
+		protected function figureHids() {
+			$this->hids = array(
+				"home"
 			);
 		}
 	}
