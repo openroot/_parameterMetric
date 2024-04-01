@@ -8,13 +8,9 @@
 <?php
 	class Brick {
 		private array $flats;
-		private array $touches;
-		private array $pites;
 
 		public function __construct() {
 			$this->figureFlats();
-			$this->figureTouches();
-			$this->figurePites();
 		}
 
 		public function fetchFlats() {
@@ -58,10 +54,6 @@
 				"home/machine/switch"
 			);
 		}
-
-		private function figureTouches() {}
-
-		private function figurePites() {}
 	}
 ?>
 
