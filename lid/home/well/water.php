@@ -23,6 +23,14 @@
 
 		private function figureFlats() {
 			$this->flats = array(
+				"home/margosa",
+				"home/margosa/now",
+				"home/margosa/data",
+				"home/margosa/branch",
+				"home/margosa/spin",
+				"home/margosa/spin/algebrafate",
+				"home/margosa/spin/algebrafate/recyclebin",
+				"home/margosa/spin/exist",
 				"home/analyze",
 				"home/analyze/essay",
 				"home/analyze/essay/ignore",
