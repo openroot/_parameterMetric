@@ -14,13 +14,17 @@
 
 		public function __construct() {
 			try {
+				$success = false;
 				$this->directory = new Directory();
 				$this->file = new File();
-				if (!($this->directory && $this->file && $this->RequireonceDirectory("home/well"))) {
-					die("ParameterMetric execution interrupted. Possibly it gets fixed on refresh.");
-				}
-				else {
+				if ($this->directory && $this->file && $this->RequireonceDirectory("home/well")) {
 					$this->pull = new pull\Pull();
+					if ($this->pull) {
+						$success = true;
+					}
+				}
+				if (!$success) {
+					die("ParameterMetric execution interrupted. Possibly it gets fixed on refresh.");
 				}
 			}
 			catch (\Exception $exception) {}

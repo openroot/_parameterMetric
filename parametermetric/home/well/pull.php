@@ -20,7 +20,7 @@
 		}
 
 		public function Test() {
-			echo "I'm in Pull'.";
+			//echo "I'm in Pull.";
 		}
 	}
 ?>
