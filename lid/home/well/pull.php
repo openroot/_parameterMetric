@@ -12,10 +12,13 @@
 
 		public function __construct() {
 			$this->brick = new lidwater\Brick();
+			$this->prepareFlats();
 		}
 
 		public function prepareFlats() {
-
+			foreach ($this->brick->fetchFlats() as $index => $value) {
+				echo "{$value}<br>";
+			}
 		}
 	}
 ?>

@@ -17,6 +17,10 @@
 			$this->figurePites();
 		}
 
+		public function fetchFlats() {
+			return $this->flats;
+		}
+
 		private function figureFlats() {
 			$this->flats = array(
 				"home/analyze",
