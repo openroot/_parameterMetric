@@ -14,11 +14,11 @@
 			$this->platform = new heap\Platform();
 
 			if ($blockName != null) {
-				$this->Execute($blockName);
+				$this->Skeleton($blockName);
 			}
 		}
 
-		public function Execute(string $blockName) {
+		public function Skeleton(string $blockName) {
 			if ($this->platform) {
 				// Following cases to view to demonstrate of code-in-action in front-end as defined in respective.
 				switch ($blockName) {
@@ -60,9 +60,10 @@
 
 <?php
 	$launch = new Launch();
-	//$launch->Execute("heap");
-	//$launch->Execute("joint");
-	$launch->Execute("joins");
+	$launch->Skeleton("margosa");
+	$launch->Skeleton("heap");
+	$launch->Skeleton("joint");
+	$launch->Skeleton("joins");
 ?>
 
 <?php
