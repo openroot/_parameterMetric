@@ -59,10 +59,10 @@
 ?>
 
 <?php
-	$launch = new Launch("margosa");
-	//$launch->Execute("joint");
-	//$launch->Execute("joins");
+	$launch = new Launch();
 	//$launch->Execute("heap");
+	//$launch->Execute("joint");
+	$launch->Execute("joins");
 ?>
 
 <?php
