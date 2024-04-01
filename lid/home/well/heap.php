@@ -136,6 +136,9 @@
 			return $result;
 		}
 
+		public function MoveDirectory(string $directoryPath, string $locationPath) {
+		}
+
 		public function DirectoryFinePathAs(string $directoryPath) {
 			return "{$this->directoryPathTop}/{$directoryPath}";
 		}
