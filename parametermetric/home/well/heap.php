@@ -197,14 +197,6 @@
 			return $filteredList;
 		}
 	}
-
-	class Pull {
-
-	}
-
-	class Push {
-
-	}
 ?>
 
 <?php
