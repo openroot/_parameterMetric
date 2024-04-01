@@ -13,7 +13,7 @@
 
 <?php
 	class Joins extends joint\Joint {
-		public function __construct() { }
+		public function __construct() {}
 
 		public function Test() {
 			return parent::Test() . " PHP gets used with, HTML I know too.";

@@ -18,7 +18,7 @@
 					die("ParameterMetric execution interrupted. Possibly it gets fixed on refresh.");
 				}
 			}
-			catch (Exception $exception) { }
+			catch (Exception $exception) {}
 		}
 
 		public function RequireonceDirectory(string $directoryPath) {
