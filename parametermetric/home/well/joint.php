@@ -9,13 +9,7 @@
 
 <?php
 	class Joint {
-		protected heap\Directory $directory;
-		protected heap\File $file;
-
-		public function __construct() {
-			$this->directory = new heap\Directory();
-			$this->file = new heap\File();
-		}
+		public function __construct() {}
 
 		public function Test() {
 			return "I know PHP.";
