@@ -213,8 +213,8 @@
 			if ($platform->RequireonceDirectory("home/margosa/now")) {
 				echo "<pre>RequireonceDirectory, successfull.</pre>";
 			}
-			echo "\$platform->RequireonceFile(\"\", \"water.php\");";
-			if ($platform->RequireonceFile("", "water.php")) {
+			echo "\$platform->RequireonceFile(\"home/well\", \"water.php\");";
+			if ($platform->RequireonceFile("home/well", "water.php")) {
 				echo "<pre>RequireonceFile, successfull.</pre>";
 			}
 
