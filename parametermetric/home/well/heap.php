@@ -3,6 +3,9 @@
 ?>
 
 <?php
+?>
+
+<?php
 	class Platform {
 		protected Directory $directory;
 		protected File $file;

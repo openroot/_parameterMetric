@@ -1,6 +1,11 @@
 <?php
 	namespace parametermetric\home\margosa\now\flower;
+?>
 
+<?php
+?>
+
+<?php
 	class Me extends Friend {
 		protected string $baseId = "";
 		protected string $recognize = "Lorem Ipsum";
