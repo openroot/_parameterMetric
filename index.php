@@ -29,18 +29,18 @@
 							new parametermetric\home\well\heap\Specimen();
 						}
 						break;
-					case "joint":
-						// A demonstration of: namespace 'parametermetric\home\well\joint'.
-						if ($this->platform->RequireonceFile("home/well", "joint.php")) {
-							echo "<h3>new parametermetric\home\well\joint\Specimen();</h3>";
-							new parametermetric\home\well\joint\Specimen();
-						}
-						break;
 					case "joins":
 						// A demonstration of: namespace 'parametermetric\home\well\joins'.
 						if ($this->platform->RequireonceFile("home/well", "joins.php")) {
 							echo "<h3>new parametermetric\home\well\joins\Specimen();</h3>";
 							new parametermetric\home\well\joins\Specimen();
+						}
+						break;
+					case "joint":
+						// A demonstration of: namespace 'parametermetric\home\well\joint'.
+						if ($this->platform->RequireonceFile("home/well", "joint.php")) {
+							echo "<h3>new parametermetric\home\well\joint\Specimen();</h3>";
+							new parametermetric\home\well\joint\Specimen();
 						}
 						break;
 					case "margosa":
@@ -62,8 +62,8 @@
 	$launch = new Launch();
 	//$launch->Skeleton("margosa");
 	//$launch->Skeleton("heap");
-	//$launch->Skeleton("joint");
 	//$launch->Skeleton("joins");
+	//$launch->Skeleton("joint");
 ?>
 
 <?php
