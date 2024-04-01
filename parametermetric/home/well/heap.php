@@ -197,6 +197,10 @@
 			return $filteredList;
 		}
 	}
+
+	class Pull {
+
+	}
 ?>
 
 <?php
