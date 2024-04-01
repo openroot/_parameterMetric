@@ -3,6 +3,7 @@
 ?>
 
 <?php
+	use lid\home\well\heap as lidheap;
 	use lid\home\well\water as lidwater;
 ?>
 
@@ -16,8 +17,13 @@
 		}
 
 		public function prepareFlats() {
-			foreach ($this->brick->fetchFlats() as $index => $value) {
-				echo "{$value}<br>";
+			if (count($this->brick->fetchFlats()) > 0) {
+				$directory = new lidheap\Directory();
+				if ($directory) {
+					foreach ($this->brick->fetchFlats() as $index => $value) {
+						$directory->MakeDirectory($value);
+					}
+				}
 			}
 		}
 	}

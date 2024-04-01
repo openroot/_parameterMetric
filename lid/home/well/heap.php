@@ -235,8 +235,8 @@
 			echo "\$directory->DirectoryListRecent();";
 			echo "<pre>"; print_r($directory->DirectoryListRecent()); echo "</pre>";
 
-			echo "\$directory->MakeDirectory(\"home/margosa/spin/algebrafate/Delete\");";
-			echo "<pre>"; echo $directory->MakeDirectory("home/margosa/spin/algebrafate/Delete") ? "Directory made." : "Directory not made or already exists."; echo "</pre>";
+			echo "\$directory->MakeDirectory(\"home/margosa/spin/algebrafate/ARandomDirectory\");";
+			echo "<pre>"; echo $directory->MakeDirectory("home/margosa/spin/algebrafate/ARandomDirectory") ? "Directory made." : "Directory not made or already exists."; echo "</pre>";
 			echo "\$directory->DeleteDirectory(\"home/margosa/spin/algebrafate/ARandomDirectory\");";
 			echo "<pre>"; echo $directory->DeleteDirectory("home/margosa/spin/algebrafate/ARandomDirectory") ? "Directory deleted." : "Directory not deleted or not exists."; echo "</pre>";
 			
