@@ -126,10 +126,9 @@
 				$directoryOriginalName = substr($directoryFinePathAs, strrpos($directoryFinePathAs, "/") + 1);
 				if ($this->DirectoryFoundAt($this->DirectoryListRefresh($this->DirectoryUnfinedPathAs($directoryParentName)), $directoryOriginalName)) {
 					$directoryRecyclebinPath = "home/margosa/spin/algebrafate/recyclebin";
-					if ($this->MakeDirectory($directoryRecyclebinPath)) {
-						if (is_dir($this->DirectoryFinePathAs($directoryRecyclebinPath))) {
-							return rename($directoryFinePathAs, "{$this->directoryPathTop}/{$directoryRecyclebinPath}/{$directoryOriginalName}" . $this->CurrentTimePlatformSafe());
-						}
+					$this->MakeDirectory($directoryRecyclebinPath);
+					if (is_dir($this->DirectoryFinePathAs($directoryRecyclebinPath))) {
+						return rename($directoryFinePathAs, "{$this->directoryPathTop}/{$directoryRecyclebinPath}/{$directoryOriginalName}" . $this->CurrentTimePlatformSafe());
 					}
 				}
 			}
@@ -242,6 +241,9 @@
 			echo "<pre>"; echo $directory->MakeDirectory("home/margosa/spin/algebrafate/ARandomDirectory") ? "Directory made." : "Directory not made or already exists."; echo "</pre>";
 			echo "\$directory->DeleteDirectory(\"home/margosa/spin/algebrafate/ARandomDirectory\");";
 			echo "<pre>"; echo $directory->DeleteDirectory("home/margosa/spin/algebrafate/ARandomDirectory") ? "Directory deleted." : "Directory not deleted or not exists."; echo "</pre>";
+
+			echo "<pre>"; echo $directory->DeleteDirectory("home/analyze") ? "Directory deleted." : "Directory not deleted or not exists."; echo "</pre>";
+			echo "<pre>"; echo $directory->DeleteDirectory("home/machine") ? "Directory deleted." : "Directory not deleted or not exists."; echo "</pre>";
 			
 			echo "\$directory->DirectoryListRefresh();";
 			echo "<pre>"; print_r($directory->DirectoryListRefresh()); echo "</pre>";
