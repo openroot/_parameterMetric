@@ -201,6 +201,10 @@
 	class Pull {
 
 	}
+
+	class Push {
+
+	}
 ?>
 
 <?php
