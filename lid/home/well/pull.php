@@ -10,19 +10,29 @@
 <?php
 	class Pull {
 		private lidwater\Brick $brick;
+		private lidheap\Directory $directory;
 
 		public function __construct() {
 			$this->brick = new lidwater\Brick();
-			$this->prepareFlats();
+			$this->directory = new lidheap\Directory();
+			if ($this->brick && $this->directory) {
+				$this->prepareFlats();
+				$this->prepareHids();
+			}
 		}
 
 		public function prepareFlats() {
 			if (count($this->brick->fetchFlats()) > 0) {
-				$directory = new lidheap\Directory();
-				if ($directory) {
-					foreach ($this->brick->fetchFlats() as $index => $value) {
-						$directory->MakeDirectory($value);
-					}
+				foreach ($this->brick->fetchFlats() as $index => $value) {
+					$this->directory->MakeDirectory($value);
+				}
+			}
+		}
+
+		public function prepareHids() {
+			if (count($this->brick->fetchHids()) > 0) {
+				foreach ($this->brick->fetchHids() as $index => $value) {
+					echo "{$value}<br>";
 				}
 			}
 		}
