@@ -21,7 +21,7 @@
 			$this->flats = array(
 				"home/analyze",
 				"home/analyze/essay",
-				"home/analyze/essay/ignore",
+				/*"home/analyze/essay/ignore",
 				"home/analyze/essay/spell",
 				"home/analyze/essay/spell/power",
 				"home/analyze/essay/restore",
@@ -43,7 +43,7 @@
 				"home/machine/calculator",
 				"home/machine/specimen",
 				"home/machine/dice",
-				"home/machine/switch"
+				"home/machine/switch"*/
 			);
 		}
 
