@@ -1,5 +1,5 @@
 <?php
-	namespace parametermetric\home\margosa\now\flower;
+	namespace lid\home\margosa\now\flower;
 ?>
 
 <?php
@@ -105,7 +105,7 @@
 ?>
 
 <?php
-	use parametermetric\home\margosa\now\flower as tattooartist;
+	use lid\home\margosa\now\flower as tattooartist;
 
 	class Specimen {
 		public function __construct() {

@@ -1,9 +1,9 @@
 <?php
-	namespace parametermetric\home\well\heap;
+	namespace lid\home\well\heap;
 ?>
 
 <?php
-	use parametermetric\home\well\pull as pull;
+	use lid\home\well\pull as pull;
 ?>
 
 <?php
@@ -24,7 +24,7 @@
 					}
 				}
 				if (!$success) {
-					die("ParameterMetric execution interrupted. Possibly it gets fixed on refresh.");
+					die("Execution interrupted. Possibly it gets fixed on refresh.");
 				}
 			}
 			catch (\Exception $exception) {}
@@ -90,9 +90,10 @@
 	class Directory {
 		protected string $directoryPathTop = "";
 		protected array $directoryList = array();
+		private string $directoryPathTopDefault = "./lid";
 
 		public function __construct(?string $directoryPathTop = null) {
-			$this->directoryPathTop = empty($directoryPathTop) ? "./parametermetric" : $directoryPathTop;
+			$this->directoryPathTop = empty($directoryPathTop) ? $this->directoryPathTopDefault : $directoryPathTop;
 		}
 
 		public function DirectoryPathTop() {
@@ -209,11 +210,11 @@
 ?>
 
 <?php
-	use parametermetric\home\well\heap as heap;
+	use lid\home\well\heap as heap;
 
 	class Specimen {
 		public function __construct() {
-			echo "use parametermetric\home\well\heap as heap;<br>\$platform = new heap\Platform();<br>\$directory = new heap\Directory();<br>\$file = new heap\File();<br><br>";
+			echo "use lid\home\well\heap as heap;<br>\$platform = new heap\Platform();<br>\$directory = new heap\Directory();<br>\$file = new heap\File();<br><br>";
 			$platform = new heap\Platform();
 			$directory = new heap\Directory();
 			$file = new heap\File();

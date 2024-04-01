@@ -1,9 +1,9 @@
 <?php
-	namespace parametermetric\home\well\joins;
+	namespace lid\home\well\joins;
 ?>
 
 <?php
-	use parametermetric\home\well\heap as heap;
+	use lid\home\well\heap as heap;
 ?>
 
 <?php
@@ -17,11 +17,11 @@
 ?>
 
 <?php
-	use parametermetric\home\well\joins as season;
+	use lid\home\well\joins as season;
 
 	class Specimen {
 		public function __construct() {
-			echo "use parametermetric\home\well\joins as season;<br>\$joins = new season\Joins();<br><br>";
+			echo "use lid\home\well\joins as season;<br>\$joins = new season\Joins();<br><br>";
 			$joins = new season\Joins();
 
 			echo "\$joins->Test();";

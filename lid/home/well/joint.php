@@ -1,9 +1,9 @@
 <?php
-	namespace parametermetric\home\well\joint;
+	namespace lid\home\well\joint;
 ?>
 
 <?php
-	use parametermetric\home\well\heap as heap;
+	use lid\home\well\heap as heap;
 ?>
 
 <?php
@@ -17,11 +17,11 @@
 ?>
 
 <?php
-	use parametermetric\home\well\joint as reason;
+	use lid\home\well\joint as reason;
 
 	class Specimen {
 		public function __construct() {
-			echo "use parametermetric\home\well\joint as reason;<br>\$joint = new reason\Joint();<br><br>";
+			echo "use lid\home\well\joint as reason;<br>\$joint = new reason\Joint();<br><br>";
 			$joint = new reason\Joint();
 
 			echo "\$joint->Test();";

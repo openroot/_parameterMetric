@@ -1,9 +1,9 @@
 <?php
-	namespace parametermetric\home\well\pull;
+	namespace lid\home\well\pull;
 ?>
 
 <?php
-	use parametermetric\home\well\heap as heap;
+	use lid\home\well\heap as heap;
 ?>
 
 <?php
@@ -20,7 +20,7 @@
 ?>
 
 <?php
-	use parametermetric\home\well\pull as ping;
+	use lid\home\well\pull as ping;
 
 	class Specimen {
 		public function __construct() {}
