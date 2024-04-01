@@ -3,7 +3,6 @@
 ?>
 
 <?php
-	use lid\home\well\heap as lidheap;
 ?>
 
 <?php
