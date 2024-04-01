@@ -79,7 +79,6 @@
 
 		public function __construct(?string $directoryPathTop = null) {
 			$this->directoryPathTop = empty($directoryPathTop) ? "./parametermetric" : $directoryPathTop;
-			$this->DirectoryListRefresh();
 		}
 
 		public function DirectoryPathTop() {
