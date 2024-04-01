@@ -1,6 +1,5 @@
 <?php
 	namespace parametermetric\home\well\joint;
-	require_once("parametermetric/home/well/heap.php");
 ?>
 
 <?php

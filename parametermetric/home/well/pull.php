@@ -1,6 +1,5 @@
 <?php
 	namespace parametermetric\home\well\pull;
-	require_once("parametermetric/home/well/heap.php");
 ?>
 
 <?php
@@ -9,18 +8,13 @@
 
 <?php
 	class Pull {
-		protected heap\Directory $directory;
-		protected heap\File $file;
-
 		public function __construct() {
-			$this->directory = new heap\Directory();
-			$this->file = new heap\File();
-
 			$this->Test();
 		}
 
 		public function Test() {
-			//echo "I'm in Pull.";
+			//echo "I'm in Pull.<br>";
+			//echo "<pre>"; print_r((new heap\Directory())->DirectoryListRefresh()); echo "</pre>";
 		}
 	}
 ?>

@@ -1,5 +1,5 @@
 <?php
-	namespace parametermetric\water;
+	namespace parametermetric\home\well\water;
 ?>
 
 <?php
