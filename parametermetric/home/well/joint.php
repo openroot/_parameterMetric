@@ -5,10 +5,12 @@
 
 <?php
 	use parametermetric\home\well\heap as heap;
+?>
 
+<?php
 	class Joint {
-		private heap\Directory $directory;
-		private heap\File $file;
+		protected heap\Directory $directory;
+		protected heap\File $file;
 
 		public function __construct() {
 			$this->directory = new heap\Directory();

@@ -21,6 +21,12 @@
 		new parametermetric\home\well\joint\Specimen();
 	}
 
+	// A demonstration of: namespace 'parametermetric\home\well\joins'.
+	if ($platform->RequireonceFile("home/well", "joins.php")) {
+		echo "<h3>new parametermetric\home\well\joins\Specimen();</h3>";
+		new parametermetric\home\well\joins\Specimen();
+	}
+
 	// A demonstration of: code convention used in this project in generic format.
 	/*if ($platform->RequireonceDirectory("home/margosa/now")) {
 		echo "<h3>new parametermetric\home\margosa\now\\flower\Specimen();</h3>";

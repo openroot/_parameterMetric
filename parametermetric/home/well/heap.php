@@ -1,6 +1,8 @@
 <?php
 	namespace parametermetric\home\well\heap;
+?>
 
+<?php
 	class Platform {
 		protected Directory $directory;
 		protected File $file;
