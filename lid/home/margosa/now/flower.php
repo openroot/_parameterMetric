@@ -105,11 +105,11 @@
 ?>
 
 <?php
-	use lid\home\margosa\now\flower as tattooartist;
+	use lid\home\margosa\now\flower as lidtattooartist;
 
 	class Specimen {
 		public function __construct() {
-			$iKnow = new tattooartist\Friend(
+			$iKnow = new lidtattooartist\Friend(
 				"debcyberboy@gmail.com",
 				"D Tapader",
 				"Aviator Sun-glass",
@@ -120,7 +120,7 @@
 				array("when", "do not")
 			);
 
-			$iKnowAnother = new tattooartist\Friend(
+			$iKnowAnother = new lidtattooartist\Friend(
 				"dev.openroot@live.com",
 				"Debaprasad Tapader",
 				"Higher Education",
@@ -131,7 +131,7 @@
 				array("code", "style")
 			);
 
-			$youThinkI = new tattooartist\Me(
+			$youThinkI = new lidtattooartist\Me(
 				"dev.openroot@gmail.com",
 				"Dev",
 				array("Masala Dosa", "Milk Coffee", "Egg omelette"),

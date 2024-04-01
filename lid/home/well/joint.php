@@ -3,7 +3,7 @@
 ?>
 
 <?php
-	use lid\home\well\heap as heap;
+	use lid\home\well\heap as lidheap;
 ?>
 
 <?php
@@ -17,12 +17,12 @@
 ?>
 
 <?php
-	use lid\home\well\joint as reason;
+	use lid\home\well\joint as lidreason;
 
 	class Specimen {
 		public function __construct() {
-			echo "use lid\home\well\joint as reason;<br>\$joint = new reason\Joint();<br><br>";
-			$joint = new reason\Joint();
+			echo "use lid\home\well\joint as lidreason;<br>\$joint = new lidreason\Joint();<br><br>";
+			$joint = new lidreason\Joint();
 
 			echo "\$joint->Test();";
 			echo "<pre>"; echo $joint->Test(); echo "</pre>";

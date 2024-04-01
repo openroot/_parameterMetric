@@ -3,24 +3,25 @@
 ?>
 
 <?php
-	use lid\home\well\heap as heap;
+	use lid\home\well\water as lidwater;
 ?>
 
 <?php
 	class Pull {
+		private lidwater\Brick $brick;
+
 		public function __construct() {
-			$this->Test();
+			$this->brick = new lidwater\Brick();
 		}
 
-		public function Test() {
-			//echo "I'm in Pull.<br>";
-			//echo "<pre>"; print_r((new heap\Directory())->DirectoryListRefresh()); echo "</pre>";
+		public function prepareFlats() {
+
 		}
 	}
 ?>
 
 <?php
-	use lid\home\well\pull as ping;
+	use lid\home\well\pull as lidping;
 
 	class Specimen {
 		public function __construct() {}

@@ -3,7 +3,7 @@
 ?>
 
 <?php
-	use lid\home\well\heap as heap;
+	use lid\home\well\heap as lidheap;
 ?>
 
 <?php
@@ -17,12 +17,12 @@
 ?>
 
 <?php
-	use lid\home\well\joins as season;
+	use lid\home\well\joins as lidseason;
 
 	class Specimen {
 		public function __construct() {
-			echo "use lid\home\well\joins as season;<br>\$joins = new season\Joins();<br><br>";
-			$joins = new season\Joins();
+			echo "use lid\home\well\joins as lidseason;<br>\$joins = new lidseason\Joins();<br><br>";
+			$joins = new lidseason\Joins();
 
 			echo "\$joins->Test();";
 			echo "<pre>"; echo $joins->Test(); echo "</pre>";

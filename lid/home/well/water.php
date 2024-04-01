@@ -17,7 +17,7 @@
 			$this->figurePites();
 		}
 
-		public function figureFlats() {
+		private function figureFlats() {
 			$this->flats = array(
 				"home/analyze",
 				"home/analyze/essay",
@@ -47,9 +47,9 @@
 			);
 		}
 
-		public function figureTouches() {}
+		private function figureTouches() {}
 
-		public function figurePites() {}
+		private function figurePites() {}
 	}
 ?>
 

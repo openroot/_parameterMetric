@@ -3,15 +3,15 @@
 ?>
 
 <?php
-	use lid\home\well\heap as heap;
+	use lid\home\well\heap as lidheap;
 ?>
 
 <?php
 	class Launch {
-		private heap\Platform $platform;
+		private lidheap\Platform $platform;
 
 		public function __construct(?string $blockName = null) {
-			$this->platform = new heap\Platform();
+			$this->platform = new lidheap\Platform();
 
 			if ($blockName != null) {
 				$this->Skeleton($blockName);
@@ -60,10 +60,10 @@
 
 <?php
 	$launch = new Launch();
-	$launch->Skeleton("margosa");
-	$launch->Skeleton("heap");
-	$launch->Skeleton("joins");
-	$launch->Skeleton("joint");
+	//$launch->Skeleton("margosa");
+	//$launch->Skeleton("heap");
+	//$launch->Skeleton("joins");
+	//$launch->Skeleton("joint");
 ?>
 
 <?php

@@ -3,14 +3,14 @@
 ?>
 
 <?php
-	use lid\home\well\pull as pull;
+	use lid\home\well\pull as lidpull;
 ?>
 
 <?php
 	class Platform {
 		protected Directory $directory;
 		protected File $file;
-		protected pull\Pull $pull;
+		protected lidpull\Pull $pull;
 
 		public function __construct() {
 			try {
@@ -18,7 +18,7 @@
 				$this->directory = new Directory();
 				$this->file = new File();
 				if ($this->directory && $this->file && $this->RequireonceDirectory("home/well")) {
-					$this->pull = new pull\Pull();
+					$this->pull = new lidpull\Pull();
 					if ($this->pull) {
 						$success = true;
 					}
@@ -210,14 +210,14 @@
 ?>
 
 <?php
-	use lid\home\well\heap as heap;
+	use lid\home\well\heap as lidheap;
 
 	class Specimen {
 		public function __construct() {
-			echo "use lid\home\well\heap as heap;<br>\$platform = new heap\Platform();<br>\$directory = new heap\Directory();<br>\$file = new heap\File();<br><br>";
-			$platform = new heap\Platform();
-			$directory = new heap\Directory();
-			$file = new heap\File();
+			echo "use lid\home\well\heap as lidheap;<br>\$platform = new lidheap\Platform();<br>\$directory = new lidheap\Directory();<br>\$file = new lidheap\File();<br><br>";
+			$platform = new lidheap\Platform();
+			$directory = new lidheap\Directory();
+			$file = new lidheap\File();
 
 			echo "\$platform->RequireonceDirectory(\"home/margosa/now\");";
 			if ($platform->RequireonceDirectory("home/margosa/now")) {
