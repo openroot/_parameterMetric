@@ -4,7 +4,8 @@
 ?>
 
 <?php
-	$platform = new \parametermetric\home\well\heap\Platform();
+	use parametermetric\home\well\heap as heap;
+	$platform = new heap\Platform();
 
 	$platform->RequireonceFile("home/well", "joint.php");
 	use parametermetric\home\well\joint as joint;

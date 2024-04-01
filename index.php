@@ -3,9 +3,14 @@
 ?>
 
 <?php
-	$platform = new parametermetric\home\well\heap\Platform();
+	use parametermetric\home\well\heap as heap;
+	$platform = new heap\Platform();
+?>
 
+<?php
+?>
 
+<?php
 	// ------------------------------------------------------------------------------------------------------------
 	// Unblock following if() blocks to view demonstration of code-in-action in front-end or defined in respective.
 
