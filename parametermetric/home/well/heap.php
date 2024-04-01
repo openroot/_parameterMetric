@@ -3,12 +3,14 @@
 ?>
 
 <?php
+	use parametermetric\home\well\pull as pull;
 ?>
 
 <?php
 	class Platform {
 		protected Directory $directory;
 		protected File $file;
+		protected pull\Pull $pull;
 
 		public function __construct() {
 			try {
@@ -17,8 +19,11 @@
 				if (!($this->directory && $this->file && $this->RequireonceDirectory("home/well"))) {
 					die("ParameterMetric execution interrupted. Possibly it gets fixed on refresh.");
 				}
+				else {
+					$this->pull = new pull\Pull();
+				}
 			}
-			catch (Exception $exception) {}
+			catch (\Exception $exception) {}
 		}
 
 		public function RequireonceDirectory(string $directoryPath) {
