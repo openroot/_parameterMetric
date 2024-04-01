@@ -10,10 +10,10 @@
 	// Unblock following if() blocks to view demonstration of code-in-action in front-end or defined in respective.
 
 	// A demonstration of: namespace 'parametermetric\home\well\heap'.
-	if ($platform) {
+	/*if ($platform) {
 		echo "<h3>new parametermetric\home\well\heap\Specimen();</h3>";
 		new parametermetric\home\well\heap\Specimen();
-	}
+	}*/
 
 	// A demonstration of: namespace 'parametermetric\home\well\joint'.
 	if ($platform->RequireonceFile("home/well", "joint.php")) {
@@ -22,10 +22,10 @@
 	}
 
 	// A demonstration of: code convention used in this project in generic format.
-	if ($platform->RequireonceDirectory("home/margosa/now")) {
+	/*if ($platform->RequireonceDirectory("home/margosa/now")) {
 		echo "<h3>new parametermetric\home\margosa\now\\flower\Specimen();</h3>";
 		new parametermetric\home\margosa\now\flower\Specimen();
-	}
+	}*/
 	// ------------------------------------------------------------------------------------------------------------
 
 
