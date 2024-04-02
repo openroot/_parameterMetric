@@ -135,7 +135,7 @@
 			return $result;
 		}
 
-		public function MoveDirectoryRecursive(string $directoryPath, string $locationPath) {
+		public function CopyDirectoryRecursive(string $directoryPath, string $locationPath) {
 			$result = false;
 			$directoryFinePathAs = $this->DirectoryFinePathAs($directoryPath);
 			if (is_dir($directoryFinePathAs)) {
