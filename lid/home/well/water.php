@@ -11,19 +11,19 @@
 		private array $hids;
 
 		public function __construct() {
-			$this->figureFlats();
-			$this->figureHids();
+			$this->FigureFlats();
+			$this->FigureHids();
 		}
 
-		public function fetchFlats() {
+		public function FetchFlats() {
 			return $this->flats;
 		}
 
-		public function fetchHids() {
+		public function FetchHids() {
 			return $this->hids;
 		}
 
-		protected function figureFlats() {
+		protected function FigureFlats() {
 			$this->flats = array(
 				"home/margosa",
 				"home/margosa/now",
@@ -61,7 +61,7 @@
 			);
 		}
 
-		protected function figureHids() {
+		protected function FigureHids() {
 			$this->hids = array(
 				"version1"
 			);

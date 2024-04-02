@@ -207,7 +207,7 @@
 
 		private function CopyDirectory(string $directoryFinePathAs, string $locationFinePathAs, string $copyType) {
 			$result = true;
-			$directoriesandfiles = $this->fetchDirectoriesAndFilesFirstlevel($directoryFinePathAs);
+			$directoriesandfiles = $this->FetchDirectoriesAndFilesFirstlevel($directoryFinePathAs);
 			if (count($directoriesandfiles) == 0) {
 				return;
 			}
@@ -260,7 +260,7 @@
 			return $result;
 		}
 
-		private function fetchDirectoriesAndFilesFirstlevel(string $directoryFinePathAs) {
+		private function FetchDirectoriesAndFilesFirstlevel(string $directoryFinePathAs) {
 			$directoriesandfiles = array();
 			if (!($directoryFinePathAs == "." || $directoryFinePathAs == "..") && is_dir($directoryFinePathAs)) {
 				foreach(scandir($directoryFinePathAs) as $index => $value) {

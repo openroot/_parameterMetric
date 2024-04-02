@@ -16,23 +16,23 @@
 			$this->brick = new lidwater\Brick();
 			$this->directory = new lidheap\Directory();
 			if ($this->brick && $this->directory) {
-				$this->prepareFlats();
-				$this->prepareHids();
+				$this->PrepareFlats();
+				$this->PrepareHids();
 			}
 		}
 
-		public function prepareFlats() {
-			if (count($this->brick->fetchFlats()) > 0) {
-				foreach ($this->brick->fetchFlats() as $index => $value) {
+		public function PrepareFlats() {
+			if (count($this->brick->FetchFlats()) > 0) {
+				foreach ($this->brick->FetchFlats() as $index => $value) {
 					$this->directory->MakeDirectory($value);
 				}
 			}
 		}
 
-		public function prepareHids() {
-			if (count($this->brick->fetchHids()) > 0) {
+		public function PrepareHids() {
+			if (count($this->brick->FetchHids()) > 0) {
 				$directoryHidPath = "home/well/hid";
-				foreach ($this->brick->fetchHids() as $index => $value) {
+				foreach ($this->brick->FetchHids() as $index => $value) {
 					$this->directory->CopyDirectoryLeaveindepth("{$directoryHidPath}/{$value}", "");
 				}
 			}
