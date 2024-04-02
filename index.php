@@ -49,6 +49,11 @@
 						echo "<h5>Namespace: lid\home\well\pull</h5>";
 						new lid\home\well\pull\Specimen();
 						break;
+					case "push":
+						// A demonstration of Namespace: 'lid\home\well\push'.
+						echo "<h5>Namespace: lid\home\well\push</h5>";
+						new lid\home\well\push\Specimen();
+						break;
 					case "water":
 						// A demonstration of Namespace: 'lid\home\well\water'.
 						echo "<h5>Namespace: lid\home\well\water</h5>";
@@ -69,6 +74,7 @@
 	$launch->Skeleton("joins");
 	$launch->Skeleton("joint");
 	$launch->Skeleton("pull");
+	$launch->Skeleton("push");
 	$launch->Skeleton("water");
 ?>
 
