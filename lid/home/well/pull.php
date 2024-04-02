@@ -3,8 +3,8 @@
 ?>
 
 <?php
-	use lid\home\well\heap as lidheap;
 	use lid\home\well\water as lidwater;
+	use lid\home\well\heap as lidheap;
 ?>
 
 <?php
