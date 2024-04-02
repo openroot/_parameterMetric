@@ -179,7 +179,9 @@
 				else {
 					echo "<pre>"; print_r($directoriesandfiles); echo "</pre>";
 					foreach ($directoriesandfiles as $index => $value) {
-						echo $directoryFinePathAs . "<br>";
+						$renameFrom = "{$directoryFinePathAs}/{$value}";
+						$renameTo = "{$locationFinePathAs}/{$value}";
+						echo "{$renameFrom}, {$renameTo}<br><br>";
 						switch ($copyType) {
 							case "leaveindepth":
 								break;
@@ -192,7 +194,9 @@
 							//return rename($directoryFinePathAs, "{$this->directoryPathTop}/{$locationPath}/{$directoryPath}");
 						}
 					}
+					echo "<hr>";
 					foreach ($directoriesandfiles as $index => $value) {
+						$locationFinePathAs .= "/{$value}";
 						$this->CopyDirectory("{$directoryFinePathAs}/{$value}", $locationFinePathAs, $copyType);
 					}
 				}
@@ -201,7 +205,7 @@
 		}
 
 		public function DirectoryFinePathAs(string $directoryPath) {
-			return "{$this->directoryPathTop}/{$directoryPath}";
+			return $directoryPath != "" ? "{$this->directoryPathTop}/{$directoryPath}" : $this->directoryPathTop;
 		}
 
 		public function DirectoryUnfinedPathAs(string $directoryFinePathAs) {

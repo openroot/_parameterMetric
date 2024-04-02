@@ -63,7 +63,7 @@
 
 		protected function figureHids() {
 			$this->hids = array(
-				"home"
+				"version1"
 			);
 		}
 	}
