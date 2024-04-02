@@ -156,14 +156,16 @@
 			$directoryFinePathAs = $this->DirectoryFinePathAs($directoryPath);
 			if (is_dir($directoryFinePathAs)) {
 				$this->MakeDirectory($locationPath);
-				if (is_dir($this->DirectoryFinePathAs($locationPath))) {
-					$this->CopyDirectory($copyType);
+				$locationFinePathAs = $this->DirectoryFinePathAs($locationPath);
+				if (is_dir($locationFinePathAs)) {
+					$result = $this->CopyDirectory($directoryFinePathAs, $locationFinePathAs, $copyType);
 				}
 			}
 			return $result;
 		}
 
-		private function CopyDirectory(string $copyType) {
+		private function CopyDirectory(string $directoryFinePathAs, string $locationFinePathAs, string $copyType) {
+			echo "directoryFinePathAs: {$directoryFinePathAs} <br> locationFinePathAs: {$locationFinePathAs}<br>{$copyType}<br><br>";
 			switch ($copyType) {
 				case "leaveindepth":
 					break;
