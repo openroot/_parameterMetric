@@ -15,11 +15,11 @@
 			$this->FigureHids();
 		}
 
-		public function FetchFlats() {
+		public function ReadFlats() {
 			return $this->flats;
 		}
 
-		public function FetchHids() {
+		public function ReadHids() {
 			return $this->hids;
 		}
 

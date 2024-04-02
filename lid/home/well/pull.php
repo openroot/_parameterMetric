@@ -22,17 +22,17 @@
 		}
 
 		public function PrepareFlats() {
-			if (count($this->brick->FetchFlats()) > 0) {
-				foreach ($this->brick->FetchFlats() as $index => $value) {
+			if (count($this->brick->ReadFlats()) > 0) {
+				foreach ($this->brick->ReadFlats() as $index => $value) {
 					$this->directory->MakeDirectory($value);
 				}
 			}
 		}
 
 		public function PrepareHids() {
-			if (count($this->brick->FetchHids()) > 0) {
+			if (count($this->brick->ReadHids()) > 0) {
 				$directoryHidPath = "home/well/hid";
-				foreach ($this->brick->FetchHids() as $index => $value) {
+				foreach ($this->brick->ReadHids() as $index => $value) {
 					$this->directory->CopyDirectoryLeaveindepth("{$directoryHidPath}/{$value}", "");
 				}
 			}
