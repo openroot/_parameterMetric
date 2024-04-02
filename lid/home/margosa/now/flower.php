@@ -139,8 +139,7 @@
 				$iKnow
 			);
 
-			echo "<h4>Me</h4>";
-
+			echo "<h6>Me</h6>";
 			echo $youThinkI->Know();
 			echo "<br /><br />";
 			echo $youThinkI->Ride($iKnow);
@@ -149,12 +148,9 @@
 			echo "<br /><br />";
 			echo "- regards, " . $youThinkI->Identify() . " [ " . $youThinkI->BaseIdentity() . " ]";
 
-			echo "<h4>Friend</h4>";
-
+			echo "<h6>Friend</h6>";
 			echo $iKnow->Explain();
-
 			echo "<hr />";
-
 			echo $iKnowAnother->Explain();
 		}
 	}

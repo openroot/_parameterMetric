@@ -20,11 +20,10 @@
 
 	class Specimen {
 		public function __construct() {
-			echo "use lid\home\well\joint as lidreason;<br>\$joint = new lidreason\Joint();<br><br>";
 			$joint = new lidreason\Joint();
 
-			echo "\$joint->Test();";
-			echo "<pre>"; echo $joint->Test(); echo "</pre>";
+			echo "<h6>1</h6>";
+			echo $joint->Test();
 		}
 	}
 ?>
