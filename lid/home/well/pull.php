@@ -16,12 +16,12 @@
 			$this->brick = new lidwater\Brick();
 			$this->directory = new lidheap\Directory();
 			if ($this->brick && $this->directory) {
-				$this->PrepareBrickFlats();
-				$this->PrepareBrickHids();
+				$this->TripBrickFlats();
+				$this->TripBrickHids();
 			}
 		}
 
-		public function PrepareBrickFlats() {
+		public function TripBrickFlats() {
 			if (count($this->brick->ReadFlats()) > 0) {
 				foreach ($this->brick->ReadFlats() as $index => $value) {
 					$this->directory->MakeDirectory($value);
@@ -30,7 +30,7 @@
 			return true;
 		}
 
-		public function PrepareBrickHids() {
+		public function TripBrickHids() {
 			if (count($this->brick->ReadHids()) > 0) {
 				foreach ($this->brick->ReadHids() as $index => $value) {
 					$this->directory->CopyDirectoryLeaveindepth($this->brick->ReadHidDirectoryPath() . "/{$value}", "");
@@ -49,10 +49,10 @@
 			$pull = new lidping\Pull();
 
 			echo "<h6>1</h6>";
-			echo $pull->PrepareBrickFlats() ? "Success" : "Unsuccess";
+			echo $pull->TripBrickFlats() ? "Success" : "Unsuccess";
 
 			echo "<h6>2</h6>";
-			echo $pull->PrepareBrickHids() ? "Success" : "Unsuccess";
+			echo $pull->TripBrickHids() ? "Success" : "Unsuccess";
 		}
 	}
 ?>
