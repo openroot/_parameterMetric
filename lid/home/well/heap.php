@@ -175,13 +175,17 @@
 				foreach ($directoriesandfiles as $index => $value) {
 					$renameFrom = "{$directoryFinePathAs}/{$value}";
 					$renameTo = "{$locationFinePathAs}/{$value}";
-					//echo "FROM= {$renameFrom}<br>";
-					//echo "TO= {$renameTo}<br>";
-					//echo "<br>";
+					echo "FROM= {$renameFrom}<br>";
+					echo "TO= {$renameTo}<br>";
+					echo "<br>";
 					switch ($copyType) {
 						case "leaveindepth":
+
+							$this->CopyDirectory("{$directoryFinePathAs}/{$value}", "{$locationFinePathAs}/{$value}", $copyType);
 							break;
 						case "forceindepth":
+
+							$this->CopyDirectory("{$directoryFinePathAs}/{$value}", "{$locationFinePathAs}/{$value}", $copyType);
 							break;
 						case "leaveoutdepth":
 							break;
@@ -189,7 +193,6 @@
 							break;
 						//return rename($directoryFinePathAs, "{$this->directoryPathTop}/{$locationPath}/{$directoryPath}");
 					}
-					$this->CopyDirectory("{$directoryFinePathAs}/{$value}", "{$locationFinePathAs}/{$value}", $copyType);
 				}
 			}
 			return $result;
