@@ -151,6 +151,47 @@
 			return $this->CopyDirectoryGate($directoryPath, $locationPath, "mergeoutdepth");
 		}
 
+		public function DirectoryFinePathAs(string $directoryPath) {
+			return $directoryPath != "" ? "{$this->directoryPathTop}/{$directoryPath}" : $this->directoryPathTop;
+		}
+
+		public function DirectoryUnfinedPathAs(string $directoryFinePathAs) {
+			return strpos($directoryFinePathAs, $this->directoryPathTop) == 0 ? substr($directoryFinePathAs, strlen($this->directoryPathTop) + 1) : false;
+		}
+
+		public function DirectoryFoundAt(array $directoryPaths, string $directoryName) {
+			$result = false;
+			foreach ($directoryPaths as $index => $value) {
+				if (strcmp(substr($value, strrpos($value, "/") + 1), $directoryName) == 0) {
+					if (is_dir($this->DirectoryFinePathAs($value))) {
+						$result = true;
+					}
+				}
+			}
+			return $result;
+		}
+
+		private function DirectoryListScan(string $directoryPath) {
+			foreach ($this->DirectoryListFilter($this->DirectoryFinePathAs($directoryPath)) as $index => $value) {
+				$directoryFound = "{$directoryPath}/{$value}";
+				$directoryFound = strpos($directoryFound, "/") == 0 ? substr($directoryFound, 1) : $directoryFound;
+				array_push($this->directoryList, $directoryFound);
+				$this->DirectoryListScan("{$directoryPath}/{$value}");
+			}
+		}
+
+		private function DirectoryListFilter(string $directoryPath) {
+			$filteredList = array();
+			if (is_dir($directoryPath)) {
+				foreach (scandir($directoryPath) as $index => $value) {
+					if (!($value == "." || $value == "..") && is_dir("{$directoryPath}/{$value}")) {
+						array_push($filteredList, $value);
+					}
+				}
+			}
+			return $filteredList;
+		}
+
 		private function CopyDirectoryGate(string $directoryPath, string $locationPath, string $copyType) {
 			$result = false;
 			$directoryFinePathAs = $this->DirectoryFinePathAs($directoryPath);
@@ -229,47 +270,6 @@
 				}
 			}
 			return $directoriesandfiles;
-		}
-
-		public function DirectoryFinePathAs(string $directoryPath) {
-			return $directoryPath != "" ? "{$this->directoryPathTop}/{$directoryPath}" : $this->directoryPathTop;
-		}
-
-		public function DirectoryUnfinedPathAs(string $directoryFinePathAs) {
-			return strpos($directoryFinePathAs, $this->directoryPathTop) == 0 ? substr($directoryFinePathAs, strlen($this->directoryPathTop) + 1) : false;
-		}
-
-		public function DirectoryFoundAt(array $directoryPaths, string $directoryName) {
-			$result = false;
-			foreach ($directoryPaths as $index => $value) {
-				if (strcmp(substr($value, strrpos($value, "/") + 1), $directoryName) == 0) {
-					if (is_dir($this->DirectoryFinePathAs($value))) {
-						$result = true;
-					}
-				}
-			}
-			return $result;
-		}
-
-		private function DirectoryListScan(string $directoryPath) {
-			foreach ($this->DirectoryListFilter($this->DirectoryFinePathAs($directoryPath)) as $index => $value) {
-				$directoryFound = "{$directoryPath}/{$value}";
-				$directoryFound = strpos($directoryFound, "/") == 0 ? substr($directoryFound, 1) : $directoryFound;
-				array_push($this->directoryList, $directoryFound);
-				$this->DirectoryListScan("{$directoryPath}/{$value}");
-			}
-		}
-
-		private function DirectoryListFilter(string $directoryPath) {
-			$filteredList = array();
-			if (is_dir($directoryPath)) {
-				foreach (scandir($directoryPath) as $index => $value) {
-					if (!($value == "." || $value == "..") && is_dir("{$directoryPath}/{$value}")) {
-						array_push($filteredList, $value);
-					}
-				}
-			}
-			return $filteredList;
 		}
 
 		private function CurrentTimePlatformSafe(?string $timeZone = "UTC") {
