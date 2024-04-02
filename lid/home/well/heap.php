@@ -136,22 +136,22 @@
 		}
 
 		public function CopyDirectoryLeaveindepth(string $directoryPath, string $locationPath) {
-			return $this->CopyDirectoryFilter($directoryPath, $locationPath, "leaveindepth");
+			return $this->CopyDirectoryGate($directoryPath, $locationPath, "leaveindepth");
 		}
 
 		public function CopyDirectoryForceindepth() {
-			return $this->CopyDirectoryFilter($directoryPath, $locationPath, "forceindepth");
+			return $this->CopyDirectoryGate($directoryPath, $locationPath, "forceindepth");
 		}
 
 		public function CopyDirectoryLeaveoutdepth() {
-			return $this->CopyDirectoryFilter($directoryPath, $locationPath, "leaveoutdepth");
+			return $this->CopyDirectoryGate($directoryPath, $locationPath, "leaveoutdepth");
 		}
 
 		public function CopyDirectoryForceoutdepth() {
-			return $this->CopyDirectoryFilter($directoryPath, $locationPath, "forceoutdepth");
+			return $this->CopyDirectoryGate($directoryPath, $locationPath, "forceoutdepth");
 		}
 
-		private function CopyDirectoryFilter(string $directoryPath, string $locationPath, string $copyType) {
+		private function CopyDirectoryGate(string $directoryPath, string $locationPath, string $copyType) {
 			$result = false;
 			$directoryFinePathAs = $this->DirectoryFinePathAs($directoryPath);
 			if (is_dir($directoryFinePathAs)) {
@@ -165,7 +165,30 @@
 		}
 
 		private function CopyDirectory(string $directoryFinePathAs, string $locationFinePathAs, string $copyType) {
-			echo "directoryFinePathAs: {$directoryFinePathAs} <br> locationFinePathAs: {$locationFinePathAs}<br>{$copyType}<br><br>";
+			$result = false;
+			if (!($directoryFinePathAs == "." || $directoryFinePathAs == "..") && is_dir($directoryFinePathAs)) {
+				echo "directoryFinePathAs: {$directoryFinePathAs} <br> locationFinePathAs: {$locationFinePathAs}<br>{$copyType}";
+				$directories = array();
+				foreach(scandir($directoryFinePathAs) as $index => $value) {
+					if (!($value == "." || $value == "..")) {
+						array_push($directories, $value);
+					}
+				}
+				echo "<pre>"; print_r($directories); echo "</pre>";
+				if (count($directories) == 0) {
+					return;
+				}
+				else {
+					foreach ($directories as $index => $value) {
+						$this->CopyDirectory("{$directoryFinePathAs}/{$value}", $locationFinePathAs, $copyType);
+						
+						
+						$result = true;
+					}
+				}
+			}
+
+
 			switch ($copyType) {
 				case "leaveindepth":
 					break;
