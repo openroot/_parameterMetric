@@ -9,10 +9,12 @@
 	class Brick {
 		private array $flats;
 		private array $hids;
+		private string $hidDirectoryPath;
 
 		public function __construct() {
 			$this->CapFlats();
 			$this->CapHids();
+			$this->hidDirectoryPath = "home/well/hid";
 		}
 
 		public function ReadFlats() {
@@ -21,6 +23,10 @@
 
 		public function ReadHids() {
 			return $this->hids;
+		}
+
+		public function ReadHidDirectoryPath() {
+			return $this->hidDirectoryPath;
 		}
 
 		protected function CapFlats() {
@@ -70,5 +76,23 @@
 ?>
 
 <?php
-	/*echo "<pre>water.php: \"Once boil done, at this point, it's executed and data in memory.\"</pre>";*/
+	use lid\home\well\water as lidwater;
+
+	class Specimen {
+		public function __construct() {
+			$brick = new lidwater\Brick();
+
+			echo "<h6>1</h6>";
+			echo "<pre>";
+			print_r($brick->ReadFlats());
+			echo "</pre>";
+
+			echo "<h6>2</h6>";
+			echo "<pre>";
+			print_r($brick->ReadHids());
+			echo "</pre>";
+
+			/*echo "<pre>water.php: \"Once boil done, at this point, it's executed and data in memory.\"</pre>";*/
+		}
+	}
 ?>

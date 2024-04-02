@@ -22,36 +22,40 @@
 			if ($this->platform) {
 				// Following cases to view to demonstrate of code-in-action in front-end as defined in respective.
 				switch ($blockName) {
-					case "heap":
-						// A demonstration of: namespace 'lid\home\well\heap'.
-						if ($this->platform) {
-							echo "<h3>new lid\home\well\heap\Specimen();</h3>";
-							new lid\home\well\heap\Specimen();
-						}
-						break;
-					case "joins":
-						// A demonstration of: namespace 'lid\home\well\joins'.
-						if ($this->platform->RequireonceFile("home/well", "joins.php")) {
-							echo "<h3>new lid\home\well\joins\Specimen();</h3>";
-							new lid\home\well\joins\Specimen();
-						}
-						break;
-					case "joint":
-						// A demonstration of: namespace 'lid\home\well\joint'.
-						if ($this->platform->RequireonceFile("home/well", "joint.php")) {
-							echo "<h3>new lid\home\well\joint\Specimen();</h3>";
-							new lid\home\well\joint\Specimen();
-						}
-						break;
-					case "margosa":
-						// A demonstration of: code convention used in this project in generic format.
+					case "margosanow":
+						// A demonstration of code convention used in this project in generic format.
 						if ($this->platform->RequireonceDirectory("home/margosa/now")) {
-							echo "<h3>new lid\home\margosa\\now\\flower\Specimen();</h3>";
+							echo "<h5>Namespace: lid\home\margosa\\now\\flower</h5>";
 							new lid\home\margosa\now\flower\Specimen();
 						}
 						break;
+					case "heap":
+						// A demonstration of Namespace: 'lid\home\well\heap'.
+						echo "<h5>Namespace: lid\home\well\heap</h5>";
+						new lid\home\well\heap\Specimen();
+						break;
+					case "joins":
+						// A demonstration of Namespace: 'lid\home\well\joins'.
+						echo "<h5>Namespace: lid\home\well\joins</h5>";
+						new lid\home\well\joins\Specimen();
+						break;
+					case "joint":
+						// A demonstration of Namespace: 'lid\home\well\joint'.
+						echo "<h5>Namespace: lid\home\well\joint</h5>";
+						new lid\home\well\joint\Specimen();
+						break;
+					case "pull":
+						// A demonstration of Namespace: 'lid\home\well\pull'.
+						echo "<h5>Namespace: lid\home\well\pull</h5>";
+						new lid\home\well\pull\Specimen();
+						break;
+					case "water":
+						// A demonstration of Namespace: 'lid\home\well\water'.
+						echo "<h5>Namespace: lid\home\well\water</h5>";
+						new lid\home\well\water\Specimen();
+						break;
 					default:
-						echo "This is default case.";
+						echo "This is default case of Class 'Launch'.";
 				}
 			}
 		}
@@ -60,10 +64,12 @@
 
 <?php
 	$launch = new Launch();
-	$launch->Skeleton("margosa");
+	$launch->Skeleton("margosanow");
 	$launch->Skeleton("heap");
 	$launch->Skeleton("joins");
 	$launch->Skeleton("joint");
+	$launch->Skeleton("pull");
+	$launch->Skeleton("water");
 ?>
 
 <?php

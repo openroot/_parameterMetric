@@ -27,15 +27,16 @@
 					$this->directory->MakeDirectory($value);
 				}
 			}
+			return true;
 		}
 
 		public function PrepareHids() {
 			if (count($this->brick->ReadHids()) > 0) {
-				$directoryHidPath = "home/well/hid";
 				foreach ($this->brick->ReadHids() as $index => $value) {
-					$this->directory->CopyDirectoryLeaveindepth("{$directoryHidPath}/{$value}", "");
+					$this->directory->CopyDirectoryLeaveindepth($this->brick->ReadHidDirectoryPath() . "/{$value}", "");
 				}
 			}
+			return true;
 		}
 	}
 ?>
@@ -44,6 +45,14 @@
 	use lid\home\well\pull as lidping;
 
 	class Specimen {
-		public function __construct() {}
+		public function __construct() {
+			$pull = new lidping\Pull();
+
+			echo "<h6>1</h6>";
+			echo $pull->PrepareFlats() ? "Success" : "Unsuccess";
+
+			echo "<h6>2</h6>";
+			echo $pull->PrepareHids() ? "Success" : "Unsuccess";
+		}
 	}
 ?>
