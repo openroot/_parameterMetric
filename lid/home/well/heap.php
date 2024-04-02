@@ -139,16 +139,16 @@
 			return $this->CopyDirectoryGate($directoryPath, $locationPath, "leaveindepth");
 		}
 
-		public function CopyDirectoryForceindepth(string $directoryPath, string $locationPath) {
-			return $this->CopyDirectoryGate($directoryPath, $locationPath, "forceindepth");
+		public function CopyDirectoryMergeindepth(string $directoryPath, string $locationPath) {
+			return $this->CopyDirectoryGate($directoryPath, $locationPath, "mergeindepth");
 		}
 
 		public function CopyDirectoryLeaveoutdepth(string $directoryPath, string $locationPath) {
 			return $this->CopyDirectoryGate($directoryPath, $locationPath, "leaveoutdepth");
 		}
 
-		public function CopyDirectoryForceoutdepth(string $directoryPath, string $locationPath) {
-			return $this->CopyDirectoryGate($directoryPath, $locationPath, "forceoutdepth");
+		public function CopyDirectoryMergeoutdepth(string $directoryPath, string $locationPath) {
+			return $this->CopyDirectoryGate($directoryPath, $locationPath, "mergeoutdepth");
 		}
 
 		private function CopyDirectoryGate(string $directoryPath, string $locationPath, string $copyType) {
@@ -165,33 +165,54 @@
 		}
 
 		private function CopyDirectory(string $directoryFinePathAs, string $locationFinePathAs, string $copyType) {
-			$result = false;
+			$result = true;
 			$directoriesandfiles = $this->fetchDirectoriesAndFilesFirstlevel($directoryFinePathAs);
 			if (count($directoriesandfiles) == 0) {
 				return;
 			}
 			else {
-				//echo "<pre>"; print_r($directoriesandfiles); echo "</pre>";
 				foreach ($directoriesandfiles as $index => $value) {
-					$renameFrom = "{$directoryFinePathAs}/{$value}";
-					$renameTo = "{$locationFinePathAs}/{$value}";
-					echo "FROM= {$renameFrom}<br>";
-					echo "TO= {$renameTo}<br>";
-					echo "<br>";
+					$copySource = "{$directoryFinePathAs}/{$value}";
+					$copyTo = "{$locationFinePathAs}/{$value}";
 					switch ($copyType) {
 						case "leaveindepth":
-
-							$this->CopyDirectory("{$directoryFinePathAs}/{$value}", "{$locationFinePathAs}/{$value}", $copyType);
+							if (!file_exists($copyTo)) {
+								if (is_dir($copySource)) {
+									$result = mkdir($copyTo);
+								}
+								else if (is_file($copySource)) {
+									$result = copy($copySource, $copyTo);
+								}
+							}
+							$result = $this->CopyDirectory("{$directoryFinePathAs}/{$value}", "{$locationFinePathAs}/{$value}", $copyType);
 							break;
-						case "forceindepth":
-
-							$this->CopyDirectory("{$directoryFinePathAs}/{$value}", "{$locationFinePathAs}/{$value}", $copyType);
+						case "mergeindepth":
+							if (is_file($copySource)) {
+								$result = copy($copySource, $copyTo);
+							}
+							else if (is_dir($copySource) && !file_exists($copyTo)) {
+								$result = mkdir($copyTo);
+							}
+							$result = $this->CopyDirectory("{$directoryFinePathAs}/{$value}", "{$locationFinePathAs}/{$value}", $copyType);
 							break;
 						case "leaveoutdepth":
+							if (!file_exists($copyTo)) {
+								if (is_dir($copySource)) {
+									$result = mkdir($copyTo);
+								}
+								else if (is_file($copySource)) {
+									$result = copy($copySource, $copyTo);
+								}
+							}
 							break;
-						case "forceoutdepth":
+						case "mergeoutdepth":
+							if (is_file($copySource)) {
+								$result = copy($copySource, $copyTo);
+							}
+							else if (is_dir($copySource) && !file_exists($copyTo)) {
+								$result = mkdir($copyTo);
+							}
 							break;
-						//return rename($directoryFinePathAs, "{$this->directoryPathTop}/{$locationPath}/{$directoryPath}");
 					}
 				}
 			}
