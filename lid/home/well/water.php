@@ -11,8 +11,8 @@
 		private array $hids;
 
 		public function __construct() {
-			$this->FigureFlats();
-			$this->FigureHids();
+			$this->CapFlats();
+			$this->CapHids();
 		}
 
 		public function ReadFlats() {
@@ -23,7 +23,7 @@
 			return $this->hids;
 		}
 
-		protected function FigureFlats() {
+		protected function CapFlats() {
 			$this->flats = array(
 				"home/margosa",
 				"home/margosa/now",
@@ -61,7 +61,7 @@
 			);
 		}
 
-		protected function FigureHids() {
+		protected function CapHids() {
 			$this->hids = array(
 				"version1"
 			);
