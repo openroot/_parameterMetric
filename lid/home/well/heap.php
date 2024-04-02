@@ -135,14 +135,39 @@
 			return $result;
 		}
 
-		public function CopyDirectoryRecursive(string $directoryPath, string $locationPath) {
+		public function CopyDirectoryLeaveindepth(string $directoryPath, string $locationPath) {
+			return $this->CopyDirectory($directoryPath, $locationPath, "leaveindepth");
+		}
+
+		public function CopyDirectoryForceindepth() {
+			return $this->CopyDirectory($directoryPath, $locationPath, "forceindepth");
+		}
+
+		public function CopyDirectoryLeaveoutdepth() {
+			return $this->CopyDirectory($directoryPath, $locationPath, "leaveoutdepth");
+		}
+
+		public function CopyDirectoryForceoutdepth() {
+			return $this->CopyDirectory($directoryPath, $locationPath, "forceoutdepth");
+		}
+
+		private function CopyDirectory(string $directoryPath, string $locationPath, string $copyType) {
 			$result = false;
 			$directoryFinePathAs = $this->DirectoryFinePathAs($directoryPath);
 			if (is_dir($directoryFinePathAs)) {
 				$this->MakeDirectory($locationPath);
-				//if (is_dir($this->DirectoryFinePathAs($locationPath))) {
+				if (is_dir($this->DirectoryFinePathAs($locationPath))) {
+					switch ($copyType)
+						case "leaveindepth":
+							break;
+						case "forceindepth":
+							break;
+						case "leaveoutdepth":
+							break;
+						case "forceoutdepth":
+							break;
 					//return rename($directoryFinePathAs, "{$this->directoryPathTop}/{$locationPath}/{$directoryPath}");
-				//}
+				}
 			}
 			return $result;
 		}
