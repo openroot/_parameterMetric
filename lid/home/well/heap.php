@@ -157,7 +157,7 @@
 			if (is_dir($directoryFinePathAs)) {
 				$this->MakeDirectory($locationPath);
 				if (is_dir($this->DirectoryFinePathAs($locationPath))) {
-					switch ($copyType)
+					switch ($copyType) {
 						case "leaveindepth":
 							break;
 						case "forceindepth":
@@ -166,7 +166,8 @@
 							break;
 						case "forceoutdepth":
 							break;
-					//return rename($directoryFinePathAs, "{$this->directoryPathTop}/{$locationPath}/{$directoryPath}");
+						//return rename($directoryFinePathAs, "{$this->directoryPathTop}/{$locationPath}/{$directoryPath}");
+					}
 				}
 			}
 			return $result;
