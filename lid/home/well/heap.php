@@ -136,41 +136,45 @@
 		}
 
 		public function CopyDirectoryLeaveindepth(string $directoryPath, string $locationPath) {
-			return $this->CopyDirectory($directoryPath, $locationPath, "leaveindepth");
+			return $this->CopyDirectoryFilter($directoryPath, $locationPath, "leaveindepth");
 		}
 
 		public function CopyDirectoryForceindepth() {
-			return $this->CopyDirectory($directoryPath, $locationPath, "forceindepth");
+			return $this->CopyDirectoryFilter($directoryPath, $locationPath, "forceindepth");
 		}
 
 		public function CopyDirectoryLeaveoutdepth() {
-			return $this->CopyDirectory($directoryPath, $locationPath, "leaveoutdepth");
+			return $this->CopyDirectoryFilter($directoryPath, $locationPath, "leaveoutdepth");
 		}
 
 		public function CopyDirectoryForceoutdepth() {
-			return $this->CopyDirectory($directoryPath, $locationPath, "forceoutdepth");
+			return $this->CopyDirectoryFilter($directoryPath, $locationPath, "forceoutdepth");
 		}
 
-		private function CopyDirectory(string $directoryPath, string $locationPath, string $copyType) {
+		private function CopyDirectoryFilter(string $directoryPath, string $locationPath, string $copyType) {
 			$result = false;
 			$directoryFinePathAs = $this->DirectoryFinePathAs($directoryPath);
 			if (is_dir($directoryFinePathAs)) {
 				$this->MakeDirectory($locationPath);
 				if (is_dir($this->DirectoryFinePathAs($locationPath))) {
-					switch ($copyType) {
-						case "leaveindepth":
-							break;
-						case "forceindepth":
-							break;
-						case "leaveoutdepth":
-							break;
-						case "forceoutdepth":
-							break;
-						//return rename($directoryFinePathAs, "{$this->directoryPathTop}/{$locationPath}/{$directoryPath}");
-					}
+					$this->CopyDirectory($copyType);
 				}
 			}
 			return $result;
+		}
+
+		private function CopyDirectory(string $copyType) {
+			switch ($copyType) {
+				case "leaveindepth":
+					break;
+				case "forceindepth":
+					break;
+				case "leaveoutdepth":
+					break;
+				case "forceoutdepth":
+					break;
+				//return rename($directoryFinePathAs, "{$this->directoryPathTop}/{$locationPath}/{$directoryPath}");
+			}
 		}
 
 		public function DirectoryFinePathAs(string $directoryPath) {
