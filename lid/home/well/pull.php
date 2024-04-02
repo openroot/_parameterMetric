@@ -44,7 +44,7 @@
 <?php
 	use lid\home\well\pull as lidping;
 
-	class Specimen {
+	class Specimen extends lidping\Pull {
 		public function __construct() {
 			$pull = new lidping\Pull();
 
