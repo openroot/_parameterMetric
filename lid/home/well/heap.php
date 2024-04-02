@@ -139,15 +139,15 @@
 			return $this->CopyDirectoryGate($directoryPath, $locationPath, "leaveindepth");
 		}
 
-		public function CopyDirectoryForceindepth() {
+		public function CopyDirectoryForceindepth(string $directoryPath, string $locationPath) {
 			return $this->CopyDirectoryGate($directoryPath, $locationPath, "forceindepth");
 		}
 
-		public function CopyDirectoryLeaveoutdepth() {
+		public function CopyDirectoryLeaveoutdepth(string $directoryPath, string $locationPath) {
 			return $this->CopyDirectoryGate($directoryPath, $locationPath, "leaveoutdepth");
 		}
 
-		public function CopyDirectoryForceoutdepth() {
+		public function CopyDirectoryForceoutdepth(string $directoryPath, string $locationPath) {
 			return $this->CopyDirectoryGate($directoryPath, $locationPath, "forceoutdepth");
 		}
 
@@ -166,42 +166,45 @@
 
 		private function CopyDirectory(string $directoryFinePathAs, string $locationFinePathAs, string $copyType) {
 			$result = false;
+			$directoriesandfiles = $this->fetchDirectoriesAndFilesFirstlevel($directoryFinePathAs);
+			if (count($directoriesandfiles) == 0) {
+				return;
+			}
+			else {
+				//echo "<pre>"; print_r($directoriesandfiles); echo "</pre>";
+				foreach ($directoriesandfiles as $index => $value) {
+					$renameFrom = "{$directoryFinePathAs}/{$value}";
+					$renameTo = "{$locationFinePathAs}/{$value}";
+					//echo "FROM= {$renameFrom}<br>";
+					//echo "TO= {$renameTo}<br>";
+					//echo "<br>";
+					switch ($copyType) {
+						case "leaveindepth":
+							break;
+						case "forceindepth":
+							break;
+						case "leaveoutdepth":
+							break;
+						case "forceoutdepth":
+							break;
+						//return rename($directoryFinePathAs, "{$this->directoryPathTop}/{$locationPath}/{$directoryPath}");
+					}
+					$this->CopyDirectory("{$directoryFinePathAs}/{$value}", "{$locationFinePathAs}/{$value}", $copyType);
+				}
+			}
+			return $result;
+		}
+
+		private function fetchDirectoriesAndFilesFirstlevel(string $directoryFinePathAs) {
+			$directoriesandfiles = array();
 			if (!($directoryFinePathAs == "." || $directoryFinePathAs == "..") && is_dir($directoryFinePathAs)) {
-				$directoriesandfiles = array();
 				foreach(scandir($directoryFinePathAs) as $index => $value) {
 					if (!($value == "." || $value == "..")) {
 						array_push($directoriesandfiles, $value);
 					}
 				}
-				if (count($directoriesandfiles) == 0) {
-					return;
-				}
-				else {
-					echo "<pre>"; print_r($directoriesandfiles); echo "</pre>";
-					foreach ($directoriesandfiles as $index => $value) {
-						$renameFrom = "{$directoryFinePathAs}/{$value}";
-						$renameTo = "{$locationFinePathAs}/{$value}";
-						echo "{$renameFrom}, {$renameTo}<br><br>";
-						switch ($copyType) {
-							case "leaveindepth":
-								break;
-							case "forceindepth":
-								break;
-							case "leaveoutdepth":
-								break;
-							case "forceoutdepth":
-								break;
-							//return rename($directoryFinePathAs, "{$this->directoryPathTop}/{$locationPath}/{$directoryPath}");
-						}
-					}
-					echo "<hr>";
-					foreach ($directoriesandfiles as $index => $value) {
-						$locationFinePathAs .= "/{$value}";
-						$this->CopyDirectory("{$directoryFinePathAs}/{$value}", $locationFinePathAs, $copyType);
-					}
-				}
 			}
-			return $result;
+			return $directoriesandfiles;
 		}
 
 		public function DirectoryFinePathAs(string $directoryPath) {

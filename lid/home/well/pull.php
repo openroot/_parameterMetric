@@ -33,7 +33,7 @@
 			if (count($this->brick->fetchHids()) > 0) {
 				$directoryHidPath = "home/well/hid";
 				foreach ($this->brick->fetchHids() as $index => $value) {
-					$this->directory->CopyDirectoryLeaveindepth("{$directoryHidPath}/{$value}", "");
+					$this->directory->CopyDirectoryLeaveindepth("{$directoryHidPath}/{$value}", "hand");
 				}
 			}
 		}
