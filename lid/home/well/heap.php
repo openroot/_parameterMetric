@@ -88,13 +88,13 @@
 	}
 
 	class Directory {
-		protected array $directoryList;
 		protected string $topDirectory;
+		protected array $recentDirectorylist;
 		private string $defaultTopDirectory;
 		private string $recyclebinDirectory;
 
 		public function __construct(?string $topDirectory = null) {
-			$this->directoryList = array();
+			$this->recentDirectorylist = array();
 			$this->defaultTopDirectory = "./lid";
 			$this->recyclebinDirectory = "home/margosa/spin/algebrafate/recyclebin";
 			$this->topDirectory = empty($topDirectory) ? $this->defaultTopDirectory : $topDirectory;
@@ -104,14 +104,8 @@
 			return $this->topDirectory;
 		}
 
-		public function RecentDirectoryList() {
-			return $this->directoryList;
-		}
-
-		public function RefreshDirectoryList(?string $directoryPath = null) {
-			array_splice($this->directoryList, 0, count($this->directoryList));
-			$this->DirectoryListScan(empty($directoryPath) ? "" : $directoryPath);
-			return $this->directoryList;
+		public function RecentDirectorylist() {
+			return $this->recentDirectorylist;
 		}
 
 		public function FineDirectoryPath(string $directoryPath) {
@@ -120,6 +114,12 @@
 
 		public function UnfineDirectoryPath(string $fineDirectoryPath) {
 			return strpos($fineDirectoryPath, $this->topDirectory) == 0 ? substr($fineDirectoryPath, strlen($this->topDirectory) + 1) : false;
+		}
+
+		public function RefreshDirectorylist(?string $directoryPath = null) {
+			array_splice($this->recentDirectorylist, 0, count($this->recentDirectorylist));
+			$this->EnlistDirectorylist(empty($directoryPath) ? "" : $directoryPath);
+			return $this->recentDirectorylist;
 		}
 
 		public function FindDirectory(array $directoryPaths, string $directoryName) {
@@ -148,7 +148,7 @@
 			if (is_dir($fineDirectoryPath)) {
 				$directoryParentName = substr($fineDirectoryPath, 0, strrpos($fineDirectoryPath, "/"));
 				$directoryName = substr($fineDirectoryPath, strrpos($fineDirectoryPath, "/") + 1);
-				if ($this->FindDirectory($this->RefreshDirectoryList($this->UnfineDirectoryPath($directoryParentName)), $directoryName)) {
+				if ($this->FindDirectory($this->RefreshDirectorylist($this->UnfineDirectoryPath($directoryParentName)), $directoryName)) {
 					$this->MakeDirectory($this->recyclebinDirectory);
 					if (is_dir($this->FineDirectoryPath($this->recyclebinDirectory))) {
 						return rename($fineDirectoryPath, "{$this->topDirectory}/{$this->recyclebinDirectory}/{$directoryName}" . $this->CurrentTimePlatformSafe());
@@ -159,28 +159,19 @@
 		}
 
 		public function CopyDirectoryLeaveindepth(string $directoryPath, string $locationPath) {
-			return $this->CopyDirectoryGate($directoryPath, $locationPath, "leaveindepth");
+			return $this->YieldCopyDirectory($directoryPath, $locationPath, "leaveindepth");
 		}
 
 		public function CopyDirectoryMergeindepth(string $directoryPath, string $locationPath) {
-			return $this->CopyDirectoryGate($directoryPath, $locationPath, "mergeindepth");
+			return $this->YieldCopyDirectory($directoryPath, $locationPath, "mergeindepth");
 		}
 
 		public function CopyDirectoryLeaveoutdepth(string $directoryPath, string $locationPath) {
-			return $this->CopyDirectoryGate($directoryPath, $locationPath, "leaveoutdepth");
+			return $this->YieldCopyDirectory($directoryPath, $locationPath, "leaveoutdepth");
 		}
 
 		public function CopyDirectoryMergeoutdepth(string $directoryPath, string $locationPath) {
-			return $this->CopyDirectoryGate($directoryPath, $locationPath, "mergeoutdepth");
-		}
-
-		private function DirectoryListScan(string $directoryPath) {
-			foreach ($this->DirectoryListFilter($this->FineDirectoryPath($directoryPath)) as $index => $value) {
-				$directoryFound = "{$directoryPath}/{$value}";
-				$directoryFound = strpos($directoryFound, "/") == 0 ? substr($directoryFound, 1) : $directoryFound;
-				array_push($this->directoryList, $directoryFound);
-				$this->DirectoryListScan("{$directoryPath}/{$value}");
-			}
+			return $this->YieldCopyDirectory($directoryPath, $locationPath, "mergeoutdepth");
 		}
 
 		private function DirectoryListFilter(string $directoryPath) {
@@ -195,7 +186,16 @@
 			return $filteredList;
 		}
 
-		private function CopyDirectoryGate(string $directoryPath, string $locationPath, string $copyType) {
+		private function EnlistDirectorylist(string $directoryPath) {
+			foreach ($this->DirectoryListFilter($this->FineDirectoryPath($directoryPath)) as $index => $value) {
+				$directoryFound = "{$directoryPath}/{$value}";
+				$directoryFound = strpos($directoryFound, "/") == 0 ? substr($directoryFound, 1) : $directoryFound;
+				array_push($this->recentDirectorylist, $directoryFound);
+				$this->EnlistDirectorylist("{$directoryPath}/{$value}");
+			}
+		}
+
+		private function YieldCopyDirectory(string $directoryPath, string $locationPath, string $copyType) {
 			$result = false;
 			$fineDirectoryPath = $this->FineDirectoryPath($directoryPath);
 			if (is_dir($fineDirectoryPath)) {
@@ -322,19 +322,19 @@
 			echo "<h6>2: RequireonceFile (home/well, water.php)</h6>";
 			echo $platform->RequireonceFile("home/well", "water.php") ? "Success" : "Unsuccess";
 
-			echo "<h6>3: RecentDirectoryList ()</h6>";
+			echo "<h6>3: RecentDirectorylist ()</h6>";
 			echo "<pre>";
-			print_r($directory->RecentDirectoryList());
+			print_r($directory->RecentDirectorylist());
 			echo "</pre>";
 			
-			echo "<h6>4: RefreshDirectoryList (home/margosa)</h6>";
+			echo "<h6>4: RefreshDirectorylist (home/margosa)</h6>";
 			echo "<pre>";
-			print_r($directory->RefreshDirectoryList("home/margosa"));
+			print_r($directory->RefreshDirectorylist("home/margosa"));
 			echo "</pre>";
 
-			echo "<h6>5: RecentDirectoryList ()</h6>";
+			echo "<h6>5: RecentDirectorylist ()</h6>";
 			echo "<pre>";
-			print_r($directory->RecentDirectoryList());
+			print_r($directory->RecentDirectorylist());
 			echo "</pre>";
 
 			echo "<h6>6: MakeDirectory (home/margosa/spin/algebrafate/ARandomDirectory)</h6>";
@@ -343,9 +343,9 @@
 			echo "<h6>7: DeleteDirectory (home/margosa/spin/algebrafate/ARandomDirectory)</h6>";
 			echo $directory->DeleteDirectory("home/margosa/spin/algebrafate/ARandomDirectory") ? "Success" : "Directory not deleted or not exists";
 		
-			echo "<h6>8: RefreshDirectoryList ()</h6>";
+			echo "<h6>8: RefreshDirectorylist ()</h6>";
 			echo "<pre>";
-			print_r($directory->RefreshDirectoryList());
+			print_r($directory->RefreshDirectorylist());
 			echo "</pre>";
 
 			echo "<h6>9: RefreshFileList (home/margosa/now)</h6>";
