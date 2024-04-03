@@ -298,8 +298,7 @@
 			$this->directory = new Directory();
 		}
 
-		public function ContainsFileName(string $filePaths, string $fileName) {
-			// TODO: This function is not verified yet, verify after real implementation.
+		public function ContainsFileName(array $filePaths, string $fileName) {
 			$result = false;
 			foreach ($filePaths as $index => $value) {
 				if (strcmp(substr($value, strrpos($value, "/") + 1), $fileName) == 0) {
@@ -353,33 +352,36 @@
 			echo "<h6>6: ContainsDirectoryName (home/margosa/now | home/margosa/spin, Spin)</h6>";
 			echo $directory->ContainsDirectoryName(array("home/margosa/now", "home/margosa/spin"), "Spin") ? "Success" : "Unsuccess";
 
-			echo "<h6>3: RecentDirectorylist ()</h6>";
+			echo "<h6>7: RecentDirectorylist ()</h6>";
 			echo "<pre>";
 			print_r($directory->RecentDirectorylist());
 			echo "</pre>";
 			
-			echo "<h6>4: RefreshRecentDirectorylistIndepth (home/margosa)</h6>";
+			echo "<h6>8: RefreshRecentDirectorylistIndepth (home/margosa)</h6>";
 			echo "<pre>";
 			print_r($directory->RefreshRecentDirectorylistIndepth("home/margosa"));
 			echo "</pre>";
 
-			echo "<h6>5: RecentDirectorylist ()</h6>";
+			echo "<h6>9: RecentDirectorylist ()</h6>";
 			echo "<pre>";
 			print_r($directory->RecentDirectorylist());
 			echo "</pre>";
 
-			echo "<h6>6: MakeDirectory (home/margosa/spin/algebrafate/ARandomDirectory)</h6>";
+			echo "<h6>10: MakeDirectory (home/margosa/spin/algebrafate/ARandomDirectory)</h6>";
 			echo $directory->MakeDirectory("home/margosa/spin/algebrafate/ARandomDirectory") ? "Success" : "Directory not made or already exists";
 			
-			echo "<h6>7: DeleteDirectory (home/margosa/spin/algebrafate/ARandomDirectory)</h6>";
+			echo "<h6>11: DeleteDirectory (home/margosa/spin/algebrafate/ARandomDirectory)</h6>";
 			echo $directory->DeleteDirectory("home/margosa/spin/algebrafate/ARandomDirectory") ? "Success" : "Directory not deleted or not exists";
 		
-			echo "<h6>8: RefreshRecentDirectorylistIndepth ()</h6>";
+			echo "<h6>12: RefreshRecentDirectorylistIndepth ()</h6>";
 			echo "<pre>";
 			print_r($directory->RefreshRecentDirectorylistIndepth());
 			echo "</pre>";
 
-			echo "<h6>9: EnlistFilelist (home/margosa/now)</h6>";
+			echo "<h6>13: ContainsFileName (home/margosa/now/flower.php | home/margosa/now/leaf.php, Leaf.php)</h6>";
+			echo $file->ContainsFileName(array("home/margosa/now/flower.php", "home/margosa/now/leaf.php"), "Leaf.php") ? "Success" : "Unsuccess";
+
+			echo "<h6>14: EnlistFilelist (home/margosa/now)</h6>";
 			echo "<pre>";
 			print_r($file->EnlistFilelist("home/margosa/now"));
 			echo "</pre>";
