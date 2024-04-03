@@ -212,15 +212,15 @@
 			$fineDirectoryPath = $this->FineDirectoryPath($directoryPath);
 			if (is_dir($fineDirectoryPath)) {
 				$this->MakeDirectory($locationPath);
-				$locationFinePathAs = $this->FineDirectoryPath($locationPath);
-				if (is_dir($locationFinePathAs)) {
-					$result = $this->CopyDirectory($fineDirectoryPath, $locationFinePathAs, $copyType);
+				$fineLocationPath = $this->FineDirectoryPath($locationPath);
+				if (is_dir($fineLocationPath)) {
+					$result = $this->CopyDirectoryIndepth($fineDirectoryPath, $fineLocationPath, $copyType);
 				}
 			}
 			return $result;
 		}
 
-		private function CopyDirectory(string $fineDirectoryPath, string $locationFinePathAs, string $copyType) {
+		private function CopyDirectoryIndepth(string $fineDirectoryPath, string $fineLocationPath, string $copyType) {
 			$result = true;
 			$directoriesandfiles = $this->EnlistDirectoriesAndFilesOutdepth($fineDirectoryPath);
 			if (count($directoriesandfiles) == 0) {
@@ -229,7 +229,7 @@
 			else {
 				foreach ($directoriesandfiles as $index => $value) {
 					$copySource = "{$fineDirectoryPath}/{$value}";
-					$copyTo = "{$locationFinePathAs}/{$value}";
+					$copyTo = "{$fineLocationPath}/{$value}";
 					switch ($copyType) {
 						case "leaveindepth":
 							if (!file_exists($copyTo)) {
@@ -240,7 +240,7 @@
 									$result = copy($copySource, $copyTo);
 								}
 							}
-							$result = $this->CopyDirectory("{$fineDirectoryPath}/{$value}", "{$locationFinePathAs}/{$value}", $copyType);
+							$result = $this->CopyDirectoryIndepth("{$fineDirectoryPath}/{$value}", "{$fineLocationPath}/{$value}", $copyType);
 							break;
 						case "mergeindepth":
 							if (is_file($copySource)) {
@@ -249,7 +249,7 @@
 							else if (is_dir($copySource) && !file_exists($copyTo)) {
 								$result = mkdir($copyTo);
 							}
-							$result = $this->CopyDirectory("{$fineDirectoryPath}/{$value}", "{$locationFinePathAs}/{$value}", $copyType);
+							$result = $this->CopyDirectoryIndepth("{$fineDirectoryPath}/{$value}", "{$fineLocationPath}/{$value}", $copyType);
 							break;
 						case "leaveoutdepth":
 							if (!file_exists($copyTo)) {
