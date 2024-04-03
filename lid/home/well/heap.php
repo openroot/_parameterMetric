@@ -88,12 +88,12 @@
 	}
 
 	class Directory {
-		protected string $topDirectory = "";
 		protected array $directoryList = array();
-		private string $topDirectoryDefault = "./lid";
+		protected string $topDirectory = "";
+		private string $defaultTopDirectory = "./lid";
 
 		public function __construct(?string $topDirectory = null) {
-			$this->topDirectory = empty($topDirectory) ? $this->topDirectoryDefault : $topDirectory;
+			$this->topDirectory = empty($topDirectory) ? $this->defaultTopDirectory : $topDirectory;
 		}
 
 		public function ReadTopDirectory() {
