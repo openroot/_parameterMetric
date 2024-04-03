@@ -195,7 +195,7 @@
 			return $filteredList;
 		}
 
-		private function FetchDirectoriesAndFilesFirstlevel(string $fineDirectoryPath) {
+		private function EnlistDirectoriesAndFilesOutdepth(string $fineDirectoryPath) {
 			$directoriesandfiles = array();
 			if (!($fineDirectoryPath == "." || $fineDirectoryPath == "..") && is_dir($fineDirectoryPath)) {
 				foreach(scandir($fineDirectoryPath) as $index => $value) {
@@ -222,7 +222,7 @@
 
 		private function CopyDirectory(string $fineDirectoryPath, string $locationFinePathAs, string $copyType) {
 			$result = true;
-			$directoriesandfiles = $this->FetchDirectoriesAndFilesFirstlevel($fineDirectoryPath);
+			$directoriesandfiles = $this->EnlistDirectoriesAndFilesOutdepth($fineDirectoryPath);
 			if (count($directoriesandfiles) == 0) {
 				return;
 			}
