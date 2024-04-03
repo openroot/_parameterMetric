@@ -104,7 +104,7 @@
 			return $this->directoryList;
 		}
 
-		public function DirectoryListRefresh(?string $directoryPath = null) {
+		public function RefreshDirectoryList(?string $directoryPath = null) {
 			array_splice($this->directoryList, 0, count($this->directoryList));
 			$this->DirectoryListScan(empty($directoryPath) ? "" : $directoryPath);
 			return $this->directoryList;
@@ -124,7 +124,7 @@
 			if (is_dir($fineDirectoryPath)) {
 				$directoryParentName = substr($fineDirectoryPath, 0, strrpos($fineDirectoryPath, "/"));
 				$directoryOriginalName = substr($fineDirectoryPath, strrpos($fineDirectoryPath, "/") + 1);
-				if ($this->DirectoryFoundAt($this->DirectoryListRefresh($this->DirectoryUnfinedPathAs($directoryParentName)), $directoryOriginalName)) {
+				if ($this->DirectoryFoundAt($this->RefreshDirectoryList($this->DirectoryUnfinedPathAs($directoryParentName)), $directoryOriginalName)) {
 					$directoryRecyclebinPath = "home/margosa/spin/algebrafate/recyclebin";
 					$this->MakeDirectory($directoryRecyclebinPath);
 					if (is_dir($this->FineDirectoryPath($directoryRecyclebinPath))) {
@@ -324,9 +324,9 @@
 			print_r($directory->RecentDirectoryList());
 			echo "</pre>";
 			
-			echo "<h6>4: DirectoryListRefresh (home/margosa)</h6>";
+			echo "<h6>4: RefreshDirectoryList (home/margosa)</h6>";
 			echo "<pre>";
-			print_r($directory->DirectoryListRefresh("home/margosa"));
+			print_r($directory->RefreshDirectoryList("home/margosa"));
 			echo "</pre>";
 
 			echo "<h6>5: RecentDirectoryList ()</h6>";
@@ -340,9 +340,9 @@
 			echo "<h6>7: DeleteDirectory (home/margosa/spin/algebrafate/ARandomDirectory)</h6>";
 			echo $directory->DeleteDirectory("home/margosa/spin/algebrafate/ARandomDirectory") ? "Success" : "Directory not deleted or not exists";
 		
-			echo "<h6>8: DirectoryListRefresh ()</h6>";
+			echo "<h6>8: RefreshDirectoryList ()</h6>";
 			echo "<pre>";
-			print_r($directory->DirectoryListRefresh());
+			print_r($directory->RefreshDirectoryList());
 			echo "</pre>";
 
 			echo "<h6>9: RefreshFileList (home/margosa/now)</h6>";
