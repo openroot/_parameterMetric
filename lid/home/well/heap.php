@@ -174,7 +174,7 @@
 			return $this->YieldCopyDirectory($directoryPath, $locationPath, "mergeoutdepth");
 		}
 
-		private function DirectoryListFilter(string $directoryPath) {
+		private function EnlistDirectorylistOutdepth(string $directoryPath) {
 			$filteredList = array();
 			if (is_dir($directoryPath)) {
 				foreach (scandir($directoryPath) as $index => $value) {
@@ -187,11 +187,11 @@
 		}
 
 		private function EnlistDirectorylistIndepth(string $directoryPath) {
-			foreach ($this->DirectoryListFilter($this->FineDirectoryPath($directoryPath)) as $index => $value) {
-				$directoryFound = "{$directoryPath}/{$value}";
-				$directoryFound = strpos($directoryFound, "/") == 0 ? substr($directoryFound, 1) : $directoryFound;
-				array_push($this->recentDirectorylist, $directoryFound);
-				$this->EnlistDirectorylistIndepth("{$directoryPath}/{$value}");
+			foreach ($this->EnlistDirectorylistOutdepth($this->FineDirectoryPath($directoryPath)) as $index => $value) {
+				$foundDirectoryPath = "{$directoryPath}/{$value}";
+				$foundDirectoryPath = strpos($foundDirectoryPath, "/") == 0 ? substr($foundDirectoryPath, 1) : $foundDirectoryPath;
+				array_push($this->recentDirectorylist, $foundDirectoryPath);
+				$this->EnlistDirectorylistIndepth($foundDirectoryPath);
 			}
 		}
 
