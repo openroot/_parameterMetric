@@ -31,6 +31,7 @@
 
 		protected function CapFlats() {
 			$this->flats = array(
+				"home",
 				"home/margosa",
 				"home/margosa/now",
 				"home/margosa/data",
@@ -39,6 +40,7 @@
 				"home/margosa/spin/algebrafate",
 				"home/margosa/spin/algebrafate/recyclebin",
 				"home/margosa/spin/exist",
+				"home/well",
 				"home/analyze",
 				"home/analyze/essay",
 				"home/analyze/essay/ignore",
