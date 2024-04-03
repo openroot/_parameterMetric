@@ -116,12 +116,6 @@
 			return strpos($fineDirectoryPath, $this->topDirectory) == 0 ? substr($fineDirectoryPath, strlen($this->topDirectory) + 1) : false;
 		}
 
-		public function RefreshRecentDirectorylistIndepth(?string $directoryPath = null) {
-			array_splice($this->recentDirectorylist, 0, count($this->recentDirectorylist));
-			$this->EnlistRecentDirectorylistIndepth(empty($directoryPath) ? "" : $directoryPath);
-			return $this->recentDirectorylist;
-		}
-
 		public function ContainsDirectoryName(array $directoryPaths, string $directoryName) {
 			$result = false;
 			foreach ($directoryPaths as $index => $value) {
@@ -132,6 +126,12 @@
 				}
 			}
 			return $result;
+		}
+
+		public function RefreshRecentDirectorylistIndepth(?string $directoryPath = null) {
+			array_splice($this->recentDirectorylist, 0, count($this->recentDirectorylist));
+			$this->EnlistRecentDirectorylistIndepth(empty($directoryPath) ? "" : $directoryPath);
+			return $this->recentDirectorylist;
 		}
 
 		public function MakeDirectory(string $directoryPath) {
@@ -292,6 +292,19 @@
 			$this->directory = new Directory();
 		}
 
+		public function ContainsFileName(string $filePaths, string $fileName) {
+			// TODO: This function is not verified yet, verify after real implementation.
+			$result = false;
+			foreach ($filePaths as $index => $value) {
+				if (strcmp(substr($value, strrpos($value, "/") + 1), $fileName) == 0) {
+					if (is_file($this->directory->FineDirectoryPath($value))) {
+						$result = true;
+					}
+				}
+			}
+			return $result;
+		}
+
 		public function EnlistFilelist(string $directoryPath) {
 			$fileList = array();
 			$fineDirectoryPath = $this->directory->FineDirectoryPath($directoryPath);
@@ -321,6 +334,9 @@
 
 			echo "<h6>2: RequireonceFile (home/well, water.php)</h6>";
 			echo $platform->RequireonceFile("home/well", "water.php") ? "Success" : "Unsuccess";
+
+			echo "<h6>3: ReadTopDirectory</h6>";
+			echo $directory->ReadTopDirectory();
 
 			echo "<h6>3: RecentDirectorylist ()</h6>";
 			echo "<pre>";
