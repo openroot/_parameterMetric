@@ -143,12 +143,12 @@
 			$fineDirectoryPath = $this->FineDirectoryPath($directoryPath);
 			if (is_dir($fineDirectoryPath)) {
 				$directoryParentName = substr($fineDirectoryPath, 0, strrpos($fineDirectoryPath, "/"));
-				$directoryOriginalName = substr($fineDirectoryPath, strrpos($fineDirectoryPath, "/") + 1);
-				if ($this->FindDirectory($this->RefreshDirectoryList($this->UnfineDirectoryPath($directoryParentName)), $directoryOriginalName)) {
+				$directoryName = substr($fineDirectoryPath, strrpos($fineDirectoryPath, "/") + 1);
+				if ($this->FindDirectory($this->RefreshDirectoryList($this->UnfineDirectoryPath($directoryParentName)), $directoryName)) {
 					$directoryRecyclebinPath = "home/margosa/spin/algebrafate/recyclebin";
 					$this->MakeDirectory($directoryRecyclebinPath);
 					if (is_dir($this->FineDirectoryPath($directoryRecyclebinPath))) {
-						return rename($fineDirectoryPath, "{$this->topDirectory}/{$directoryRecyclebinPath}/{$directoryOriginalName}" . $this->CurrentTimePlatformSafe());
+						return rename($fineDirectoryPath, "{$this->topDirectory}/{$directoryRecyclebinPath}/{$directoryName}" . $this->CurrentTimePlatformSafe());
 					}
 				}
 			}
