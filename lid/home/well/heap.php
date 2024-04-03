@@ -146,9 +146,9 @@
 			$result = false;
 			$fineDirectoryPath = $this->FineDirectoryPath($directoryPath);
 			if (is_dir($fineDirectoryPath)) {
-				$directoryParentName = substr($fineDirectoryPath, 0, strrpos($fineDirectoryPath, "/"));
+				$parentDirectoryPath = substr($fineDirectoryPath, 0, strrpos($fineDirectoryPath, "/"));
 				$directoryName = substr($fineDirectoryPath, strrpos($fineDirectoryPath, "/") + 1);
-				if ($this->ContainsDirectoryName($this->RefreshDirectorylistIndepth($this->UnfineDirectoryPath($directoryParentName)), $directoryName)) {
+				if ($this->ContainsDirectoryName($this->RefreshDirectorylistIndepth($this->UnfineDirectoryPath($parentDirectoryPath)), $directoryName)) {
 					$this->MakeDirectory($this->recyclebinDirectory);
 					if (is_dir($this->FineDirectoryPath($this->recyclebinDirectory))) {
 						return rename($fineDirectoryPath, "{$this->topDirectory}/{$this->recyclebinDirectory}/{$directoryName}" . $this->CurrentTimePlatformSafe());
