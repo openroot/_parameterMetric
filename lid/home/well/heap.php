@@ -110,6 +110,26 @@
 			return $this->directoryList;
 		}
 
+		public function FineDirectoryPath(string $directoryPath) {
+			return $directoryPath != "" ? "{$this->topDirectory}/{$directoryPath}" : $this->topDirectory;
+		}
+
+		public function UnfineDirectoryPath(string $fineDirectoryPath) {
+			return strpos($fineDirectoryPath, $this->topDirectory) == 0 ? substr($fineDirectoryPath, strlen($this->topDirectory) + 1) : false;
+		}
+
+		public function FindDirectory(array $directoryPaths, string $directoryName) {
+			$result = false;
+			foreach ($directoryPaths as $index => $value) {
+				if (strcmp(substr($value, strrpos($value, "/") + 1), $directoryName) == 0) {
+					if (is_dir($this->FineDirectoryPath($value))) {
+						$result = true;
+					}
+				}
+			}
+			return $result;
+		}
+
 		public function MakeDirectory(string $directoryPath) {
 			$fineDirectoryPath = $this->FineDirectoryPath($directoryPath);
 			if (!file_exists($fineDirectoryPath)) {
@@ -124,7 +144,7 @@
 			if (is_dir($fineDirectoryPath)) {
 				$directoryParentName = substr($fineDirectoryPath, 0, strrpos($fineDirectoryPath, "/"));
 				$directoryOriginalName = substr($fineDirectoryPath, strrpos($fineDirectoryPath, "/") + 1);
-				if ($this->DirectoryFoundAt($this->RefreshDirectoryList($this->DirectoryUnfinedPathAs($directoryParentName)), $directoryOriginalName)) {
+				if ($this->FindDirectory($this->RefreshDirectoryList($this->UnfineDirectoryPath($directoryParentName)), $directoryOriginalName)) {
 					$directoryRecyclebinPath = "home/margosa/spin/algebrafate/recyclebin";
 					$this->MakeDirectory($directoryRecyclebinPath);
 					if (is_dir($this->FineDirectoryPath($directoryRecyclebinPath))) {
@@ -149,26 +169,6 @@
 
 		public function CopyDirectoryMergeoutdepth(string $directoryPath, string $locationPath) {
 			return $this->CopyDirectoryGate($directoryPath, $locationPath, "mergeoutdepth");
-		}
-
-		public function FineDirectoryPath(string $directoryPath) {
-			return $directoryPath != "" ? "{$this->topDirectory}/{$directoryPath}" : $this->topDirectory;
-		}
-
-		public function DirectoryUnfinedPathAs(string $fineDirectoryPath) {
-			return strpos($fineDirectoryPath, $this->topDirectory) == 0 ? substr($fineDirectoryPath, strlen($this->topDirectory) + 1) : false;
-		}
-
-		public function DirectoryFoundAt(array $directoryPaths, string $directoryName) {
-			$result = false;
-			foreach ($directoryPaths as $index => $value) {
-				if (strcmp(substr($value, strrpos($value, "/") + 1), $directoryName) == 0) {
-					if (is_dir($this->FineDirectoryPath($value))) {
-						$result = true;
-					}
-				}
-			}
-			return $result;
 		}
 
 		private function DirectoryListScan(string $directoryPath) {
