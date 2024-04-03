@@ -122,7 +122,7 @@
 			return $this->recentDirectorylist;
 		}
 
-		public function FindDirectory(array $directoryPaths, string $directoryName) {
+		public function ContainsDirectoryName(array $directoryPaths, string $directoryName) {
 			$result = false;
 			foreach ($directoryPaths as $index => $value) {
 				if (strcmp(substr($value, strrpos($value, "/") + 1), $directoryName) == 0) {
@@ -148,7 +148,7 @@
 			if (is_dir($fineDirectoryPath)) {
 				$directoryParentName = substr($fineDirectoryPath, 0, strrpos($fineDirectoryPath, "/"));
 				$directoryName = substr($fineDirectoryPath, strrpos($fineDirectoryPath, "/") + 1);
-				if ($this->FindDirectory($this->RefreshDirectorylist($this->UnfineDirectoryPath($directoryParentName)), $directoryName)) {
+				if ($this->ContainsDirectoryName($this->RefreshDirectorylist($this->UnfineDirectoryPath($directoryParentName)), $directoryName)) {
 					$this->MakeDirectory($this->recyclebinDirectory);
 					if (is_dir($this->FineDirectoryPath($this->recyclebinDirectory))) {
 						return rename($fineDirectoryPath, "{$this->topDirectory}/{$this->recyclebinDirectory}/{$directoryName}" . $this->CurrentTimePlatformSafe());
