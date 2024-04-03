@@ -33,7 +33,7 @@
 		protected function TripBrickHids() {
 			if (count($this->brick->ReadHids()) > 0) {
 				foreach ($this->brick->ReadHids() as $index => $value) {
-					$this->directory->CopyDirectoryLeaveindepth($this->brick->ReadHidDirectoryPath() . "/{$value}", "");
+					$this->directory->CopyDirectoryLeaveIndepth($this->brick->ReadHidDirectoryPath() . "/{$value}", "");
 				}
 			}
 			return true;

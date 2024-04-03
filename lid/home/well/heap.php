@@ -158,19 +158,19 @@
 			return $result;
 		}
 
-		public function CopyDirectoryLeaveindepth(string $directoryPath, string $locationPath) {
+		public function CopyDirectoryLeaveIndepth(string $directoryPath, string $locationPath) {
 			return $this->YieldCopyDirectory($directoryPath, $locationPath, "leaveindepth");
 		}
 
-		public function CopyDirectoryMergeindepth(string $directoryPath, string $locationPath) {
+		public function CopyDirectoryMergeIndepth(string $directoryPath, string $locationPath) {
 			return $this->YieldCopyDirectory($directoryPath, $locationPath, "mergeindepth");
 		}
 
-		public function CopyDirectoryLeaveoutdepth(string $directoryPath, string $locationPath) {
+		public function CopyDirectoryLeaveOutdepth(string $directoryPath, string $locationPath) {
 			return $this->YieldCopyDirectory($directoryPath, $locationPath, "leaveoutdepth");
 		}
 
-		public function CopyDirectoryMergeoutdepth(string $directoryPath, string $locationPath) {
+		public function CopyDirectoryMergeOutdepth(string $directoryPath, string $locationPath) {
 			return $this->YieldCopyDirectory($directoryPath, $locationPath, "mergeoutdepth");
 		}
 
