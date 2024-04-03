@@ -34,7 +34,7 @@
 			$filteredFileFullPaths = array();
 			foreach ($this->file->EnlistFilelist($directoryPath) as $index => $value) {
 				$fileFullPath = $this->directory->ReadTopDirectory() . "/{$directoryPath}/{$value}";
-				if (!$this->SearchScriptIsCurrent($fileFullPath)) {
+				if (!$this->SearchScriptAsCurrentScript($fileFullPath)) {
 					array_push($filteredFileFullPaths, $fileFullPath);
 				}
 			}
@@ -72,7 +72,7 @@
 
 		public function RequireonceFile(string $directoryPath, string $fileName) {
 			$fullFilePath = $this->directory->ReadTopDirectory() . "/{$directoryPath}/{$fileName}";
-			if (!$this->SearchScriptIsCurrent($fullFilePath)) {
+			if (!$this->SearchScriptAsCurrentScript($fullFilePath)) {
 				if (is_file($fullFilePath)) {
 					return require_once($fullFilePath);
 				}
@@ -80,10 +80,10 @@
 			return false;
 		}
 
-		private function SearchScriptIsCurrent(string $fullFilePath) {
+		public function SearchScriptAsCurrentScript(string $fileName) {
 			$presentScriptFile = str_replace("\\", "/", __FILE__);
-			$fullFilePath = $fullFilePath[0] == "." ? substr($fullFilePath, 1) : $fullFilePath;
-			return str_contains($presentScriptFile, $fullFilePath) ? true : false;
+			$fileName = $fileName[0] == "." ? substr($fileName, 1) : $fileName;
+			return str_contains($presentScriptFile, $fileName) ? true : false;
 		}
 	}
 
@@ -340,48 +340,51 @@
 			echo "<h6>2: RequireonceFile (home/well, water.php)</h6>";
 			echo $platform->RequireonceFile("home/well", "water.php") ? "Success" : "Unsuccess";
 
-			echo "<h6>3: ReadTopDirectory</h6>";
+			echo "<h6>3: SearchScriptAsCurrentScript (well/heap.php)</h6>";
+			echo $platform->SearchScriptAsCurrentScript("well/heap.php") ? "Success" : "Unsuccess";
+
+			echo "<h6>4: ReadTopDirectory</h6>";
 			echo $directory->ReadTopDirectory();
 
-			echo "<h6>4: FineDirectoryPath (home/margosa/now)</h6>";
+			echo "<h6>5: FineDirectoryPath (home/margosa/now)</h6>";
 			echo $directory->FineDirectoryPath("home/margosa/now");
 
-			echo "<h6>5: UnfineDirectoryPath (./lid/home/margosa/now)</h6>";
+			echo "<h6>6: UnfineDirectoryPath (./lid/home/margosa/now)</h6>";
 			echo $directory->UnfineDirectoryPath("./lid/home/margosa/now");
 
-			echo "<h6>6: ContainsDirectoryName (home/margosa/now | home/margosa/spin, Spin)</h6>";
+			echo "<h6>7: ContainsDirectoryName (home/margosa/now | home/margosa/spin, Spin)</h6>";
 			echo $directory->ContainsDirectoryName(array("home/margosa/now", "home/margosa/spin"), "Spin") ? "Success" : "Unsuccess";
 
-			echo "<h6>7: RecentDirectorylist ()</h6>";
+			echo "<h6>8: RecentDirectorylist ()</h6>";
 			echo "<pre>";
 			print_r($directory->RecentDirectorylist());
 			echo "</pre>";
 			
-			echo "<h6>8: RefreshRecentDirectorylistIndepth (home/margosa)</h6>";
+			echo "<h6>9: RefreshRecentDirectorylistIndepth (home/margosa)</h6>";
 			echo "<pre>";
 			print_r($directory->RefreshRecentDirectorylistIndepth("home/margosa"));
 			echo "</pre>";
 
-			echo "<h6>9: RecentDirectorylist ()</h6>";
+			echo "<h6>10: RecentDirectorylist ()</h6>";
 			echo "<pre>";
 			print_r($directory->RecentDirectorylist());
 			echo "</pre>";
 
-			echo "<h6>10: MakeDirectory (home/margosa/spin/algebrafate/ARandomDirectory)</h6>";
+			echo "<h6>11: MakeDirectory (home/margosa/spin/algebrafate/ARandomDirectory)</h6>";
 			echo $directory->MakeDirectory("home/margosa/spin/algebrafate/ARandomDirectory") ? "Success" : "Directory not made or already exists";
 			
-			echo "<h6>11: DeleteDirectory (home/margosa/spin/algebrafate/ARandomDirectory)</h6>";
+			echo "<h6>12: DeleteDirectory (home/margosa/spin/algebrafate/ARandomDirectory)</h6>";
 			echo $directory->DeleteDirectory("home/margosa/spin/algebrafate/ARandomDirectory") ? "Success" : "Directory not deleted or not exists";
 		
-			echo "<h6>12: RefreshRecentDirectorylistIndepth ()</h6>";
+			echo "<h6>13: RefreshRecentDirectorylistIndepth ()</h6>";
 			echo "<pre>";
 			print_r($directory->RefreshRecentDirectorylistIndepth());
 			echo "</pre>";
 
-			echo "<h6>13: ContainsFileName (home/margosa/now/flower.php | home/margosa/now/leaf.php, Leaf.php)</h6>";
+			echo "<h6>14: ContainsFileName (home/margosa/now/flower.php | home/margosa/now/leaf.php, Leaf.php)</h6>";
 			echo $file->ContainsFileName(array("home/margosa/now/flower.php", "home/margosa/now/leaf.php"), "Leaf.php") ? "Success" : "Unsuccess";
 
-			echo "<h6>14: EnlistFilelist (home/margosa/now)</h6>";
+			echo "<h6>15: EnlistFilelist (home/margosa/now)</h6>";
 			echo "<pre>";
 			print_r($file->EnlistFilelist("home/margosa/now"));
 			echo "</pre>";
