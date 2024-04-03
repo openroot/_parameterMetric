@@ -88,11 +88,15 @@
 	}
 
 	class Directory {
-		protected array $directoryList = array();
-		protected string $topDirectory = "";
-		private string $defaultTopDirectory = "./lid";
+		protected array $directoryList;
+		protected string $topDirectory;
+		private string $defaultTopDirectory;
+		private string $recyclebinDirectory;
 
 		public function __construct(?string $topDirectory = null) {
+			$this->directoryList = array();
+			$this->defaultTopDirectory = "./lid";
+			$this->recyclebinDirectory = "home/margosa/spin/algebrafate/recyclebin";
 			$this->topDirectory = empty($topDirectory) ? $this->defaultTopDirectory : $topDirectory;
 		}
 
@@ -145,10 +149,9 @@
 				$directoryParentName = substr($fineDirectoryPath, 0, strrpos($fineDirectoryPath, "/"));
 				$directoryName = substr($fineDirectoryPath, strrpos($fineDirectoryPath, "/") + 1);
 				if ($this->FindDirectory($this->RefreshDirectoryList($this->UnfineDirectoryPath($directoryParentName)), $directoryName)) {
-					$directoryRecyclebinPath = "home/margosa/spin/algebrafate/recyclebin";
-					$this->MakeDirectory($directoryRecyclebinPath);
-					if (is_dir($this->FineDirectoryPath($directoryRecyclebinPath))) {
-						return rename($fineDirectoryPath, "{$this->topDirectory}/{$directoryRecyclebinPath}/{$directoryName}" . $this->CurrentTimePlatformSafe());
+					$this->MakeDirectory($this->recyclebinDirectory);
+					if (is_dir($this->FineDirectoryPath($this->recyclebinDirectory))) {
+						return rename($fineDirectoryPath, "{$this->topDirectory}/{$this->recyclebinDirectory}/{$directoryName}" . $this->CurrentTimePlatformSafe());
 					}
 				}
 			}
