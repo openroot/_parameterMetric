@@ -116,9 +116,9 @@
 			return strpos($fineDirectoryPath, $this->topDirectory) == 0 ? substr($fineDirectoryPath, strlen($this->topDirectory) + 1) : false;
 		}
 
-		public function RefreshDirectorylist(?string $directoryPath = null) {
+		public function RefreshDirectorylistIndepth(?string $directoryPath = null) {
 			array_splice($this->recentDirectorylist, 0, count($this->recentDirectorylist));
-			$this->EnlistDirectorylist(empty($directoryPath) ? "" : $directoryPath);
+			$this->EnlistDirectorylistIndepth(empty($directoryPath) ? "" : $directoryPath);
 			return $this->recentDirectorylist;
 		}
 
@@ -148,7 +148,7 @@
 			if (is_dir($fineDirectoryPath)) {
 				$directoryParentName = substr($fineDirectoryPath, 0, strrpos($fineDirectoryPath, "/"));
 				$directoryName = substr($fineDirectoryPath, strrpos($fineDirectoryPath, "/") + 1);
-				if ($this->ContainsDirectoryName($this->RefreshDirectorylist($this->UnfineDirectoryPath($directoryParentName)), $directoryName)) {
+				if ($this->ContainsDirectoryName($this->RefreshDirectorylistIndepth($this->UnfineDirectoryPath($directoryParentName)), $directoryName)) {
 					$this->MakeDirectory($this->recyclebinDirectory);
 					if (is_dir($this->FineDirectoryPath($this->recyclebinDirectory))) {
 						return rename($fineDirectoryPath, "{$this->topDirectory}/{$this->recyclebinDirectory}/{$directoryName}" . $this->CurrentTimePlatformSafe());
@@ -186,12 +186,12 @@
 			return $filteredList;
 		}
 
-		private function EnlistDirectorylist(string $directoryPath) {
+		private function EnlistDirectorylistIndepth(string $directoryPath) {
 			foreach ($this->DirectoryListFilter($this->FineDirectoryPath($directoryPath)) as $index => $value) {
 				$directoryFound = "{$directoryPath}/{$value}";
 				$directoryFound = strpos($directoryFound, "/") == 0 ? substr($directoryFound, 1) : $directoryFound;
 				array_push($this->recentDirectorylist, $directoryFound);
-				$this->EnlistDirectorylist("{$directoryPath}/{$value}");
+				$this->EnlistDirectorylistIndepth("{$directoryPath}/{$value}");
 			}
 		}
 
@@ -327,9 +327,9 @@
 			print_r($directory->RecentDirectorylist());
 			echo "</pre>";
 			
-			echo "<h6>4: RefreshDirectorylist (home/margosa)</h6>";
+			echo "<h6>4: RefreshDirectorylistIndepth (home/margosa)</h6>";
 			echo "<pre>";
-			print_r($directory->RefreshDirectorylist("home/margosa"));
+			print_r($directory->RefreshDirectorylistIndepth("home/margosa"));
 			echo "</pre>";
 
 			echo "<h6>5: RecentDirectorylist ()</h6>";
@@ -343,9 +343,9 @@
 			echo "<h6>7: DeleteDirectory (home/margosa/spin/algebrafate/ARandomDirectory)</h6>";
 			echo $directory->DeleteDirectory("home/margosa/spin/algebrafate/ARandomDirectory") ? "Success" : "Directory not deleted or not exists";
 		
-			echo "<h6>8: RefreshDirectorylist ()</h6>";
+			echo "<h6>8: RefreshDirectorylistIndepth ()</h6>";
 			echo "<pre>";
-			print_r($directory->RefreshDirectorylist());
+			print_r($directory->RefreshDirectorylistIndepth());
 			echo "</pre>";
 
 			echo "<h6>9: RefreshFileList (home/margosa/now)</h6>";
