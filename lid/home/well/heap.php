@@ -33,7 +33,7 @@
 		public function RequireonceDirectory(string $directoryPath) {
 			$filteredFileFullPaths = array();
 			foreach ($this->file->RefreshFileList($directoryPath) as $index => $value) {
-				$fileFullPath = $this->directory->DirectoryPathTop() . "/{$directoryPath}/{$value}";
+				$fileFullPath = $this->directory->ReadTopDirectory() . "/{$directoryPath}/{$value}";
 				if (!$this->SearchScriptIsCurrent($fileFullPath)) {
 					array_push($filteredFileFullPaths, $fileFullPath);
 				}
@@ -71,7 +71,7 @@
 		}
 
 		public function RequireonceFile(string $directoryPath, string $fileName) {
-			$fullFilePath = $this->directory->DirectoryPathTop() . "/{$directoryPath}/{$fileName}";
+			$fullFilePath = $this->directory->ReadTopDirectory() . "/{$directoryPath}/{$fileName}";
 			if (!$this->SearchScriptIsCurrent($fullFilePath)) {
 				if (is_file($fullFilePath)) {
 					return require_once($fullFilePath);
@@ -88,16 +88,16 @@
 	}
 
 	class Directory {
-		protected string $directoryPathTop = "";
+		protected string $topDirectory = "";
 		protected array $directoryList = array();
-		private string $directoryPathTopDefault = "./lid";
+		private string $topDirectoryDefault = "./lid";
 
-		public function __construct(?string $directoryPathTop = null) {
-			$this->directoryPathTop = empty($directoryPathTop) ? $this->directoryPathTopDefault : $directoryPathTop;
+		public function __construct(?string $topDirectory = null) {
+			$this->topDirectory = empty($topDirectory) ? $this->topDirectoryDefault : $topDirectory;
 		}
 
-		public function DirectoryPathTop() {
-			return $this->directoryPathTop;
+		public function ReadTopDirectory() {
+			return $this->topDirectory;
 		}
 
 		public function DirectoryListRecent() {
@@ -128,7 +128,7 @@
 					$directoryRecyclebinPath = "home/margosa/spin/algebrafate/recyclebin";
 					$this->MakeDirectory($directoryRecyclebinPath);
 					if (is_dir($this->FineDirectoryPath($directoryRecyclebinPath))) {
-						return rename($fineDirectoryPath, "{$this->directoryPathTop}/{$directoryRecyclebinPath}/{$directoryOriginalName}" . $this->CurrentTimePlatformSafe());
+						return rename($fineDirectoryPath, "{$this->topDirectory}/{$directoryRecyclebinPath}/{$directoryOriginalName}" . $this->CurrentTimePlatformSafe());
 					}
 				}
 			}
@@ -152,11 +152,11 @@
 		}
 
 		public function FineDirectoryPath(string $directoryPath) {
-			return $directoryPath != "" ? "{$this->directoryPathTop}/{$directoryPath}" : $this->directoryPathTop;
+			return $directoryPath != "" ? "{$this->topDirectory}/{$directoryPath}" : $this->topDirectory;
 		}
 
 		public function DirectoryUnfinedPathAs(string $fineDirectoryPath) {
-			return strpos($fineDirectoryPath, $this->directoryPathTop) == 0 ? substr($fineDirectoryPath, strlen($this->directoryPathTop) + 1) : false;
+			return strpos($fineDirectoryPath, $this->topDirectory) == 0 ? substr($fineDirectoryPath, strlen($this->topDirectory) + 1) : false;
 		}
 
 		public function DirectoryFoundAt(array $directoryPaths, string $directoryName) {
