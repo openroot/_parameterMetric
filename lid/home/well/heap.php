@@ -32,7 +32,7 @@
 
 		public function RequireonceDirectory(string $directoryPath) {
 			$filteredFileFullPaths = array();
-			foreach ($this->file->RefreshFileList($directoryPath) as $index => $value) {
+			foreach ($this->file->EnlistFilelist($directoryPath) as $index => $value) {
 				$fileFullPath = $this->directory->ReadTopDirectory() . "/{$directoryPath}/{$value}";
 				if (!$this->SearchScriptIsCurrent($fileFullPath)) {
 					array_push($filteredFileFullPaths, $fileFullPath);
@@ -292,7 +292,7 @@
 			$this->directory = new Directory();
 		}
 
-		public function RefreshFileList(string $directoryPath) {
+		public function EnlistFilelist(string $directoryPath) {
 			$fileList = array();
 			$fineDirectoryPath = $this->directory->FineDirectoryPath($directoryPath);
 			if (is_dir($fineDirectoryPath)) {
@@ -348,9 +348,9 @@
 			print_r($directory->RefreshRecentDirectorylistIndepth());
 			echo "</pre>";
 
-			echo "<h6>9: RefreshFileList (home/margosa/now)</h6>";
+			echo "<h6>9: EnlistFilelist (home/margosa/now)</h6>";
 			echo "<pre>";
-			print_r($file->RefreshFileList("home/margosa/now"));
+			print_r($file->EnlistFilelist("home/margosa/now"));
 			echo "</pre>";
 		}
 	}
