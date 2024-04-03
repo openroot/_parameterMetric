@@ -195,6 +195,18 @@
 			return $filteredList;
 		}
 
+		private function FetchDirectoriesAndFilesFirstlevel(string $fineDirectoryPath) {
+			$directoriesandfiles = array();
+			if (!($fineDirectoryPath == "." || $fineDirectoryPath == "..") && is_dir($fineDirectoryPath)) {
+				foreach(scandir($fineDirectoryPath) as $index => $value) {
+					if (!($value == "." || $value == "..")) {
+						array_push($directoriesandfiles, $value);
+					}
+				}
+			}
+			return $directoriesandfiles;
+		}
+
 		private function YieldCopyDirectory(string $directoryPath, string $locationPath, string $copyType) {
 			$result = false;
 			$fineDirectoryPath = $this->FineDirectoryPath($directoryPath);
@@ -261,18 +273,6 @@
 				}
 			}
 			return $result;
-		}
-
-		private function FetchDirectoriesAndFilesFirstlevel(string $fineDirectoryPath) {
-			$directoriesandfiles = array();
-			if (!($fineDirectoryPath == "." || $fineDirectoryPath == "..") && is_dir($fineDirectoryPath)) {
-				foreach(scandir($fineDirectoryPath) as $index => $value) {
-					if (!($value == "." || $value == "..")) {
-						array_push($directoriesandfiles, $value);
-					}
-				}
-			}
-			return $directoriesandfiles;
 		}
 
 		private function CurrentTimePlatformSafe(?string $timeZone = "UTC") {
