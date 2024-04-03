@@ -309,37 +309,46 @@
 
 	class Specimen {
 		public function __construct() {
-			echo "use lid\home\well\heap as lidheap;<br>\$platform = new lidheap\Platform();<br>\$directory = new lidheap\Directory();<br>\$file = new lidheap\File();<br><br>";
 			$platform = new lidheap\Platform();
 			$directory = new lidheap\Directory();
 			$file = new lidheap\File();
 
-			echo "\$platform->RequireonceDirectory(\"home/margosa/now\");";
-			if ($platform->RequireonceDirectory("home/margosa/now")) {
-				echo "<pre>RequireonceDirectory, successfull.</pre>";
-			}
-			echo "\$platform->RequireonceFile(\"home/well\", \"water.php\");";
-			if ($platform->RequireonceFile("home/well", "water.php")) {
-				echo "<pre>RequireonceFile, successfull.</pre>";
-			}
+			echo "<h6>1: RequireonceDirectory (home/margosa/now)</h6>";
+			echo $platform->RequireonceDirectory("home/margosa/now") ? "Success" : "Unsuccess";
 
-			echo "\$directory->DirectoryListRecent();";
-			echo "<pre>"; print_r($directory->DirectoryListRecent()); echo "</pre>";
-			echo "\$directory->DirectoryListRefresh(\"home/margosa\");";
-			echo "<pre>"; print_r($directory->DirectoryListRefresh("home/margosa")); echo "</pre>";
-			echo "\$directory->DirectoryListRecent();";
-			echo "<pre>"; print_r($directory->DirectoryListRecent()); echo "</pre>";
+			echo "<h6>2: RequireonceFile (home/well, water.php)</h6>";
+			echo $platform->RequireonceFile("home/well", "water.php") ? "Success" : "Unsuccess";
 
-			echo "\$directory->MakeDirectory(\"home/margosa/spin/algebrafate/ARandomDirectory\");";
-			echo "<pre>"; echo $directory->MakeDirectory("home/margosa/spin/algebrafate/ARandomDirectory") ? "Directory made." : "Directory not made or already exists."; echo "</pre>";
-			echo "\$directory->DeleteDirectory(\"home/margosa/spin/algebrafate/ARandomDirectory\");";
-			echo "<pre>"; echo $directory->DeleteDirectory("home/margosa/spin/algebrafate/ARandomDirectory") ? "Directory deleted." : "Directory not deleted or not exists."; echo "</pre>";
+			echo "<h6>3: DirectoryListRecent ()</h6>";
+			echo "<pre>";
+			print_r($directory->DirectoryListRecent());
+			echo "</pre>";
+			
+			echo "<h6>4: DirectoryListRefresh (home/margosa)</h6>";
+			echo "<pre>";
+			print_r($directory->DirectoryListRefresh("home/margosa"));
+			echo "</pre>";
+
+			echo "<h6>5: DirectoryListRecent ()</h6>";
+			echo "<pre>";
+			print_r($directory->DirectoryListRecent());
+			echo "</pre>";
+
+			echo "<h6>6: MakeDirectory (home/margosa/spin/algebrafate/ARandomDirectory)</h6>";
+			echo $directory->MakeDirectory("home/margosa/spin/algebrafate/ARandomDirectory") ? "Success" : "Directory not made or already exists";
+			
+			echo "<h6>7: DeleteDirectory (home/margosa/spin/algebrafate/ARandomDirectory)</h6>";
+			echo $directory->DeleteDirectory("home/margosa/spin/algebrafate/ARandomDirectory") ? "Success" : "Directory not deleted or not exists";
 		
-			echo "\$directory->DirectoryListRefresh();";
-			echo "<pre>"; print_r($directory->DirectoryListRefresh()); echo "</pre>";
+			echo "<h6>8: DirectoryListRefresh ()</h6>";
+			echo "<pre>";
+			print_r($directory->DirectoryListRefresh());
+			echo "</pre>";
 
-			echo "\$file->FileListRefresh(\"home/margosa/now\");";
-			echo "<pre>"; print_r($file->FileListRefresh("home/margosa/now")); echo "</pre>";
+			echo "<h6>9: FileListRefresh (home/margosa/now)</h6>";
+			echo "<pre>";
+			print_r($file->FileListRefresh("home/margosa/now"));
+			echo "</pre>";
 		}
 	}
 ?>
