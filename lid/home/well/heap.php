@@ -116,9 +116,9 @@
 			return strpos($fineDirectoryPath, $this->topDirectory) == 0 ? substr($fineDirectoryPath, strlen($this->topDirectory) + 1) : false;
 		}
 
-		public function RefreshDirectorylistIndepth(?string $directoryPath = null) {
+		public function RefreshRecentDirectorylistIndepth(?string $directoryPath = null) {
 			array_splice($this->recentDirectorylist, 0, count($this->recentDirectorylist));
-			$this->EnlistDirectorylistIndepth(empty($directoryPath) ? "" : $directoryPath);
+			$this->EnlistRecentDirectorylistIndepth(empty($directoryPath) ? "" : $directoryPath);
 			return $this->recentDirectorylist;
 		}
 
@@ -148,7 +148,7 @@
 			if (is_dir($fineDirectoryPath)) {
 				$parentDirectoryPath = substr($fineDirectoryPath, 0, strrpos($fineDirectoryPath, "/"));
 				$directoryName = substr($fineDirectoryPath, strrpos($fineDirectoryPath, "/") + 1);
-				if ($this->ContainsDirectoryName($this->RefreshDirectorylistIndepth($this->UnfineDirectoryPath($parentDirectoryPath)), $directoryName)) {
+				if ($this->ContainsDirectoryName($this->RefreshRecentDirectorylistIndepth($this->UnfineDirectoryPath($parentDirectoryPath)), $directoryName)) {
 					$this->MakeDirectory($this->recyclebinDirectory);
 					if (is_dir($this->FineDirectoryPath($this->recyclebinDirectory))) {
 						return rename($fineDirectoryPath, "{$this->topDirectory}/{$this->recyclebinDirectory}/{$directoryName}" . $this->CurrentTimePlatformSafe());
@@ -174,12 +174,12 @@
 			return $this->YieldCopyDirectory($directoryPath, $locationPath, "mergeoutdepth");
 		}
 
-		private function EnlistDirectorylistIndepth(string $directoryPath) {
+		private function EnlistRecentDirectorylistIndepth(string $directoryPath) {
 			foreach ($this->EnlistDirectorylistOutdepth($this->FineDirectoryPath($directoryPath)) as $index => $value) {
 				$foundDirectoryPath = "{$directoryPath}/{$value}";
 				$foundDirectoryPath = strpos($foundDirectoryPath, "/") == 0 ? substr($foundDirectoryPath, 1) : $foundDirectoryPath;
 				array_push($this->recentDirectorylist, $foundDirectoryPath);
-				$this->EnlistDirectorylistIndepth($foundDirectoryPath);
+				$this->EnlistRecentDirectorylistIndepth($foundDirectoryPath);
 			}
 		}
 
@@ -327,9 +327,9 @@
 			print_r($directory->RecentDirectorylist());
 			echo "</pre>";
 			
-			echo "<h6>4: RefreshDirectorylistIndepth (home/margosa)</h6>";
+			echo "<h6>4: RefreshRecentDirectorylistIndepth (home/margosa)</h6>";
 			echo "<pre>";
-			print_r($directory->RefreshDirectorylistIndepth("home/margosa"));
+			print_r($directory->RefreshRecentDirectorylistIndepth("home/margosa"));
 			echo "</pre>";
 
 			echo "<h6>5: RecentDirectorylist ()</h6>";
@@ -343,9 +343,9 @@
 			echo "<h6>7: DeleteDirectory (home/margosa/spin/algebrafate/ARandomDirectory)</h6>";
 			echo $directory->DeleteDirectory("home/margosa/spin/algebrafate/ARandomDirectory") ? "Success" : "Directory not deleted or not exists";
 		
-			echo "<h6>8: RefreshDirectorylistIndepth ()</h6>";
+			echo "<h6>8: RefreshRecentDirectorylistIndepth ()</h6>";
 			echo "<pre>";
-			print_r($directory->RefreshDirectorylistIndepth());
+			print_r($directory->RefreshRecentDirectorylistIndepth());
 			echo "</pre>";
 
 			echo "<h6>9: RefreshFileList (home/margosa/now)</h6>";
