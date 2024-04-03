@@ -109,10 +109,16 @@
 		}
 
 		public function FineDirectoryPath(string $directoryPath) {
+			// TODO: [NOT MISSION CRITICAL]
+			// TODO: Process only after verifying if passed value do not already contain topDirectory at start.
+			// TODO: Further rectify any false slashes.
 			return $directoryPath != "" ? "{$this->topDirectory}/{$directoryPath}" : $this->topDirectory;
 		}
 
 		public function UnfineDirectoryPath(string $fineDirectoryPath) {
+			// TODO: [NOT MISSION CRITICAL]
+			// TODO: Process only after verifying if passed value do contain topDirectory at start.
+			// TODO: Further rectify any false slashes.
 			return strpos($fineDirectoryPath, $this->topDirectory) == 0 ? substr($fineDirectoryPath, strlen($this->topDirectory) + 1) : false;
 		}
 
@@ -337,6 +343,12 @@
 
 			echo "<h6>3: ReadTopDirectory</h6>";
 			echo $directory->ReadTopDirectory();
+
+			echo "<h6>4: FineDirectoryPath (home/margosa/now)</h6>";
+			echo $directory->FineDirectoryPath("home/margosa/now");
+
+			echo "<h6>5: UnfineDirectoryPath (./lid/home/margosa/now)</h6>";
+			echo $directory->UnfineDirectoryPath("./lid/home/margosa/now");
 
 			echo "<h6>3: RecentDirectorylist ()</h6>";
 			echo "<pre>";
