@@ -85,6 +85,7 @@
 	// TODO: 1. Add section-counter feature.
 	// TODO: 2. Add 'task-section'. Till then, jot down here.
 	// TODO: 3. Add 'analyze-section' for code of the project analysis.
+	// TODO: 4. Make a 'file-mod' registration system. Incorporate it with push mechanism of project updates.
 	// ------------------------------------------------------------------------------------------------------------
 ?>
 
