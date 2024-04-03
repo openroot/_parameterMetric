@@ -350,6 +350,9 @@
 			echo "<h6>5: UnfineDirectoryPath (./lid/home/margosa/now)</h6>";
 			echo $directory->UnfineDirectoryPath("./lid/home/margosa/now");
 
+			echo "<h6>6: ContainsDirectoryName (home/margosa/now | home/margosa/spin, Spin)</h6>";
+			echo $directory->ContainsDirectoryName(array("home/margosa/now", "home/margosa/spin"), "Spin") ? "Success" : "Unsuccess";
+
 			echo "<h6>3: RecentDirectorylist ()</h6>";
 			echo "<pre>";
 			print_r($directory->RecentDirectorylist());
