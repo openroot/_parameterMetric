@@ -100,7 +100,7 @@
 			return $this->topDirectory;
 		}
 
-		public function DirectoryListRecent() {
+		public function RecentDirectoryList() {
 			return $this->directoryList;
 		}
 
@@ -319,9 +319,9 @@
 			echo "<h6>2: RequireonceFile (home/well, water.php)</h6>";
 			echo $platform->RequireonceFile("home/well", "water.php") ? "Success" : "Unsuccess";
 
-			echo "<h6>3: DirectoryListRecent ()</h6>";
+			echo "<h6>3: RecentDirectoryList ()</h6>";
 			echo "<pre>";
-			print_r($directory->DirectoryListRecent());
+			print_r($directory->RecentDirectoryList());
 			echo "</pre>";
 			
 			echo "<h6>4: DirectoryListRefresh (home/margosa)</h6>";
@@ -329,9 +329,9 @@
 			print_r($directory->DirectoryListRefresh("home/margosa"));
 			echo "</pre>";
 
-			echo "<h6>5: DirectoryListRecent ()</h6>";
+			echo "<h6>5: RecentDirectoryList ()</h6>";
 			echo "<pre>";
-			print_r($directory->DirectoryListRecent());
+			print_r($directory->RecentDirectoryList());
 			echo "</pre>";
 
 			echo "<h6>6: MakeDirectory (home/margosa/spin/algebrafate/ARandomDirectory)</h6>";
