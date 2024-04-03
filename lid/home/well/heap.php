@@ -34,7 +34,7 @@
 			$scripts = array();
 			foreach ($this->file->FileListRefresh($directoryPath) as $index => $value) {
 				$fileFullPath = $this->directory->DirectoryPathTop() . "/{$directoryPath}/{$value}";
-				if (!$this->CurrentScript($fileFullPath)) {
+				if (!$this->SearchScriptIsCurrent($fileFullPath)) {
 					array_push($scripts, $fileFullPath);
 				}
 			}
@@ -72,7 +72,7 @@
 
 		public function RequireonceFile(string $directoryPath, string $fileName) {
 			$fileFullPath = $this->directory->DirectoryPathTop() . "/{$directoryPath}/{$fileName}";
-			if (!$this->CurrentScript($fileFullPath)) {
+			if (!$this->SearchScriptIsCurrent($fileFullPath)) {
 				if (is_file($fileFullPath)) {
 					return require_once($fileFullPath);
 				}
@@ -80,10 +80,10 @@
 			return false;
 		}
 
-		private function CurrentScript(string $scriptFile) {
-			$presentFile = str_replace("\\", "/", __FILE__);
+		private function SearchScriptIsCurrent(string $scriptFile) {
+			$presentScriptFile = str_replace("\\", "/", __FILE__);
 			$scriptFile = $scriptFile[0] == "." ? substr($scriptFile, 1) : $scriptFile;
-			return str_contains($presentFile, $scriptFile) ? true : false;
+			return str_contains($presentScriptFile, $scriptFile) ? true : false;
 		}
 	}
 
