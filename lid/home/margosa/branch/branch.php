@@ -1,18 +1,18 @@
 <?php
-	namespace lid\home\margosa\now\leaf;
+	namespace lid\home\margosa\branch;
 ?>
 
 <?php
 ?>
 
 <?php
-	class Leaf {
+	class Branch {
 		public function __construct() {}
 	}
 ?>
 
 <?php
-	use lid\home\margosa\now\leaf as lidleave;
+	use lid\home\margosa\branch as lidbranch;
 
 	class Specimen {
 		public function __construct() {}
