@@ -328,7 +328,7 @@
 		public function __construct() {}
 	}
 
-	class Runtime {
+	class Run {
 		public function __construct() {}
 	}
 ?>
