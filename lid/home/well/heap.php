@@ -331,6 +331,10 @@
 	class Run {
 		public function __construct() {}
 	}
+
+	class Dive {
+		public function __construct() {}
+	}
 ?>
 
 <?php
