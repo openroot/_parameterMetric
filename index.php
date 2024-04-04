@@ -29,6 +29,13 @@
 							new lid\home\margosa\now\flower\Specimen();
 						}
 						break;
+					case "margosabranch":
+						// A demonstration of code convention used in this project in generic format.
+						if ($this->platform->RequireonceFile("home/margosa/branch", "branch.php")) {
+							echo "<h5>Namespace: lid\home\margosa\branch</h5>";
+							new lid\home\margosa\branch\Specimen();
+						}
+						break;
 					case "heap":
 						// A demonstration of Namespace: 'lid\home\well\heap'.
 						echo "<h5>Namespace: lid\home\well\heap</h5>";
@@ -69,13 +76,14 @@
 
 <?php
 	$launch = new Launch();
-	$launch->Skeleton("margosanow");
-	$launch->Skeleton("heap");
-	$launch->Skeleton("joins");
-	$launch->Skeleton("joint");
-	$launch->Skeleton("pull");
-	$launch->Skeleton("push");
-	$launch->Skeleton("water");
+	//$launch->Skeleton("margosanow");
+	$launch->Skeleton("margosabranch");
+	//$launch->Skeleton("heap");
+	//$launch->Skeleton("joins");
+	//$launch->Skeleton("joint");
+	//$launch->Skeleton("pull");
+	//$launch->Skeleton("push");
+	//$launch->Skeleton("water");
 ?>
 
 <?php
