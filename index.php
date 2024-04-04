@@ -76,14 +76,14 @@
 
 <?php
 	$launch = new Launch();
-	$launch->Skeleton("margosanow");
+	//$launch->Skeleton("margosanow");
 	$launch->Skeleton("margosabranch");
-	$launch->Skeleton("heap");
-	$launch->Skeleton("joins");
-	$launch->Skeleton("joint");
-	$launch->Skeleton("pull");
-	$launch->Skeleton("push");
-	$launch->Skeleton("water");
+	//$launch->Skeleton("heap");
+	//$launch->Skeleton("joins");
+	//$launch->Skeleton("joint");
+	//$launch->Skeleton("pull");
+	//$launch->Skeleton("push");
+	//$launch->Skeleton("water");
 ?>
 
 <?php
