@@ -4,6 +4,7 @@
 
 <?php
 	use lid\home\well\heap as lidheap;
+	$redirectTo = isset($_GET["redirectto"]) ? $_GET["redirectto"] : "";
 ?>
 
 <?php
@@ -75,7 +76,7 @@
 ?>
 
 <?php
-	$launch = new Launch();
+	$launch = new Launch($redirectTo == "" ? null : $redirectTo);
 	//$launch->Skeleton("margosanow");
 	$launch->Skeleton("margosabranch");
 	//$launch->Skeleton("heap");
@@ -100,6 +101,6 @@
 <?php
 	// ------------------------------------------------------------------------------------------------------------
 	// Extra testing, is jot down here for now.
-	
+
 	// ------------------------------------------------------------------------------------------------------------
 ?>

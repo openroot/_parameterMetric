@@ -7,17 +7,20 @@
 
 <?php
 	class Branch {
-		public function __construct() {}
+		private ?array $arguments;
+
+		public function __construct(?array $arguments = null) {
+			$this->arguments = $arguments;
+		}
 
 		public function Around() {
-			for ($i = 1; $i <= 3 ; $i++) {
-				sleep(1); //$sec = 1; usleep(1000000 * $sec);
+			for ($i = 1; $i <= 5 ; $i++) {
 				$this->Here();
 			}
 		}
 
 		public function Here() {
-			echo "Singing & Playing PHP.<br>";
+			echo "Singing & Playing `PHP`.<br>";
 		}
 	}
 ?>

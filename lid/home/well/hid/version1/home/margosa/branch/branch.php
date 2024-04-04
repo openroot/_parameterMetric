@@ -7,10 +7,20 @@
 
 <?php
 	class Branch {
-		public function __construct() {}
+		private ?array $arguments;
+
+		public function __construct(?array $arguments = null) {
+			$this->arguments = $arguments;
+		}
 
 		public function Around() {
-			return "Singing & Playing PHP.";
+			for ($i = 1; $i <= 5 ; $i++) {
+				$this->Here();
+			}
+		}
+
+		public function Here() {
+			echo "Singing & Playing `PHP`.<br>";
 		}
 	}
 ?>
@@ -23,7 +33,7 @@
 			$branch = new lidbranch\Branch();
 
 			echo "<h6>1</h6>";
-			echo $branch->Around();
+			$branch->Around();
 		}
 	}
 ?>
