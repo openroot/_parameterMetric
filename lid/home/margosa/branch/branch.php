@@ -10,7 +10,14 @@
 		public function __construct() {}
 
 		public function Around() {
-			return "Singing & Playing PHP.";
+			for ($i = 1; $i <= 3 ; $i++) {
+				sleep(1); //$sec = 1; usleep(1000000 * $sec);
+				$this->Here();
+			}
+		}
+
+		public function Here() {
+			echo "Singing & Playing PHP.<br>";
 		}
 	}
 ?>
@@ -23,7 +30,7 @@
 			$branch = new lidbranch\Branch();
 
 			echo "<h6>1</h6>";
-			echo $branch->Around();
+			$branch->Around();
 		}
 	}
 ?>
