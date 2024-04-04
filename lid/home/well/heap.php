@@ -323,6 +323,10 @@
 			return $fileList;
 		}
 	}
+
+	class Street {
+		public function __construct() {}
+	}
 ?>
 
 <?php
