@@ -327,6 +327,10 @@
 	class Street {
 		public function __construct() {}
 	}
+
+	class Runtime {
+		public function __construct() {}
+	}
 ?>
 
 <?php
