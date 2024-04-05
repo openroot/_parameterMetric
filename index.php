@@ -4,8 +4,8 @@
 
 <?php
 	use lid\home\well\heap as lidheap;
-	$launchSkeleton = isset($_GET["launchSkeleton"]) ? $_GET["launchSkeleton"] : "";
-	//$launchSkeleton = 
+	$launchSkeleton = isset($_GET["launch_skeleton"]) ? $_GET["launch_skeleton"] : "";
+	//$launchSkeleton = lidhip\Street::$get["launch_skeleton"];
 ?>
 
 <?php

@@ -331,6 +331,8 @@
 	}
 
 	class Street {
+		public static array $get = array();
+
 		public function __construct() {}
 	}
 
