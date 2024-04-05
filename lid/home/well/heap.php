@@ -373,60 +373,66 @@
 			$platform = new lidheap\Platform();
 			$directory = new lidheap\Directory();
 			$file = new lidheap\File();
+			$street = $platform->ReadStreet();
 
-			echo "<h6>1: RequireonceDirectory (home/margosa/now)</h6>";
+			echo "<h6>1: Platform - RequireonceDirectory (home/margosa/now)</h6>";
 			echo $platform->RequireonceDirectory("home/margosa/now") ? "Success" : "Unsuccess";
 
-			echo "<h6>2: RequireonceFile (home/well, water.php)</h6>";
+			echo "<h6>2: Platform - RequireonceFile (home/well, water.php)</h6>";
 			echo $platform->RequireonceFile("home/well", "water.php") ? "Success" : "Unsuccess";
 
-			echo "<h6>3: SearchScriptAsCurrentScript (well/heap.php)</h6>";
+			echo "<h6>3: Platform - SearchScriptAsCurrentScript (well/heap.php)</h6>";
 			echo $platform->SearchScriptAsCurrentScript("well/heap.php") ? "Success" : "Unsuccess";
 
-			echo "<h6>4: ReadTopDirectory</h6>";
+			echo "<h6>4: Directory - ReadTopDirectory</h6>";
 			echo $directory->ReadTopDirectory();
 
-			echo "<h6>5: FineDirectoryPath (home/margosa/now)</h6>";
+			echo "<h6>5: Directory - FineDirectoryPath (home/margosa/now)</h6>";
 			echo $directory->FineDirectoryPath("home/margosa/now");
 
-			echo "<h6>6: UnfineDirectoryPath (./lid/home/margosa/now)</h6>";
+			echo "<h6>6: Directory - UnfineDirectoryPath (./lid/home/margosa/now)</h6>";
 			echo $directory->UnfineDirectoryPath("./lid/home/margosa/now");
 
-			echo "<h6>7: ContainsDirectoryName (home/margosa/now | home/margosa/spin, Spin)</h6>";
+			echo "<h6>7: Directory - ContainsDirectoryName (home/margosa/now | home/margosa/spin, Spin)</h6>";
 			echo $directory->ContainsDirectoryName(array("home/margosa/now", "home/margosa/spin"), "Spin") ? "Success" : "Unsuccess";
 
-			echo "<h6>8: ReadRecentDirectorylist ()</h6>";
+			echo "<h6>8: Directory - ReadRecentDirectorylist ()</h6>";
 			echo "<pre>";
 			print_r($directory->ReadRecentDirectorylist());
 			echo "</pre>";
 			
-			echo "<h6>9: RefreshRecentDirectorylistIndepth (home/margosa)</h6>";
+			echo "<h6>9: Directory - RefreshRecentDirectorylistIndepth (home/margosa)</h6>";
 			echo "<pre>";
 			print_r($directory->RefreshRecentDirectorylistIndepth("home/margosa"));
 			echo "</pre>";
 
-			echo "<h6>10: ReadRecentDirectorylist ()</h6>";
+			echo "<h6>10: Directory - ReadRecentDirectorylist ()</h6>";
 			echo "<pre>";
 			print_r($directory->ReadRecentDirectorylist());
 			echo "</pre>";
 
-			echo "<h6>11: MakeDirectory (home/margosa/spin/algebrafate/ARandomDirectory)</h6>";
+			echo "<h6>11: Directory - MakeDirectory (home/margosa/spin/algebrafate/ARandomDirectory)</h6>";
 			echo $directory->MakeDirectory("home/margosa/spin/algebrafate/ARandomDirectory") ? "Success" : "Directory not made or already exists";
 			
-			echo "<h6>12: DeleteDirectory (home/margosa/spin/algebrafate/ARandomDirectory)</h6>";
+			echo "<h6>12: Directory - DeleteDirectory (home/margosa/spin/algebrafate/ARandomDirectory)</h6>";
 			echo $directory->DeleteDirectory("home/margosa/spin/algebrafate/ARandomDirectory") ? "Success" : "Directory not deleted or not exists";
 		
-			echo "<h6>13: RefreshRecentDirectorylistIndepth ()</h6>";
+			echo "<h6>13: Directory - RefreshRecentDirectorylistIndepth ()</h6>";
 			echo "<pre>";
 			print_r($directory->RefreshRecentDirectorylistIndepth());
 			echo "</pre>";
 
-			echo "<h6>14: ContainsFileName (home/margosa/now/flower.php | home/margosa/now/leaf.php, Leaf.php)</h6>";
+			echo "<h6>14: File - ContainsFileName (home/margosa/now/flower.php | home/margosa/now/leaf.php, Leaf.php)</h6>";
 			echo $file->ContainsFileName(array("home/margosa/now/flower.php", "home/margosa/now/leaf.php"), "Leaf.php") ? "Success" : "Unsuccess";
 
-			echo "<h6>15: EnlistFilelist (home/margosa/now)</h6>";
+			echo "<h6>15: File - EnlistFilelist (home/margosa/now)</h6>";
 			echo "<pre>";
 			print_r($file->EnlistFilelist("home/margosa/now"));
+			echo "</pre>";
+
+			echo "<h6>16:Street - ReadGets</h6>";
+			echo "<pre>";
+			print_r($street->ReadGets());
 			echo "</pre>";
 		}
 	}
