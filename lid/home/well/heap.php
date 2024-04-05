@@ -4,16 +4,18 @@
 
 <?php
 	use lid\home\well\pull as lidpull;
+	use lid\home\well\push as lidpush;
 ?>
 
 <?php
 	class Platform {
 		protected Directory $directory;
 		protected File $file;
+		protected lidpull\Pull $pull;
+		protected lidpush\Push $push;
 		protected Street $street;
 		protected Run $run;
 		protected Dive $dive;
-		protected lidpull\Pull $pull;
 
 		public function __construct() {
 			try {
@@ -21,12 +23,18 @@
 				$this->directory = new Directory();
 				$this->file = new File();
 				$this->street = new Street();
-				$this->run = new Run();
-				$this->dive = new Dive();
-				if ($this->directory && $this->file && $this->street && $this->run && $this->dive && $this->RequireonceDirectory("home/well")) {
+				if ($this->directory && $this->file && $this->street && $this->RequireonceDirectory("home/well")) {
 					$this->pull = new lidpull\Pull();
 					if ($this->pull) {
-						$success = true;
+						$this->push = new lidpush\Push($this->street);
+						if ($this->push) {
+							$this->street->RollGets();
+							$this->run = new Run();
+							$this->dive = new Dive();
+							if ($this->run && $this->dive) {
+								$success = true;
+							}
+						}
 					}
 				}
 				if (!$success) {
@@ -348,13 +356,19 @@
 		public function __construct() {
 			$this->gets = array();
 
-			$this->SetGets("launch_skeleton");
-
-			$this->RollGets();
+			//$this->RollGets();
 		}
 
 		public function ReadGets() {
 			return $this->gets;
+		}
+
+		public function RollGets() {
+			foreach ($_GET as $key => $value) {
+				if (array_key_exists($key, $this->gets)) {
+					$this->gets[$key] = $value;
+				}
+			}
 		}
 
 		public function SetGets(string $name) {
@@ -370,14 +384,6 @@
 				return $this->gets[$name];
 			}
 			return false;
-		}
-
-		private function RollGets() {
-			foreach ($_GET as $key => $value) {
-				if (array_key_exists($key, $this->gets)) {
-					$this->gets[$key] = $value;
-				}
-			}
 		}
 	}
 

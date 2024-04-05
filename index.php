@@ -15,7 +15,7 @@
 			$this->platform = new lidheap\Platform();
 			$this->street = $this->platform->ReadStreet();
 
-			$launchSkeleton = $this->street->FindGets("launch_skeleton");
+			$launchSkeleton = $this->street->FindGets("index_launch_skeleton");
 			$blockName = !empty($launchSkeleton) ? $launchSkeleton : $blockName;
 			if ($blockName != null) {
 				$this->Skeleton($blockName);
