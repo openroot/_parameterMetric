@@ -12,9 +12,9 @@
 		private lidwater\Dye $dye;
 		protected lidheap\Street $street;
 
-		public function __construct(lidheap\Street $street) {
+		public function __construct() {
 			$this->dye = new lidwater\Dye();
-			$this->street = $street;
+			$this->street = new lidheap\Street();
 
 			if ($this->dye && $this->street) {
 				$this->TripDyeRegions();

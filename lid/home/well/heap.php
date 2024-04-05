@@ -22,16 +22,15 @@
 				$success = false;
 				$this->directory = new Directory();
 				$this->file = new File();
-				$this->street = new Street();
-				if ($this->directory && $this->file && $this->street && $this->RequireonceDirectory("home/well")) {
+				if ($this->directory && $this->file && $this->RequireonceDirectory("home/well")) {
 					$this->pull = new lidpull\Pull();
 					if ($this->pull) {
-						$this->push = new lidpush\Push($this->street);
+						$this->push = new lidpush\Push();
 						if ($this->push) {
-							$this->street->RollGets();
+							$this->street = $this->push->ReadStreet();
 							$this->run = new Run();
 							$this->dive = new Dive();
-							if ($this->run && $this->dive) {
+							if ($this->street && $this->run && $this->dive) {
 								$success = true;
 							}
 						}
@@ -355,26 +354,16 @@
 
 		public function __construct() {
 			$this->gets = array();
-
-			//$this->RollGets();
 		}
 
 		public function ReadGets() {
 			return $this->gets;
 		}
 
-		public function RollGets() {
-			foreach ($_GET as $key => $value) {
-				if (array_key_exists($key, $this->gets)) {
-					$this->gets[$key] = $value;
-				}
-			}
-		}
-
 		public function SetGets(string $name) {
 			if (!array_key_exists($name, $this->gets)) {
 				$this->gets[$name] = null;
-				return true;
+				return $this->RollGets();
 			}
 			return false;
 		}
@@ -384,6 +373,15 @@
 				return $this->gets[$name];
 			}
 			return false;
+		}
+
+		private function RollGets() {
+			foreach ($_GET as $key => $value) {
+				if (array_key_exists($key, $this->gets)) {
+					$this->gets[$key] = $value;
+					return true;
+				}
+			}
 		}
 	}
 
