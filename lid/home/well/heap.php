@@ -354,6 +354,10 @@
 		public function ReadGets() {
 			return $this->gets;
 		}
+
+		public function SetGets() {
+
+		}
 	}
 
 	class Run {
