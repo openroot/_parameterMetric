@@ -40,6 +40,14 @@
 			return $this->street;
 		}
 
+		public function ReadRun() {
+			return $this->run;
+		}
+
+		public function ReadDive() {
+			return $this->dive;
+		}
+
 		public function RequireonceDirectory(string $directoryPath) {
 			$filteredFileFullPaths = array();
 			foreach ($this->file->EnlistFilelist($directoryPath) as $index => $value) {
