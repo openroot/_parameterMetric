@@ -10,6 +10,9 @@
 	class Platform {
 		protected Directory $directory;
 		protected File $file;
+		protected Street $street;
+		protected Run $run;
+		protected Dive $dive;
 		protected lidpull\Pull $pull;
 
 		public function __construct() {
@@ -17,6 +20,9 @@
 				$success = false;
 				$this->directory = new Directory();
 				$this->file = new File();
+				$this->street = new Street();
+				$this->run = new Run();
+				$this->dive = new Dive();
 				if ($this->directory && $this->file && $this->RequireonceDirectory("home/well")) {
 					$this->pull = new lidpull\Pull();
 					if ($this->pull) {
