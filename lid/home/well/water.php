@@ -283,6 +283,24 @@
 			);
 		}
 	}
+
+	class Dye {
+		private array $regions;
+
+		public function __construct() {
+			$this->CapRegions();
+		}
+
+		public function ReadRegions() {
+			return $this->regions;
+		}
+		
+		protected function CapRegions() {
+			$this->regions = array(
+				"index_launch_skeleton"
+			);
+		}
+	}
 ?>
 
 <?php
@@ -291,15 +309,21 @@
 	class Specimen {
 		public function __construct() {
 			$brick = new lidwater\Brick();
+			$dye = new lidwater\Dye();
 
-			echo "<h6>1</h6>";
+			echo "<h6>1: Brick - ReadFlats</h6>";
 			echo "<pre>";
 			print_r($brick->ReadFlats());
 			echo "</pre>";
 
-			echo "<h6>2</h6>";
+			echo "<h6>2: Brick - ReadHids</h6>";
 			echo "<pre>";
 			print_r($brick->ReadHids());
+			echo "</pre>";
+
+			echo "<h6>3: Dye - ReadRegions</h6>";
+			echo "<pre>";
+			print_r($dye->ReadRegions());
 			echo "</pre>";
 
 			/*echo "<pre>water.php: \"Once boil done, at this point, it's executed and data in memory.\"</pre>";*/

@@ -348,15 +348,36 @@
 		public function __construct() {
 			$this->gets = array();
 
-			$this->gets["launch_skeleton"] = isset($_GET["launch_skeleton"]) ? $_GET["launch_skeleton"] : "";
+			$this->SetGets("launch_skeleton");
+
+			$this->RollGets();
 		}
 
 		public function ReadGets() {
 			return $this->gets;
 		}
 
-		public function SetGets() {
+		public function SetGets(string $name) {
+			if (!array_key_exists($name, $this->gets)) {
+				$this->gets[$name] = null;
+				return true;
+			}
+			return false;
+		}
 
+		public function FindGets(string $name) {
+			if (array_key_exists($name, $this->gets)) {
+				return $this->gets[$name];
+			}
+			return false;
+		}
+
+		private function RollGets() {
+			foreach ($_GET as $key => $value) {
+				if (array_key_exists($key, $this->gets)) {
+					$this->gets[$key] = $value;
+				}
+			}
 		}
 	}
 
