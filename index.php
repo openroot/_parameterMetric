@@ -4,17 +4,19 @@
 
 <?php
 	use lid\home\well\heap as lidheap;
-	$launchSkeleton = isset($_GET["launch_skeleton"]) ? $_GET["launch_skeleton"] : "";
-	//$launchSkeleton = lidhip\Street::$get["launch_skeleton"];
 ?>
 
 <?php
 	class Launch {
 		private lidheap\Platform $platform;
+		private lidheap\Street $street;
 
 		public function __construct(?string $blockName = null) {
 			$this->platform = new lidheap\Platform();
+			$this->street = $this->platform->ReadStreet();
 
+			$launchSkeleton = $this->street->ReadGets()["launch_skeleton"];
+			$blockName = !empty($launchSkeleton) ? $launchSkeleton : $blockName;
 			if ($blockName != null) {
 				$this->Skeleton($blockName);
 			}
@@ -77,7 +79,7 @@
 ?>
 
 <?php
-	$launch = new Launch(!empty($launchSkeleton) ? $launchSkeleton : null);
+	$launch = new Launch();
 	//$launch->Skeleton("margosanow");
 	//$launch->Skeleton("margosabranch");
 	//$launch->Skeleton("heap");

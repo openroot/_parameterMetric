@@ -23,7 +23,7 @@
 				$this->street = new Street();
 				$this->run = new Run();
 				$this->dive = new Dive();
-				if ($this->directory && $this->file && $this->RequireonceDirectory("home/well")) {
+				if ($this->directory && $this->file && $this->street && $this->run && $this->dive && $this->RequireonceDirectory("home/well")) {
 					$this->pull = new lidpull\Pull();
 					if ($this->pull) {
 						$success = true;
@@ -34,6 +34,10 @@
 				}
 			}
 			catch (\Exception $exception) {}
+		}
+
+		public function ReadStreet() {
+			return $this->street;
 		}
 
 		public function RequireonceDirectory(string $directoryPath) {
@@ -331,9 +335,17 @@
 	}
 
 	class Street {
-		public static array $get = array();
+		protected array $gets;
 
-		public function __construct() {}
+		public function __construct() {
+			$this->gets = array();
+
+			$this->gets["launch_skeleton"] = isset($_GET["launch_skeleton"]) ? $_GET["launch_skeleton"] : "";
+		}
+
+		public function ReadGets() {
+			return $this->gets;
+		}
 	}
 
 	class Run {
