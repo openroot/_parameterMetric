@@ -122,7 +122,7 @@
 			return $this->topDirectory;
 		}
 
-		public function RecentDirectorylist() {
+		public function ReadRecentDirectorylist() {
 			return $this->recentDirectorylist;
 		}
 
@@ -395,9 +395,9 @@
 			echo "<h6>7: ContainsDirectoryName (home/margosa/now | home/margosa/spin, Spin)</h6>";
 			echo $directory->ContainsDirectoryName(array("home/margosa/now", "home/margosa/spin"), "Spin") ? "Success" : "Unsuccess";
 
-			echo "<h6>8: RecentDirectorylist ()</h6>";
+			echo "<h6>8: ReadRecentDirectorylist ()</h6>";
 			echo "<pre>";
-			print_r($directory->RecentDirectorylist());
+			print_r($directory->ReadRecentDirectorylist());
 			echo "</pre>";
 			
 			echo "<h6>9: RefreshRecentDirectorylistIndepth (home/margosa)</h6>";
@@ -405,9 +405,9 @@
 			print_r($directory->RefreshRecentDirectorylistIndepth("home/margosa"));
 			echo "</pre>";
 
-			echo "<h6>10: RecentDirectorylist ()</h6>";
+			echo "<h6>10: ReadRecentDirectorylist ()</h6>";
 			echo "<pre>";
-			print_r($directory->RecentDirectorylist());
+			print_r($directory->ReadRecentDirectorylist());
 			echo "</pre>";
 
 			echo "<h6>11: MakeDirectory (home/margosa/spin/algebrafate/ARandomDirectory)</h6>";
