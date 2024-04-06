@@ -399,7 +399,9 @@
 	}
 
 	class Run {
-		public function __construct() {}
+		public function __construct() {
+			// TODO: Multi-page
+		}
 	}
 
 	class Dive {
