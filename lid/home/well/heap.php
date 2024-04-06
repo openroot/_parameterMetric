@@ -360,28 +360,41 @@
 			return $this->gets;
 		}
 
-		public function SetGets(string $name) {
-			if (!array_key_exists($name, $this->gets)) {
-				$this->gets[$name] = null;
-				return $this->RollGets();
+		public function SetGets(string $key) {
+			if (!array_key_exists($key, $this->gets)) {
+				$this->gets[$key] = null;
+				return $this->RollGets($key);
 			}
 			return false;
 		}
 
-		public function FindGets(string $name) {
-			if (array_key_exists($name, $this->gets)) {
-				return $this->gets[$name];
+		public function FindGets(string $key) {
+			if (array_key_exists($key, $this->gets)) {
+				return $this->gets[$key];
 			}
 			return false;
 		}
 
-		private function RollGets() {
-			foreach ($_GET as $key => $value) {
-				if (array_key_exists($key, $this->gets)) {
-					$this->gets[$key] = $value;
+		protected function RollGets(?string $key = null) {
+			if ($key != null) {
+				if (array_key_exists($key, $_GET)) {
+					$this->gets[$key] = $_GET[$key];
 					return true;
 				}
 			}
+			else {
+				$successCount = 0;
+				foreach ($_GET as $key => $value) {
+					if (array_key_exists($key, $this->gets)) {
+						$this->gets[$key] = $value;
+						$successCount++;
+					}
+				}
+				if ($successCount <= count($_GET)) {
+					return true;
+				}
+			}
+			return false;
 		}
 	}
 
