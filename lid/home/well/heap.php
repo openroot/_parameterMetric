@@ -524,7 +524,7 @@
 			$this->brick = new lidwater\Brick();
 		}
 
-		private function LensDirectories(bool $onlyPrimaryDirectory = true) {
+		public function LensDirectories(bool $onlyPrimaryDirectory = true) {
 			$result = array();
 
 			$result1 = array();
@@ -557,7 +557,7 @@
 			return $result;
 		}
 
-		private function LensFiles(bool $onlyPrimaryDirectory = true) {
+		public function LensFiles(bool $onlyPrimaryDirectory = true) {
 			$result = array();
 
 			foreach (array_merge($this->LensDirectories($onlyPrimaryDirectory)[0], $this->LensDirectories($onlyPrimaryDirectory)[1]) as $index => $value) {
@@ -568,34 +568,6 @@
 			}
 
 			return $result;
-		}
-
-		public function Test() {
-			echo "<pre>";
-
-			echo "Primary directories (exists)<br>";
-			print_r(($this->LensDirectories())[0]);
-			echo "<br>";
-			echo "Primary directories (do not exist)<br>";
-			print_r(($this->LensDirectories())[1]);
-
-			echo "<br><br>";
-
-			echo "All directories (primary only)<br>";
-			print_r(($this->LensDirectories(false))[0]);
-			echo "<br>";
-			echo "All directories (non primary)<br>";
-			print_r(($this->LensDirectories(false))[1]);
-
-			echo "<br><br>";
-
-			echo "Primary directory files<br>";
-			print_r($this->LensFiles());
-			echo "<br>";
-			echo "All files<br>";
-			print_r($this->LensFiles(false));
-			
-			echo "</pre>";
 		}
 	}
 ?>
@@ -675,8 +647,37 @@
 			echo "<h6>17: Lamp - TestPdoAc</h6>";
 			echo $lamp->TestPdoAc();
 
-			echo "<h6>X1: Compute - Test</h6>";
-			echo $compute->Test();
+			$lensDirectories = $compute->LensDirectories();
+			echo "<h6>X1: Compute - LensDirectories | {Primary directories (exists)} | [0]</h6>";
+			echo "<pre>";
+			print_r($lensDirectories[0]);
+			echo "</pre>";
+
+			echo "<h6>X2: Compute - LensDirectories | {Primary directories (do not exist - set)} | [1]</h6>";
+			echo "<pre>";
+			print_r($lensDirectories[1]);
+			echo "</pre>";
+
+			$lensDirectories = $compute->LensDirectories(false);
+			echo "<h6>X3: Compute - LensDirectories (false) | {All directories (primary only)} | [0]</h6>";
+			echo "<pre>";
+			print_r($lensDirectories[0]);
+			echo "</pre>";
+
+			echo "<h6>X4: Compute - LensDirectories (false) | {All directories (non primary)} | [1]</h6>";
+			echo "<pre>";
+			print_r($lensDirectories[1]);
+			echo "</pre>";
+
+			echo "<h6>X5: Compute - LensFiles | {Primary directory files}</h6>";
+			echo "<pre>";
+			print_r($compute->LensFiles());
+			echo "</pre>";
+
+			echo "<h6>X6: Compute - LensFiles (false) | {All files}</h6>";
+			echo "<pre>";
+			print_r($compute->LensFiles(false));
+			echo "</pre>";
 		}
 	}
 ?>
