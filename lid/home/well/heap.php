@@ -524,7 +524,12 @@
 
 		private function FetchAllDirectoriesAndFiles() {
 			echo "<pre>";
-			print_r($this->directory->RefreshRecentDirectorylistIndepth());
+
+			$directoryAppendix = 0;
+			foreach($this->directory->RefreshRecentDirectorylistIndepth() as $index => $value) {
+				echo ++$directoryAppendix . "> {$value}<br>";
+			}
+
 			echo "</pre>";
 		}
 
