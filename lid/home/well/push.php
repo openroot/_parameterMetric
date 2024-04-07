@@ -48,9 +48,12 @@
 <?php
 	use lid\home\well\push as lidpong;
 
-	class Specimen {
+	class Specimen extends lidpong\Push {
 		public function __construct() {
 			$push = new lidpong\Push();
+
+			echo "<h6>1: Push - TripDyeRegions</h6>";
+			echo $push->TripDyeRegions() ? "Success" : "Unsuccess";
 		}
 	}
 ?>
