@@ -5,17 +5,21 @@
 <?php
 	use lid\home\well\pull as lidpull;
 	use lid\home\well\push as lidpush;
+	use lid\home\well\water as lidwater;
 ?>
 
 <?php
+	/* recognize */
 	class Platform {
 		protected Directory $directory;
 		protected File $file;
-		protected lidpull\Pull $pull;
-		protected lidpush\Push $push;
 		protected Street $street;
+		protected Lamp $lamp;
+		protected Wide $wide;
 		protected Run $run;
 		protected Dive $dive;
+		protected lidpull\Pull $pull;
+		protected lidpush\Push $push;
 
 		public function __construct() {
 			try {
@@ -28,9 +32,11 @@
 						$this->push = new lidpush\Push();
 						if ($this->push) {
 							$this->street = $this->push->ReadStreet();
+							$this->lamp = new Lamp();
+							$this->wide = new Wide();
 							$this->run = new Run();
 							$this->dive = new Dive();
-							if ($this->street && $this->run && $this->dive) {
+							if ($this->street && $this->lamp && $this->wide && $this->run && $this->dive) {
 								$success = true;
 							}
 						}
@@ -45,6 +51,14 @@
 
 		public function ReadStreet() {
 			return $this->street;
+		}
+
+		public function ReadLamp() {
+			return $this->lamp;
+		}
+
+		public function ReadWide() {
+			return $this->wide;
 		}
 
 		public function ReadRun() {
@@ -112,6 +126,7 @@
 		}
 	}
 
+	/* eat */
 	class Directory {
 		protected string $topDirectory;
 		protected array $recentDirectorylist;
@@ -316,6 +331,7 @@
 		}
 	}
 
+	/* vehicle */
 	class File {
 		private Directory $directory;
 
@@ -349,6 +365,7 @@
 		}
 	}
 
+	/* name */
 	class Street {
 		protected array $gets;
 
@@ -398,17 +415,93 @@
 		}
 	}
 
-	class Run {
-		public function __construct() {
-			// TODO: Live Database : Multi Page
+	/* rent */
+	class Lamp {
+		protected ?\PDO $pdoAc;
+		protected string $pdoType;
+		protected lidwater\Sand $sand;
+
+		public function __construct(string $pdoType = "mysql") {
+			$this->pdoAc = null;
+			$this->pdoType = $pdoType;
+			$this->sand = new lidwater\Sand();
+
+			if ($this->sand) {
+				$this->constructPdoAc();
+			}
+		}
+
+		public function ReadPdoAc() {
+			return $this->pdoAc;
+		}
+
+		public function ReadPdoType() {
+			return $this->pdoType;
+		}
+
+		public function constructPdoAc() {
+			if ($this->pdoAc == null) {
+				try {
+					switch ($this->pdoType) {
+						case "mysql":
+							$this->pdoAc = new \PDO("mysql:host=" . $this->sand->ReadPdoAc()["servername"], $this->sand->ReadPdoAc()["username"], $this->sand->ReadPdoAc()["password"]);
+							break;
+						default:
+					}
+					$this->pdoAc->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+				}
+				catch (\PDOException $exception) {
+					// TODO: Log following: echo $exception->getMessage();
+				}
+			}
+		}
+
+		public function destroyPdoAc() {
+			$this->pdoAc = null;
+		}
+
+		public function TestPdoAc() {
+			$sql = "CREATE DATABASE myDBPDO";
+
+			try {
+				$this->pdoAc->exec($sql); // use exec() because no results are returned
+				echo "Database created successfully<br>";
+			}
+			catch (\PDOException $exception) {
+				 echo $sql . "<br>" . $exception->getMessage();
+			}
 		}
 	}
 
+	/* likes */
+	class Wide {
+		public function __construct() {
+			// TODO: Log | Console : Try Catch handler
+		}
+	}
+
+	/* hate */
+	class Notice {
+		public function __construct() {
+			// TODO: Date | Time | Bot
+		}
+	}
+
+	/* appeal */
+	class Run {
+		public function __construct() {
+			// TODO: AJAX Live : Multi Page
+		}
+	}
+
+	/* relate */
 	class Dive {
 		public function __construct() {
 			// TODO: Data Exchange : Random Source
 		}
 	}
+
+	/* reason */
 ?>
 
 <?php
@@ -420,6 +513,7 @@
 			$directory = new lidheap\Directory();
 			$file = new lidheap\File();
 			$street = $platform->ReadStreet();
+			$lamp = $platform->ReadLamp();
 
 			echo "<h6>1: Platform - RequireonceDirectory (home/margosa/now)</h6>";
 			echo $platform->RequireonceDirectory("home/margosa/now") ? "Success" : "Unsuccess";
@@ -480,6 +574,9 @@
 			echo "<pre>";
 			print_r($street->ReadGets());
 			echo "</pre>";
+
+			echo "<h6>17:Lamp - TestPdoAc</h6>";
+			echo $lamp->TestPdoAc();
 		}
 	}
 ?>

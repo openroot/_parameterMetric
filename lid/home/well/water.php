@@ -301,6 +301,27 @@
 			);
 		}
 	}
+
+	class Sand {
+		private array $pdoAc;
+
+		public function __construct() {
+			$this->CapPdoAc();
+		}
+
+		public function ReadPdoAc() {
+			return $this->pdoAc;
+		}
+
+		protected function CapPdoAc() {
+			$this->pdoAc = array(
+				"servername" => "localhost",
+				"username" => "devoptemp",
+				"password" => "viAR8d4r",
+				"databse" => "myDBPDO"
+			);
+		}
+	}
 ?>
 
 <?php
