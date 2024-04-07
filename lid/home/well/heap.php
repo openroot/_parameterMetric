@@ -529,7 +529,7 @@
 			$directoryPaths = $this->directory->RefreshRecentDirectorylistIndepth();
 			if ($onlyPrimaryDirectory) {
 				foreach ($brickFlats as $index => $value) {
-					if (array_search($value, $directoryPaths)) {
+					if ($this->SearchStringAsArrayStringOutdepth($directoryPaths, $value)) {
 						array_push($result1, $value);
 					}
 					else {
@@ -539,7 +539,7 @@
 			}
 			else {
 				foreach ($directoryPaths as $index => $value) {
-					if (array_search($value, $brickFlats)) {
+					if ($this->SearchStringAsArrayStringOutdepth($brickFlats, $value)) {
 						array_push($result1, $value);
 					}
 					else {
@@ -564,6 +564,17 @@
 			}
 
 			return $result;
+		}
+
+		private function SearchStringAsArrayStringOutdepth(array $haystack, string $needle) {
+			if (count($haystack) > 0) {
+				foreach ($haystack as $index => $value) {
+					if ($value === $needle) {
+						return true;
+					}
+				}
+			}
+			return false;
 		}
 	}
 ?>
