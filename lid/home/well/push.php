@@ -51,8 +51,13 @@
 	class Specimen extends lidpong\Push {
 		public function __construct() {
 			$push = new lidpong\Push();
+			
+			echo "<h6>1: Push - ReadStreet, ReadGets</h6>";
+			echo "<pre>";
+			print_r($push->ReadStreet()->ReadGets());
+			echo "</pre>";
 
-			echo "<h6>1: Push - TripDyeRegions</h6>";
+			echo "<h6>2: Push - TripDyeRegions</h6>";
 			echo $push->TripDyeRegions() ? "Success" : "Unsuccess";
 		}
 	}
