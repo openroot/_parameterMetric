@@ -16,8 +16,10 @@
 		protected Street $street;
 		protected Lamp $lamp;
 		protected Wide $wide;
+		protected Notice $notice;
 		protected Run $run;
 		protected Dive $dive;
+		protected Compute $compute;
 		protected lidpull\Pull $pull;
 		protected lidpush\Push $push;
 
@@ -34,9 +36,11 @@
 							$this->street = $this->push->ReadStreet();
 							$this->lamp = new Lamp();
 							$this->wide = new Wide();
+							$this->notice = new Notice();
 							$this->run = new Run();
 							$this->dive = new Dive();
-							if ($this->street && $this->lamp && $this->wide && $this->run && $this->dive) {
+							$this->compute = new Compute();
+							if ($this->street && $this->lamp && $this->wide && $this->notice && $this->run && $this->dive && $this->compute) {
 								$success = true;
 							}
 						}
@@ -61,12 +65,20 @@
 			return $this->wide;
 		}
 
+		public function ReadNotice() {
+			return $this->notice;
+		}
+
 		public function ReadRun() {
 			return $this->run;
 		}
 
 		public function ReadDive() {
 			return $this->dive;
+		}
+
+		public function ReadCompute() {
+			return $this->compute;
 		}
 
 		public function RequireonceDirectory(string $directoryPath) {
@@ -476,14 +488,14 @@
 	/* likes */
 	class Wide {
 		public function __construct() {
-			// TODO: Log | Console : Try Catch handler
+			// TODO: Console | Log : Try-Catch handler
 		}
 	}
 
 	/* hate */
 	class Notice {
 		public function __construct() {
-			// TODO: Date | Time | Bot
+			// TODO: Date | Time | Callback
 		}
 	}
 
@@ -497,11 +509,16 @@
 	/* relate */
 	class Dive {
 		public function __construct() {
-			// TODO: Data Exchange : Random Source
+			// TODO: Unlimited Energy Exchange : Source Diagram -> Time
 		}
 	}
 
 	/* reason */
+	class Compute {
+		public function __construct() {
+			// TODO: API : Service
+		}
+	}
 ?>
 
 <?php
