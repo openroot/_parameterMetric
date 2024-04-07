@@ -75,10 +75,6 @@
 			return $this->dive;
 		}
 
-		public function ReadCompute() {
-			return $this->compute;
-		}
-
 		public function RequireonceDirectory(string $directoryPath) {
 			$filteredFileFullPaths = array();
 			foreach ($this->file->EnlistFilelist($directoryPath) as $index => $value) {
