@@ -515,26 +515,67 @@
 	class Compute {
 		private Directory $directory;
 		private File $file;
+		private lidwater\Brick $brick;
 
 		public function __construct() {
 			// TODO: API : Service
 			$this->directory = new Directory();
 			$this->file = new File();
+			$this->brick = new lidwater\Brick();
 		}
 
-		private function FetchAllDirectoriesAndFiles() {
-			echo "<pre>";
+		private function LensDirectoriesAndFiles(bool $onlyPrimaryDirectory = true) {
+			$result = array();
 
+			$result1 = array();
+			$result2 = array();
 			$directoryAppendix = 0;
-			foreach($this->directory->RefreshRecentDirectorylistIndepth() as $index => $value) {
-				echo ++$directoryAppendix . "> {$value}<br>";
+			$brickFlats = $this->brick->ReadFlats();
+			$directoryPaths = $this->directory->RefreshRecentDirectorylistIndepth();
+			if ($onlyPrimaryDirectory) {
+				foreach ($brickFlats as $index => $value) {
+					if (array_search($value, $directoryPaths)) {
+						array_push($result1, $value);
+					}
+					else {
+						array_push($result2, $value);
+					}
+				}
 			}
+			else {
+				foreach ($directoryPaths as $index => $value) {
+					if (array_search($value, $brickFlats)) {
+						array_push($result1, $value);
+					}
+					else {
+						array_push($result2, $value);
+					}
+				}
+			}
+			array_push($result, $result1);
+			array_push($result, $result2);
 
-			echo "</pre>";
+			return $result;
 		}
 
 		public function Test() {
-			$this->FetchAllDirectoriesAndFiles();
+			echo "<pre>";
+
+			echo "Primary directories (exists)<br>";
+			print_r(($this->LensDirectoriesAndFiles())[0]);
+			echo "<br>";
+			echo "Primary directories (do not exist)<br>";
+			print_r(($this->LensDirectoriesAndFiles())[1]);
+
+			echo "<br><br>";
+
+			echo "All directories (primary only)<br>";
+			print_r(($this->LensDirectoriesAndFiles(false))[0]);
+			echo "<br>";
+			echo "All directories (non primary)<br>";
+			print_r(($this->LensDirectoriesAndFiles(false))[1]);
+			
+			echo "</pre>";
 		}
 	}
 ?>
