@@ -48,10 +48,10 @@
 		public function __construct() {
 			$pull = new lidping\Pull();
 
-			echo "<h6>1</h6>";
+			echo "<h6>1: Pull - TripBrickFlats</h6>";
 			echo $pull->TripBrickFlats() ? "Success" : "Unsuccess";
 
-			echo "<h6>2</h6>";
+			echo "<h6>2: Pull - TripBrickHids</h6>";
 			echo $pull->TripBrickHids() ? "Success" : "Unsuccess";
 		}
 	}
