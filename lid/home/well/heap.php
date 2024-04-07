@@ -19,7 +19,6 @@
 		protected Notice $notice;
 		protected Run $run;
 		protected Dive $dive;
-		protected Compute $compute;
 		protected lidpull\Pull $pull;
 		protected lidpush\Push $push;
 
@@ -39,8 +38,7 @@
 							$this->notice = new Notice();
 							$this->run = new Run();
 							$this->dive = new Dive();
-							$this->compute = new Compute();
-							if ($this->street && $this->lamp && $this->wide && $this->notice && $this->run && $this->dive && $this->compute) {
+							if ($this->street && $this->lamp && $this->wide && $this->notice && $this->run && $this->dive) {
 								$success = true;
 							}
 						}
@@ -463,7 +461,7 @@
 					$this->pdoAc->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
 				}
 				catch (\PDOException $exception) {
-					// TODO: Log following: echo $exception->getMessage();
+					// TODO: Log following
 				}
 			}
 		}
@@ -476,7 +474,7 @@
 			$sql = "CREATE DATABASE myDBPDO";
 
 			try {
-				$this->pdoAc->exec($sql); // use exec() because no results are returned
+				$this->pdoAc->exec($sql);
 				echo "Database created successfully<br>";
 			}
 			catch (\PDOException $exception) {
@@ -515,8 +513,23 @@
 
 	/* reason */
 	class Compute {
+		private Directory $directory;
+		private File $file;
+
 		public function __construct() {
 			// TODO: API : Service
+			$this->directory = new Directory();
+			$this->file = new File();
+		}
+
+		private function FetchAllDirectoriesAndFiles() {
+			echo "<pre>";
+			print_r($this->directory->RefreshRecentDirectorylistIndepth());
+			echo "</pre>";
+		}
+
+		public function Test() {
+			$this->FetchAllDirectoriesAndFiles();
 		}
 	}
 ?>
@@ -531,6 +544,7 @@
 			$file = new lidheap\File();
 			$street = $platform->ReadStreet();
 			$lamp = $platform->ReadLamp();
+			$compute = new Compute();
 
 			echo "<h6>1: Platform - RequireonceDirectory (home/margosa/now)</h6>";
 			echo $platform->RequireonceDirectory("home/margosa/now") ? "Success" : "Unsuccess";
@@ -587,13 +601,16 @@
 			print_r($file->EnlistFilelist("home/margosa/now"));
 			echo "</pre>";
 
-			echo "<h6>16:Street - ReadGets</h6>";
+			echo "<h6>16: Street - ReadGets</h6>";
 			echo "<pre>";
 			print_r($street->ReadGets());
 			echo "</pre>";
 
-			echo "<h6>17:Lamp - TestPdoAc</h6>";
+			echo "<h6>17: Lamp - TestPdoAc</h6>";
 			echo $lamp->TestPdoAc();
+
+			echo "<h6>X1: Compute - Test</h6>";
+			echo $compute->Test();
 		}
 	}
 ?>
