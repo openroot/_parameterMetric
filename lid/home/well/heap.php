@@ -400,12 +400,14 @@
 
 	class Run {
 		public function __construct() {
-			// TODO: Multi-page
+			// TODO: Live Database : Multi Page
 		}
 	}
 
 	class Dive {
-		public function __construct() {}
+		public function __construct() {
+			// TODO: Data Exchange : Random Source
+		}
 	}
 ?>
 
