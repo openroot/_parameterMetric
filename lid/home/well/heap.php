@@ -529,7 +529,6 @@
 
 			$result1 = array();
 			$result2 = array();
-			$directoryAppendix = 0;
 			$brickFlats = $this->brick->ReadFlats();
 			$directoryPaths = $this->directory->RefreshRecentDirectorylistIndepth();
 			if ($onlyPrimaryDirectory) {
@@ -558,6 +557,19 @@
 			return $result;
 		}
 
+		private function LensFiles(bool $onlyPrimaryDirectory = true) {
+			$result = array();
+
+			foreach (array_merge($this->LensDirectories($onlyPrimaryDirectory)[0], $this->LensDirectories($onlyPrimaryDirectory)[1]) as $index => $value) {
+				$fileNames = $this->file->EnlistFilelist($value);
+				if (count($fileNames) > 0) {
+					$result[$value] = $fileNames;
+				}
+			}
+
+			return $result;
+		}
+
 		public function Test() {
 			echo "<pre>";
 
@@ -574,6 +586,14 @@
 			echo "<br>";
 			echo "All directories (non primary)<br>";
 			print_r(($this->LensDirectories(false))[1]);
+
+			echo "<br><br>";
+
+			echo "Primary directory files<br>";
+			print_r($this->LensFiles());
+			echo "<br>";
+			echo "All files<br>";
+			print_r($this->LensFiles(false));
 			
 			echo "</pre>";
 		}
