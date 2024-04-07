@@ -524,7 +524,7 @@
 			$this->brick = new lidwater\Brick();
 		}
 
-		private function LensDirectoriesAndFiles(bool $onlyPrimaryDirectory = true) {
+		private function LensDirectories(bool $onlyPrimaryDirectory = true) {
 			$result = array();
 
 			$result1 = array();
@@ -562,18 +562,18 @@
 			echo "<pre>";
 
 			echo "Primary directories (exists)<br>";
-			print_r(($this->LensDirectoriesAndFiles())[0]);
+			print_r(($this->LensDirectories())[0]);
 			echo "<br>";
 			echo "Primary directories (do not exist)<br>";
-			print_r(($this->LensDirectoriesAndFiles())[1]);
+			print_r(($this->LensDirectories())[1]);
 
 			echo "<br><br>";
 
 			echo "All directories (primary only)<br>";
-			print_r(($this->LensDirectoriesAndFiles(false))[0]);
+			print_r(($this->LensDirectories(false))[0]);
 			echo "<br>";
 			echo "All directories (non primary)<br>";
-			print_r(($this->LensDirectoriesAndFiles(false))[1]);
+			print_r(($this->LensDirectories(false))[1]);
 			
 			echo "</pre>";
 		}
