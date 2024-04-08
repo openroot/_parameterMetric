@@ -378,7 +378,7 @@
 		}
 
 		public function ReadfileNonbinary(string $filePath) {
-			$result = null;
+			$result = array();
 			$fineFilePath = $this->directory->FineDirectoryPath($filePath);
 			if (is_file($fineFilePath)) {
 				$result = file($fineFilePath);
@@ -587,24 +587,24 @@
 
 		public function LensFiles(bool $onlyPrimaryDirectory = true) {
 			$result = array();
-
 			foreach (array_merge($this->LensDirectories($onlyPrimaryDirectory)[0], $this->LensDirectories($onlyPrimaryDirectory)[1]) as $index => $value) {
 				$fileNames = $this->file->EnlistFilelist($value);
 				if (count($fileNames) > 0) {
 					$result[$value] = $fileNames;
 				}
 			}
-
 			return $result;
 		}
 
 		public function LensContentsNonbinary(bool $onlyPrimaryDirectory = true) {
+			$result = array();
 			foreach ($this->LensFiles($onlyPrimaryDirectory) as $index1 => $value1) {
 				foreach ($value1 as $index2 => $value2) {
-					echo "{$index1}/{$value2}<br>";
-					//ReadfileNonbinary
+					$filePath = "{$index1}/{$value2}";
+					$result[$filePath] = $this->file->ReadfileNonbinary($filePath);
 				}
 			}
+			return $result;
 		}
 
 		private function SearchArrayAsStringOutdepth(array $stringArray, string $searchString) {
@@ -634,7 +634,14 @@
 			
 			echo "<h6>X7: Compute - LensContentsNonbinary | {Primary files}</h6>";
 			echo "<pre>";
-			$compute->LensContentsNonbinary();
+			$filesLines = $compute->LensContentsNonbinary();
+			foreach ($filesLines as $index1 => $value1) {
+				echo "{$index1}<br><br>";
+				foreach ($value1 as $index2 => $value2) {
+					echo ($index2 + 1) . "> ". htmlspecialchars($value2) . "<br>";
+				}
+				echo "<br>";
+			}
 			echo "</pre>";
 
 			//$this->ChainSampling($platform, $directory, $file, $compute);
