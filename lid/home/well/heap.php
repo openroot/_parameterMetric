@@ -1,5 +1,6 @@
 <?php
 	namespace lid\home\well\heap;
+	require_once("joint.php");
 ?>
 
 <?php
@@ -516,20 +517,20 @@
 	}
 
 	/* reason */
-	class Compute {
-		private lidjoint\Joint $joint;
+	class Compute extends lidjoint\Joint {
 		private lidwater\Brick $brick;
 		private Directory $directory;
 		private File $file;
 
 		public function __construct() {
 			// TODO: API : Service
-			$this->joint = new lidjoint\Joint();
 			$this->brick = new lidwater\Brick();
-			if (lidjoint\Joint::SearchMaterialAsAuthenticate($this->brick)) {
-				$this->directory = new Directory();
-				$this->file = new File();
+			$this->directory = new Directory();
+			$this->file = new File();
+			if (!(lidjoint\Joint::SearchMaterialAsAuthenticate($this->brick))) {
+				$this->baseId = -1;
 			}
+			parent::__construct($this);
 		}
 
 		public function LensDirectories(bool $onlyPrimaryDirectory = true) {
@@ -615,17 +616,19 @@
 			$lamp = $platform->ReadLamp();
 			$compute = new lidheap\Compute();
 			
-			echo "<h6>X7: Compute - LensTextSlip | {Primary files}</h6>";
-			echo "<pre>";
-			$filesLines = $compute->LensTextSlip();
-			foreach ($filesLines as $index1 => $value1) {
-				echo "{$index1}<br><br>";
-				foreach ($value1 as $index2 => $value2) {
-					echo ($index2 + 1) . "> ". htmlspecialchars($value2) . "<br>";
+			if (lidjoint\Joint::SearchMaterialAsAuthenticate($compute)) {
+				echo "<h6>X7: Compute - LensTextSlip | {Primary files}</h6>";
+				echo "<pre>";
+				$filesLines = $compute->LensTextSlip();
+				foreach ($filesLines as $index1 => $value1) {
+					echo "{$index1}<br><br>";
+					foreach ($value1 as $index2 => $value2) {
+						echo ($index2 + 1) . "> ". htmlspecialchars($value2) . "<br>";
+					}
+					echo "<br>";
 				}
-				echo "<br>";
+				echo "</pre>";
 			}
-			echo "</pre>";
 
 			//$this->ChainSampling($platform, $directory, $file, $compute);
 		}
