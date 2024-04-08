@@ -18,7 +18,27 @@
 		public function __construct() {}
 	}
 
-	class SlipText extends Slip {
+	class TextSlip extends Slip {
+		public function __construct() {}
+	}
+
+	class GraphicSlip extends Slip {
+		public function __construct() {}
+	}
+
+	class VideoSlip extends Slip {
+		public function __construct() {}
+	}
+
+	class BinarySlip extends Slip {
+		public function __construct() {}
+	}
+	
+	class CodeTextSlip extends TextSlip {
+		public function __construct() {}
+	}
+
+	class PhpCodeTextSlip extends CodeTextSlip {
 		public function __construct() {}
 	}
 ?>
