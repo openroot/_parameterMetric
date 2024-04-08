@@ -57,10 +57,6 @@
 				return false;
 			}
 		}
-
-		public function Test() {
-			return "I know HTML.";
-		}
 	}
 
 	class Slip extends Joint {
