@@ -17,7 +17,7 @@
 	class Joint {
 		protected int $baseId = 0;
 
-		public function __construct(mixed $material = null) {
+		public function __construct(mixed $material) {
 			if (!is_null($material)) {
 				if (is_object($material)) {
 					if ($material->baseId != -1) {

@@ -135,7 +135,7 @@
 	}
 
 	/* eat */
-	class Directory {
+	class Directory extends lidjoint\Joint {
 		protected string $topDirectory;
 		protected array $recentDirectorylist;
 		private string $defaultTopDirectory;
@@ -146,6 +146,7 @@
 			$this->defaultTopDirectory = "./lid";
 			$this->recyclebinDirectory = "home/margosa/spin/algebrafate/recyclebin";
 			$this->topDirectory = empty($topDirectory) ? $this->defaultTopDirectory : $topDirectory;
+			parent::__construct($this);
 		}
 
 		public function ReadTopDirectory() {
@@ -340,11 +341,15 @@
 	}
 
 	/* vehicle */
-	class File {
+	class File extends lidjoint\Joint {
 		private Directory $directory;
 
 		public function __construct() {
 			$this->directory = new Directory();
+			if (!lidjoint\Joint::SearchMaterialAsAuthenticate($this->directory)) {
+				$this->baseId = -1;
+			}
+			parent::__construct($this);
 		}
 
 		public function SearchFilepathAsFilename(string $filePath, string $fileName) {
@@ -489,28 +494,28 @@
 	}
 
 	/* likes */
-	class Wide {
+	class Wide extends lidjoint\Joint {
 		public function __construct() {
 			// TODO: Console | Log : Try-Catch handler
 		}
 	}
 
 	/* hate */
-	class Notice {
+	class Notice extends lidjoint\Joint {
 		public function __construct() {
 			// TODO: Date | Time | Callback
 		}
 	}
 
 	/* appeal */
-	class Run {
+	class Run extends lidjoint\Joint {
 		public function __construct() {
 			// TODO: AJAX Live : Multi Page
 		}
 	}
 
 	/* relate */
-	class Dive {
+	class Dive extends lidjoint\Joint {
 		public function __construct() {
 			// TODO: Unlimited Energy Exchange : Source Diagram -> Time
 		}
@@ -527,7 +532,7 @@
 			$this->brick = new lidwater\Brick();
 			$this->directory = new Directory();
 			$this->file = new File();
-			if (!(lidjoint\Joint::SearchMaterialAsAuthenticate($this->brick))) {
+			if (!(lidjoint\Joint::SearchMaterialAsAuthenticate($this->brick) && lidjoint\Joint::SearchMaterialAsAuthenticate($this->directory) && lidjoint\Joint::SearchMaterialAsAuthenticate($this->file))) {
 				$this->baseId = -1;
 			}
 			parent::__construct($this);
