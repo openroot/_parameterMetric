@@ -369,6 +369,24 @@
 			}
 			return $fileList;
 		}
+
+		public function ReadfileNonbinary(string $filePath) {}
+
+		public function CreatefileNonbinary(string $directoryPath, string $fileName) {}
+
+		public function WritefileNonbinary(string $filePath, array $lines) {}
+
+		public function AppendfileNonbinary(string $filePath, array $lines) {}
+
+		public function OverwritefileNonbinary(string $filePath, array $lines) {}
+
+		public function Copyfile(string $filePath, string $newFilePath) {}
+
+		public function Movefile(string $filePath, string $directoryPath) {}
+		
+		public function Trashfile(string $filePath) {}
+
+		public function Deletefile(string $filePath) {}
 	}
 
 	/* name */
