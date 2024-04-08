@@ -617,8 +617,6 @@
 			$platform = new lidheap\Platform();
 			$directory = new lidheap\Directory();
 			$file = new lidheap\File();
-			$street = $platform->ReadStreet();
-			$lamp = $platform->ReadLamp();
 			$compute = new lidheap\Compute();
 			
 			if (lidjoint\Joint::SearchMaterialAsAuthenticate($compute)) {
