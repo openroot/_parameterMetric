@@ -13,6 +13,14 @@
 			return "I know HTML.";
 		}
 	}
+
+	class Slip {
+		public function __construct() {}
+	}
+
+	class SlipText extends Slip {
+		public function __construct() {}
+	}
 ?>
 
 <?php
