@@ -79,7 +79,7 @@
 			$filteredFileFullPaths = array();
 			foreach ($this->file->EnlistFilelist($directoryPath) as $index => $value) {
 				$fileFullPath = $this->directory->ReadTopDirectory() . "/{$directoryPath}/{$value}";
-				if (!$this->SearchScriptAsCurrentScript($fileFullPath)) {
+				if (!$this->SearchScriptAsCurrentscript($fileFullPath)) {
 					array_push($filteredFileFullPaths, $fileFullPath);
 				}
 			}
@@ -117,7 +117,7 @@
 
 		public function RequireonceFile(string $directoryPath, string $fileName) {
 			$fullFilePath = $this->directory->ReadTopDirectory() . "/{$directoryPath}/{$fileName}";
-			if (!$this->SearchScriptAsCurrentScript($fullFilePath)) {
+			if (!$this->SearchScriptAsCurrentscript($fullFilePath)) {
 				if (is_file($fullFilePath)) {
 					return require_once($fullFilePath);
 				}
@@ -125,7 +125,7 @@
 			return false;
 		}
 
-		public function SearchScriptAsCurrentScript(string $fileName) {
+		public function SearchScriptAsCurrentscript(string $fileName) {
 			$presentScriptFile = str_replace("\\", "/", __FILE__);
 			$fileName = $fileName[0] == "." ? substr($fileName, 1) : $fileName;
 			return str_contains($presentScriptFile, $fileName) ? true : false;
@@ -345,10 +345,18 @@
 			$this->directory = new Directory();
 		}
 
+		public function SearchFilepathAsFilename(string $filePath, string $fileName) {
+			if (strcmp(substr($filePath, strrpos($filePath, "/") + 1), $fileName) == 0) {
+				return true;
+			}
+			return false;
+		}
+
 		public function ContainsFileName(array $filePaths, string $fileName) {
 			$result = false;
 			foreach ($filePaths as $index => $value) {
-				if (strcmp(substr($value, strrpos($value, "/") + 1), $fileName) == 0) {
+				//if (strcmp(substr($value, strrpos($value, "/") + 1), $fileName) == 0) {
+				if ($this->SearchFilepathAsFilename($value, $fileName)) {
 					if (is_file($this->directory->FineDirectoryPath($value))) {
 						$result = true;
 					}
@@ -370,7 +378,9 @@
 			return $fileList;
 		}
 
-		public function ReadfileNonbinary(string $filePath) {}
+		public function ReadfileNonbinary(string $filePath) {
+
+		}
 
 		public function CreatefileNonbinary(string $directoryPath, string $fileName) {}
 
@@ -547,7 +557,7 @@
 			$directoryPaths = $this->directory->RefreshRecentDirectorylistIndepth();
 			if ($onlyPrimaryDirectory) {
 				foreach ($brickFlats as $index => $value) {
-					if ($this->SearchStringAsArrayStringOutdepth($directoryPaths, $value)) {
+					if ($this->SearchArrayAsStringOutdepth($directoryPaths, $value)) {
 						array_push($result1, $value);
 					}
 					else {
@@ -557,7 +567,7 @@
 			}
 			else {
 				foreach ($directoryPaths as $index => $value) {
-					if ($this->SearchStringAsArrayStringOutdepth($brickFlats, $value)) {
+					if ($this->SearchArrayAsStringOutdepth($brickFlats, $value)) {
 						array_push($result1, $value);
 					}
 					else {
@@ -584,10 +594,10 @@
 			return $result;
 		}
 
-		private function SearchStringAsArrayStringOutdepth(array $haystack, string $needle) {
-			if (count($haystack) > 0) {
-				foreach ($haystack as $index => $value) {
-					if ($value === $needle) {
+		private function SearchArrayAsStringOutdepth(array $stringArray, string $searchString) {
+			if (count($stringArray) > 0) {
+				foreach ($stringArray as $index => $value) {
+					if ($value === $searchString) {
 						return true;
 					}
 				}
@@ -615,8 +625,8 @@
 			echo "<h6>2: Platform - RequireonceFile (home/well, water.php)</h6>";
 			echo $platform->RequireonceFile("home/well", "water.php") ? "Success" : "Unsuccess";
 
-			echo "<h6>3: Platform - SearchScriptAsCurrentScript (well/heap.php)</h6>";
-			echo $platform->SearchScriptAsCurrentScript("well/heap.php") ? "Success" : "Unsuccess";
+			echo "<h6>3: Platform - SearchScriptAsCurrentscript (well/heap.php)</h6>";
+			echo $platform->SearchScriptAsCurrentscript("well/heap.php") ? "Success" : "Unsuccess";
 
 			echo "<h6>4: Directory - ReadTopDirectory</h6>";
 			echo $directory->ReadTopDirectory();
