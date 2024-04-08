@@ -526,8 +526,10 @@
 			// TODO: API : Service
 			$this->joint = new lidjoint\Joint();
 			$this->brick = new lidwater\Brick();
-			$this->directory = new Directory();
-			$this->file = new File();
+			if (lidjoint\Joint::SearchMaterialAsAuthenticate($this->brick)) {
+				$this->directory = new Directory();
+				$this->file = new File();
+			}
 		}
 
 		public function LensDirectories(bool $onlyPrimaryDirectory = true) {
@@ -580,7 +582,7 @@
 				foreach ($value1 as $index2 => $value2) {
 					$slipPath = "{$index1}/{$value2}";
 					$textSlip = new lidjoint\TextSlip($slipPath);
-					if ($this->joint->SearchMaterialAsAuthenticate($textSlip)) {
+					if (lidjoint\Joint::SearchMaterialAsAuthenticate($textSlip)) {
 						$result[$slipPath] = $textSlip->ReadSlip();
 					}
 				}

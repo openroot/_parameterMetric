@@ -3,10 +3,11 @@
 ?>
 
 <?php
+	use lid\home\well\joint as lidjoint;
 ?>
 
 <?php
-	class Brick {
+	class Brick extends lidjoint\Joint {
 		private array $flats;
 		private array $hids;
 		private string $hidDirectoryPath;
@@ -15,6 +16,7 @@
 			$this->CapFlats();
 			$this->CapHids();
 			$this->hidDirectoryPath = "home/well/hid";
+			parent::__construct($this);
 		}
 
 		public function ReadFlats() {

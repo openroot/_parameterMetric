@@ -38,7 +38,7 @@
 			return $this->baseId;
 		}
 
-		public function SearchMaterialAsAuthenticate(mixed $material) {
+		public static function SearchMaterialAsAuthenticate(mixed $material) {
 			if (!is_null($material)) {
 				if (is_object($material)) {
 					foreach (Base::$objectBaseIds as $index => $value) {
