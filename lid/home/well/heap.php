@@ -636,7 +636,7 @@
 			//$this->ChainSampling($platform, $directory, $file, $compute);
 		}
 
-		private function ChainSampling(lidheap\Platform $platform, lidheap\Directory $directory, lidheap\File $file, lidheap\Compute $compute) {			
+		private function ChainSampling(lidheap\Platform $platform, lidheap\Directory $directory, lidheap\File $file, lidheap\Compute $compute) {
 			$street = $platform->ReadStreet();
 			$lamp = $platform->ReadLamp();
 
