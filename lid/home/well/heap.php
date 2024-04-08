@@ -378,7 +378,12 @@
 		}
 
 		public function ReadfileNonbinary(string $filePath) {
-
+			$result = null;
+			$fineFilePath = $this->directory->FineDirectoryPath($filePath);
+			if (is_file($fineFilePath)) {
+				$result = file($fineFilePath);
+			}
+			return $result;
 		}
 
 		public function CreatefileNonbinary(string $directoryPath, string $fileName) {}
@@ -593,6 +598,15 @@
 			return $result;
 		}
 
+		public function LensContentsNonbinary(bool $onlyPrimaryDirectory = true) {
+			foreach ($this->LensFiles($onlyPrimaryDirectory) as $index1 => $value1) {
+				foreach ($value1 as $index2 => $value2) {
+					echo "{$index1}/{$value2}<br>";
+					//ReadfileNonbinary
+				}
+			}
+		}
+
 		private function SearchArrayAsStringOutdepth(array $stringArray, string $searchString) {
 			if (count($stringArray) > 0) {
 				foreach ($stringArray as $index => $value) {
@@ -616,7 +630,19 @@
 			$file = new lidheap\File();
 			$street = $platform->ReadStreet();
 			$lamp = $platform->ReadLamp();
-			$compute = new Compute();
+			$compute = new lidheap\Compute();
+			
+			echo "<h6>X7: Compute - LensContentsNonbinary | {Primary files}</h6>";
+			echo "<pre>";
+			$compute->LensContentsNonbinary();
+			echo "</pre>";
+
+			//$this->ChainSampling($platform, $directory, $file, $compute);
+		}
+
+		private function ChainSampling(lidheap\Platform $platform, lidheap\Directory $directory, lidheap\File $file, lidheap\Compute $compute) {			
+			$street = $platform->ReadStreet();
+			$lamp = $platform->ReadLamp();
 
 			echo "<h6>1: Platform - RequireonceDirectory (home/margosa/now)</h6>";
 			echo $platform->RequireonceDirectory("home/margosa/now") ? "Success" : "Unsuccess";
