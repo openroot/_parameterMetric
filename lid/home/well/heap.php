@@ -3,6 +3,7 @@
 ?>
 
 <?php
+	use lid\home\well\joint as lidjoint;
 	use lid\home\well\pull as lidpull;
 	use lid\home\well\push as lidpush;
 	use lid\home\well\water as lidwater;
@@ -376,31 +377,6 @@
 			}
 			return $fileList;
 		}
-
-		public function ReadfileNonbinary(string $filePath) {
-			$result = array();
-			$fineFilePath = $this->directory->FineDirectoryPath($filePath);
-			if (is_file($fineFilePath)) {
-				$result = file($fineFilePath);
-			}
-			return $result;
-		}
-
-		public function CreatefileNonbinary(string $directoryPath, string $fileName) {}
-
-		public function WritefileNonbinary(string $filePath, array $lines) {}
-
-		public function AppendfileNonbinary(string $filePath, array $lines) {}
-
-		public function OverwritefileNonbinary(string $filePath, array $lines) {}
-
-		public function Copyfile(string $filePath, string $newFilePath) {}
-
-		public function Movefile(string $filePath, string $directoryPath) {}
-		
-		public function Trashfile(string $filePath) {}
-
-		public function Deletefile(string $filePath) {}
 	}
 
 	/* name */
@@ -596,12 +572,13 @@
 			return $result;
 		}
 
-		public function LensContentsNonbinary(bool $onlyPrimaryDirectory = true) {
+		public function LensTextSlip(bool $onlyPrimaryDirectory = true) {
 			$result = array();
 			foreach ($this->LensFiles($onlyPrimaryDirectory) as $index1 => $value1) {
 				foreach ($value1 as $index2 => $value2) {
-					$filePath = "{$index1}/{$value2}";
-					$result[$filePath] = $this->file->ReadfileNonbinary($filePath);
+					$slipPath = "{$index1}/{$value2}";
+					$textSlip = new lidjoint\TextSlip($slipPath);
+					$result[$slipPath] = $textSlip->ReadSlip();
 				}
 			}
 			return $result;
@@ -632,9 +609,9 @@
 			$lamp = $platform->ReadLamp();
 			$compute = new lidheap\Compute();
 			
-			echo "<h6>X7: Compute - LensContentsNonbinary | {Primary files}</h6>";
+			echo "<h6>X7: Compute - LensTextSlip | {Primary files}</h6>";
 			echo "<pre>";
-			$filesLines = $compute->LensContentsNonbinary();
+			$filesLines = $compute->LensTextSlip();
 			foreach ($filesLines as $index1 => $value1) {
 				echo "{$index1}<br><br>";
 				foreach ($value1 as $index2 => $value2) {
