@@ -7,21 +7,70 @@
 ?>
 
 <?php
+	class Base {
+		public static int $objectBaseIdPointer = 1;
+		public static array $objectBaseIds = array();
+		public static int $resourceBaseIdPointer = 1;
+		public static array $resourceBaseIds = array();
+	}
+
 	class Joint {
-		public function __construct() {}
+		protected int $baseId = 0;
+
+		public function __construct(mixed $material = null) {
+			if (!is_null($material)) {
+				if (is_object($material)) {
+					if ($material->baseId != -1) {
+						$material->baseId = ++Base::$objectBaseIdPointer;
+						array_push(Base::$objectBaseIds, $material->baseId);
+					}
+				}
+				else if (is_resource($material)) {
+					if ($material->baseId != -1) {
+						$material->baseId = ++Base::$resourceBaseIdPointer;
+						array_push(Base::$resourceBaseIds, $material->baseId);
+					}
+				}
+			}
+		}
+
+		public function ReadBaseId() {
+			return $this->baseId;
+		}
+
+		public function SearchMaterialAsAuthenticate(mixed $material) {
+			if (!is_null($material)) {
+				if (is_object($material)) {
+					foreach (Base::$objectBaseIds as $index => $value) {
+						if ($value == $material->ReadBaseId()) {
+							return true;
+						}
+					}
+				}
+				else if (is_resource($material)) {
+					foreach (Base::$resourceBaseIds as $index => $value) {
+						if ($value == $material->ReadBaseId()) {
+							return true;
+						}
+					}
+				}
+				return false;
+			}
+		}
 
 		public function Test() {
 			return "I know HTML.";
 		}
 	}
 
-	class Slip {
-		protected string $slipPath;
+	class Slip extends Joint {
 		protected lidheap\Directory $directory;
+		protected string $slipPath;
 
 		public function __construct(string $slipPath) {
-			$this->slipPath = $slipPath;
 			$this->directory = new lidheap\Directory();
+			$this->slipPath = $slipPath;
+			parent::__construct($this);
 		}
 
 		public function ReadSlipPath() {
@@ -52,6 +101,7 @@
 
 	class TextSlip extends Slip {
 		public function __construct(string $slipPath) {
+			// TODO: Verify as text mime, to put $this->baseId = -1; on unsuccess.
 			parent::__construct($slipPath);
 		}
 
@@ -97,9 +147,6 @@
 	class Specimen {
 		public function __construct() {
 			$joint = new lidreason\Joint();
-
-			echo "<h6>1</h6>";
-			echo $joint->Test();
 		}
 	}
 ?>

@@ -12,6 +12,8 @@
 <?php
 	/* recognize */
 	class Platform {
+		protected lidpull\Pull $pull;
+		protected lidpush\Push $push;
 		protected Directory $directory;
 		protected File $file;
 		protected Street $street;
@@ -20,8 +22,6 @@
 		protected Notice $notice;
 		protected Run $run;
 		protected Dive $dive;
-		protected lidpull\Pull $pull;
-		protected lidpush\Push $push;
 
 		public function __construct() {
 			try {
@@ -431,9 +431,9 @@
 
 	/* rent */
 	class Lamp {
+		protected lidwater\Sand $sand;
 		protected ?\PDO $pdoAc;
 		protected string $pdoType;
-		protected lidwater\Sand $sand;
 
 		public function __construct(string $pdoType = "mysql") {
 			$this->pdoAc = null;
@@ -517,15 +517,17 @@
 
 	/* reason */
 	class Compute {
+		private lidjoint\Joint $joint;
+		private lidwater\Brick $brick;
 		private Directory $directory;
 		private File $file;
-		private lidwater\Brick $brick;
 
 		public function __construct() {
 			// TODO: API : Service
+			$this->joint = new lidjoint\Joint();
+			$this->brick = new lidwater\Brick();
 			$this->directory = new Directory();
 			$this->file = new File();
-			$this->brick = new lidwater\Brick();
 		}
 
 		public function LensDirectories(bool $onlyPrimaryDirectory = true) {
@@ -578,7 +580,9 @@
 				foreach ($value1 as $index2 => $value2) {
 					$slipPath = "{$index1}/{$value2}";
 					$textSlip = new lidjoint\TextSlip($slipPath);
-					$result[$slipPath] = $textSlip->ReadSlip();
+					if ($this->joint->SearchMaterialAsAuthenticate($textSlip)) {
+						$result[$slipPath] = $textSlip->ReadSlip();
+					}
 				}
 			}
 			return $result;
