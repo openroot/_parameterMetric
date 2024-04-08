@@ -355,7 +355,6 @@
 		public function ContainsFileName(array $filePaths, string $fileName) {
 			$result = false;
 			foreach ($filePaths as $index => $value) {
-				//if (strcmp(substr($value, strrpos($value, "/") + 1), $fileName) == 0) {
 				if ($this->SearchFilepathAsFilename($value, $fileName)) {
 					if (is_file($this->directory->FineDirectoryPath($value))) {
 						$result = true;
