@@ -445,8 +445,10 @@
 			$this->sand = new lidwater\Sand();
 			$this->pdoAc = null;
 			$this->pdoType = $pdoType;
-
-			if (!(lidjoint\Joint::SearchMaterialAsAuthentic($this->sand) && $this->constructPdoAc())) {
+			if (lidjoint\Joint::SearchMaterialAsAuthentic($this->sand)) {
+				$this->constructPdoAc();
+			}
+			else {
 				$this->baseId = -1;
 			}
 			parent::__construct($this);
@@ -472,9 +474,7 @@
 					$this->pdoAc->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
 					return true;
 				}
-				catch (\PDOException $exception) {
-					// TODO: Log following
-				}
+				catch (\PDOException $exception) {}
 			}
 			return false;
 		}
@@ -485,10 +485,11 @@
 
 		public function TestPdoAc() {
 			$sql = "CREATE DATABASE myDBPDO";
-
 			try {
-				$this->pdoAc->exec($sql);
-				echo "Database created successfully<br>";
+				if ($this->pdoAc != null) {
+					$this->pdoAc->exec($sql);
+					echo "Database created successfully<br>";
+				}
 			}
 			catch (\PDOException $exception) {
 				 echo $sql . "<br>" . $exception->getMessage();
@@ -624,10 +625,10 @@
 			$platform = new lidheap\Platform();
 			$directory = new lidheap\Directory();
 			$file = new lidheap\File();
-			$compute = new lidheap\Compute();
-			
+			$compute = new lidheap\Compute();			
 			if (lidjoint\Joint::SearchMaterialAsAuthentic($platform) && lidjoint\Joint::SearchMaterialAsAuthentic($directory) && lidjoint\Joint::SearchMaterialAsAuthentic($file) && lidjoint\Joint::SearchMaterialAsAuthentic($compute)) {
-				/*echo "<h6>X7: Compute - LensTextSlip | {Primary files}</h6>";
+				/*
+				echo "<h6>X7: Compute - LensTextSlip | {Primary files}</h6>";
 				echo "<pre>";
 				$filesLines = $compute->LensTextSlip();
 				foreach ($filesLines as $index1 => $value1) {
@@ -637,8 +638,8 @@
 					}
 					echo "</i><br>";
 				}
-				echo "</pre>";*/
-
+				echo "</pre>";
+				*/
 				$this->ChainSampling($platform, $directory, $file, $compute);
 			}
 			else {
@@ -650,7 +651,6 @@
 		private function ChainSampling(lidheap\Platform $platform, lidheap\Directory $directory, lidheap\File $file, lidheap\Compute $compute) {
 			$street = $platform->ReadStreet();
 			$lamp = $platform->ReadLamp();
-
 			echo "<h6>1: Platform - RequireonceDirectory (home/margosa/now)</h6>";
 			echo $platform->RequireonceDirectory("home/margosa/now") ? "Success" : "Unsuccess";
 
