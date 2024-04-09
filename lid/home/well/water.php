@@ -331,27 +331,32 @@
 <?php
 	use lid\home\well\water as lidwater;
 
-	class Specimen {
+	class Specimen extends lidjoint\Joint {
 		public function __construct() {
 			$brick = new lidwater\Brick();
 			$dye = new lidwater\Dye();
+			if (lidjoint\Joint::SearchMaterialAsAuthentic($brick) && lidjoint\Joint::SearchMaterialAsAuthentic($dye)) {
+				echo "<h6>1: Brick - ReadFlats</h6>";
+				echo "<pre>";
+				print_r($brick->ReadFlats());
+				echo "</pre>";
 
-			echo "<h6>1: Brick - ReadFlats</h6>";
-			echo "<pre>";
-			print_r($brick->ReadFlats());
-			echo "</pre>";
+				echo "<h6>2: Brick - ReadHids</h6>";
+				echo "<pre>";
+				print_r($brick->ReadHids());
+				echo "</pre>";
 
-			echo "<h6>2: Brick - ReadHids</h6>";
-			echo "<pre>";
-			print_r($brick->ReadHids());
-			echo "</pre>";
+				echo "<h6>3: Dye - ReadRegions</h6>";
+				echo "<pre>";
+				print_r($dye->ReadRegions());
+				echo "</pre>";
 
-			echo "<h6>3: Dye - ReadRegions</h6>";
-			echo "<pre>";
-			print_r($dye->ReadRegions());
-			echo "</pre>";
-
-			/*echo "<pre>water.php: \"Once boil done, at this point, it's executed and data in memory.\"</pre>";*/
+				/*echo "<pre>water.php: \"Once boil done, at this point, it's executed and data in memory.\"</pre>";*/
+			}
+			else {
+				$this->baseId = -1;
+			}
+			parent::__construct($this);
 		}
 	}
 ?>

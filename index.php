@@ -14,7 +14,7 @@
 
 		public function __construct(?string $blockName = null) {
 			$this->platform = new lidheap\Platform();
-			if (lidjoint\Joint::SearchMaterialAsAuthenticate($this->platform)) {
+			if (lidjoint\Joint::SearchMaterialAsAuthentic($this->platform)) {
 				$this->street = $this->platform->ReadStreet();
 				$launchSkeleton = $this->street->FindGets("index_launch_skeleton");
 				$blockName = !empty($launchSkeleton) ? $launchSkeleton : $blockName;

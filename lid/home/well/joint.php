@@ -38,7 +38,7 @@
 			return $this->baseId;
 		}
 
-		public static function SearchMaterialAsAuthenticate(mixed $material) {
+		public static function SearchMaterialAsAuthentic(mixed $material) {
 			if (!is_null($material)) {
 				if (is_object($material)) {
 					foreach (Base::$objectBaseIds as $index => $value) {
@@ -65,7 +65,7 @@
 
 		public function __construct(string $slipPath) {
 			$this->directory = new lidheap\Directory();
-			if (Joint::SearchMaterialAsAuthenticate($this->directory)) {
+			if (Joint::SearchMaterialAsAuthentic($this->directory)) {
 				$this->slipPath = $slipPath;
 			}
 			else {
@@ -148,6 +148,10 @@
 	class Specimen extends Joint {
 		public function __construct() {
 			$joint = new lidreason\Joint($this);
+			if (!Joint::SearchMaterialAsAuthentic($joint)) {
+				$this->baseId = -1;
+			}
+			parent::__construct($this);
 		}
 	}
 ?>

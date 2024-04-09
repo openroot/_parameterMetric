@@ -28,7 +28,7 @@
 			$success = false;
 			$this->directory = new Directory();
 			$this->file = new File();
-			if (lidjoint\Joint::SearchMaterialAsAuthenticate($this->directory) && lidjoint\Joint::SearchMaterialAsAuthenticate($this->file) && $this->RequireonceDirectory("home/well")) {
+			if (lidjoint\Joint::SearchMaterialAsAuthentic($this->directory) && lidjoint\Joint::SearchMaterialAsAuthentic($this->file) && $this->RequireonceDirectory("home/well")) {
 				$this->pull = new lidpull\Pull();
 				if ($this->pull) {
 					$this->push = new lidpush\Push();
@@ -39,7 +39,7 @@
 						$this->notice = new Notice();
 						$this->run = new Run();
 						$this->dive = new Dive();
-						if (lidjoint\Joint::SearchMaterialAsAuthenticate($this->street) && lidjoint\Joint::SearchMaterialAsAuthenticate($this->lamp) && lidjoint\Joint::SearchMaterialAsAuthenticate($this->wide) && lidjoint\Joint::SearchMaterialAsAuthenticate($this->notice) && lidjoint\Joint::SearchMaterialAsAuthenticate($this->run) && lidjoint\Joint::SearchMaterialAsAuthenticate($this->dive)) {
+						if (lidjoint\Joint::SearchMaterialAsAuthentic($this->street) && lidjoint\Joint::SearchMaterialAsAuthentic($this->lamp) && lidjoint\Joint::SearchMaterialAsAuthentic($this->wide) && lidjoint\Joint::SearchMaterialAsAuthentic($this->notice) && lidjoint\Joint::SearchMaterialAsAuthentic($this->run) && lidjoint\Joint::SearchMaterialAsAuthentic($this->dive)) {
 							$success = true;
 						}
 					}
@@ -345,7 +345,7 @@
 
 		public function __construct() {
 			$this->directory = new Directory();
-			if (!lidjoint\Joint::SearchMaterialAsAuthenticate($this->directory)) {
+			if (!lidjoint\Joint::SearchMaterialAsAuthentic($this->directory)) {
 				$this->baseId = -1;
 			}
 			parent::__construct($this);
@@ -446,7 +446,7 @@
 			$this->pdoAc = null;
 			$this->pdoType = $pdoType;
 
-			if (!(lidjoint\Joint::SearchMaterialAsAuthenticate($this->sand) && $this->constructPdoAc())) {
+			if (!(lidjoint\Joint::SearchMaterialAsAuthentic($this->sand) && $this->constructPdoAc())) {
 				$this->baseId = -1;
 			}
 			parent::__construct($this);
@@ -539,7 +539,7 @@
 			$this->brick = new lidwater\Brick();
 			$this->directory = new Directory();
 			$this->file = new File();
-			if (!(lidjoint\Joint::SearchMaterialAsAuthenticate($this->brick) && lidjoint\Joint::SearchMaterialAsAuthenticate($this->directory) && lidjoint\Joint::SearchMaterialAsAuthenticate($this->file))) {
+			if (!(lidjoint\Joint::SearchMaterialAsAuthentic($this->brick) && lidjoint\Joint::SearchMaterialAsAuthentic($this->directory) && lidjoint\Joint::SearchMaterialAsAuthentic($this->file))) {
 				$this->baseId = -1;
 			}
 			parent::__construct($this);
@@ -595,7 +595,7 @@
 				foreach ($value1 as $index2 => $value2) {
 					$slipPath = "{$index1}/{$value2}";
 					$textSlip = new lidjoint\TextSlip($slipPath);
-					if (lidjoint\Joint::SearchMaterialAsAuthenticate($textSlip)) {
+					if (lidjoint\Joint::SearchMaterialAsAuthentic($textSlip)) {
 						$result[$slipPath] = $textSlip->ReadSlip();
 					}
 				}
@@ -619,14 +619,14 @@
 <?php
 	use lid\home\well\heap as lidheap;
 
-	class Specimen {
+	class Specimen extends lidjoint\Joint {
 		public function __construct() {
 			$platform = new lidheap\Platform();
 			$directory = new lidheap\Directory();
 			$file = new lidheap\File();
 			$compute = new lidheap\Compute();
 			
-			if (lidjoint\Joint::SearchMaterialAsAuthenticate($platform) && lidjoint\Joint::SearchMaterialAsAuthenticate($directory) && lidjoint\Joint::SearchMaterialAsAuthenticate($file) && lidjoint\Joint::SearchMaterialAsAuthenticate($compute)) {
+			if (lidjoint\Joint::SearchMaterialAsAuthentic($platform) && lidjoint\Joint::SearchMaterialAsAuthentic($directory) && lidjoint\Joint::SearchMaterialAsAuthentic($file) && lidjoint\Joint::SearchMaterialAsAuthentic($compute)) {
 				echo "<h6>X7: Compute - LensTextSlip | {Primary files}</h6>";
 				echo "<pre>";
 				$filesLines = $compute->LensTextSlip();
@@ -641,6 +641,10 @@
 
 				$this->ChainSampling($platform, $directory, $file, $compute);
 			}
+			else {
+				$this->baseId = -1;
+			}
+			parent::__construct($this);
 		}
 
 		private function ChainSampling(lidheap\Platform $platform, lidheap\Directory $directory, lidheap\File $file, lidheap\Compute $compute) {

@@ -21,12 +21,17 @@
 <?php
 	use lid\home\well\joins as lidseason;
 
-	class Specimen {
+	class Specimen extends lidjoint\Joint {
 		public function __construct() {
 			$joins = new lidseason\Joins();
-
-			echo "<h6>1</h6>";
-			echo $joins->Test();
+			if (lidjoint\Joint::SearchMaterialAsAuthentic($joins)) {
+				echo "<h6>1</h6>";
+				echo $joins->Test();
+			}
+			else {
+				$this->baseId = -1;
+			}
+			parent::__construct($this);
 		}
 	}
 ?>
