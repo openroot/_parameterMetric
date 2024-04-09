@@ -65,7 +65,12 @@
 
 		public function __construct(string $slipPath) {
 			$this->directory = new lidheap\Directory();
-			$this->slipPath = $slipPath;
+			if (lidjoint\Joint::SearchMaterialAsAuthenticate($this->directory)) {
+				$this->slipPath = $slipPath;
+			}
+			else {
+				$this->baseId = -1;
+			}
 			parent::__construct($this);
 		}
 
@@ -140,9 +145,9 @@
 <?php
 	use lid\home\well\joint as lidreason;
 
-	class Specimen {
+	class Specimen extends Joint {
 		public function __construct() {
-			$joint = new lidreason\Joint();
+			$joint = new lidreason\Joint($this);
 		}
 	}
 ?>
