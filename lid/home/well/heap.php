@@ -12,7 +12,7 @@
 
 <?php
 	/* recognize */
-	class Platform {
+	class Platform extends lidjoint\Joint {
 		protected lidpull\Pull $pull;
 		protected lidpush\Push $push;
 		protected Directory $directory;
@@ -25,32 +25,31 @@
 		protected Dive $dive;
 
 		public function __construct() {
-			try {
-				$success = false;
-				$this->directory = new Directory();
-				$this->file = new File();
-				if ($this->directory && $this->file && $this->RequireonceDirectory("home/well")) {
-					$this->pull = new lidpull\Pull();
-					if ($this->pull) {
-						$this->push = new lidpush\Push();
-						if ($this->push) {
-							$this->street = $this->push->ReadStreet();
-							$this->lamp = new Lamp();
-							$this->wide = new Wide();
-							$this->notice = new Notice();
-							$this->run = new Run();
-							$this->dive = new Dive();
-							if ($this->street && $this->lamp && $this->wide && $this->notice && $this->run && $this->dive) {
-								$success = true;
-							}
+			$success = false;
+			$this->directory = new Directory();
+			$this->file = new File();
+			if (lidjoint\Joint::SearchMaterialAsAuthenticate($this->directory) && lidjoint\Joint::SearchMaterialAsAuthenticate($this->file) && $this->RequireonceDirectory("home/well")) {
+				$this->pull = new lidpull\Pull();
+				if ($this->pull) {
+					$this->push = new lidpush\Push();
+					if ($this->push) {
+						$this->street = $this->push->ReadStreet();
+						$this->lamp = new Lamp();
+						$this->wide = new Wide();
+						$this->notice = new Notice();
+						$this->run = new Run();
+						$this->dive = new Dive();
+						if (lidjoint\Joint::SearchMaterialAsAuthenticate($this->street) && lidjoint\Joint::SearchMaterialAsAuthenticate($this->lamp) && lidjoint\Joint::SearchMaterialAsAuthenticate($this->wide) && lidjoint\Joint::SearchMaterialAsAuthenticate($this->notice) && lidjoint\Joint::SearchMaterialAsAuthenticate($this->run) && lidjoint\Joint::SearchMaterialAsAuthenticate($this->dive)) {
+							$success = true;
 						}
 					}
 				}
-				if (!$success) {
-					die("Execution interrupted. Possibly it gets fixed on refresh.");
-				}
 			}
-			catch (\Exception $exception) {}
+			if (!$success) {
+				$this->baseId = -1;
+				die("Execution interrupted. Possibly it gets fixed on refresh.");
+			}
+			parent::__construct($this);
 		}
 
 		public function ReadStreet() {
@@ -501,6 +500,7 @@
 	class Wide extends lidjoint\Joint {
 		public function __construct() {
 			// TODO: Console | Log : Try-Catch handler
+			parent::__construct($this);
 		}
 	}
 
@@ -508,6 +508,7 @@
 	class Notice extends lidjoint\Joint {
 		public function __construct() {
 			// TODO: Date | Time | Callback
+			parent::__construct($this);
 		}
 	}
 
@@ -515,6 +516,7 @@
 	class Run extends lidjoint\Joint {
 		public function __construct() {
 			// TODO: AJAX Live : Multi Page
+			parent::__construct($this);
 		}
 	}
 
@@ -522,6 +524,7 @@
 	class Dive extends lidjoint\Joint {
 		public function __construct() {
 			// TODO: Unlimited Energy Exchange : Source Diagram -> Time
+			parent::__construct($this);
 		}
 	}
 
@@ -623,7 +626,7 @@
 			$file = new lidheap\File();
 			$compute = new lidheap\Compute();
 			
-			if (lidjoint\Joint::SearchMaterialAsAuthenticate($compute)) {
+			if (lidjoint\Joint::SearchMaterialAsAuthenticate($platform) && lidjoint\Joint::SearchMaterialAsAuthenticate($directory) && lidjoint\Joint::SearchMaterialAsAuthenticate($file) && lidjoint\Joint::SearchMaterialAsAuthenticate($compute)) {
 				echo "<h6>X7: Compute - LensTextSlip | {Primary files}</h6>";
 				echo "<pre>";
 				$filesLines = $compute->LensTextSlip();
@@ -635,9 +638,9 @@
 					echo "<br>";
 				}
 				echo "</pre>";
-			}
 
-			$this->ChainSampling($platform, $directory, $file, $compute);
+				$this->ChainSampling($platform, $directory, $file, $compute);
+			}
 		}
 
 		private function ChainSampling(lidheap\Platform $platform, lidheap\Directory $directory, lidheap\File $file, lidheap\Compute $compute) {
