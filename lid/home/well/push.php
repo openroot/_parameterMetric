@@ -4,21 +4,25 @@
 
 <?php
 	use lid\home\well\heap as lidheap;
+	use lid\home\well\joint as lidjoint;
 	use lid\home\well\water as lidwater;
 ?>
 
 <?php
-	class Push {
+	class Push extends lidjoint\Joint {
 		protected lidheap\Street $street;
 		private lidwater\Dye $dye;
 
 		public function __construct() {
 			$this->street = new lidheap\Street();
 			$this->dye = new lidwater\Dye();
-
-			if ($this->dye && $this->street) {
+			if (lidjoint\Joint::SearchMaterialAsAuthenticate($this->dye) && lidjoint\Joint::SearchMaterialAsAuthenticate($this->street)) {
 				$this->TripDyeRegions();
 			}
+			else {
+				$this->baseId = -1;
+			}
+			parent::__construct($this);
 		}
 
 		public function ReadStreet() {

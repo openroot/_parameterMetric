@@ -4,21 +4,26 @@
 
 <?php
 	use lid\home\well\heap as lidheap;
+	use lid\home\well\joint as lidjoint;
 	use lid\home\well\water as lidwater;
 ?>
 
 <?php
-	class Pull {
+	class Pull extends lidjoint\Joint {
 		private lidheap\Directory $directory;
 		private lidwater\Brick $brick;
 
 		public function __construct() {
 			$this->directory = new lidheap\Directory();
 			$this->brick = new lidwater\Brick();
-			if ($this->brick && $this->directory) {
+			if (lidjoint\Joint::SearchMaterialAsAuthenticate($this->brick) && lidjoint\Joint::SearchMaterialAsAuthenticate($this->directory)) {
 				$this->TripBrickFlats();
 				$this->TripBrickHids();
 			}
+			else {
+				$this->baseId = -1;
+			}
+			parent::__construct($this);
 		}
 
 		protected function TripBrickFlats() {
