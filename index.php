@@ -20,7 +20,7 @@
 				$blockName = !empty($launchSkeleton) ? $launchSkeleton : $blockName;
 				if ($blockName != null) {
 					$this->Skeleton($blockName);
-				}			
+				}
 				echo "<pre><br><br><br><br><hr><i><b>Project generated:<br><br></b>[baseId] => namespace\Class<b><br>and, off exact order.<br><br>(for, otg development purpose)</b></i><hr><i>";
 				print_r(lidjoint\Base::$objectBaseIds);
 				echo "</i><hr><hr><br></pre>";
@@ -75,6 +75,23 @@
 						echo "<h5>Namespace: lid\home\well\water</h5>";
 						new lid\home\well\water\Specimen();
 						break;
+					case "viewcodes":
+						// Look into all code (non-binary) files (files in primary directories).
+						$compute = new lidheap\Compute();
+						if (lidjoint\Joint::SearchMaterialAsAuthentic($compute)) {
+							echo "<pre>";
+							$filesLines = $compute->LensTextSlip();
+							$i = 0;
+							foreach ($filesLines as $index1 => $value1) {
+								echo "<hr><b>[F " . ++$i . "] {$index1}</b><hr><i>";
+								foreach ($value1 as $index2 => $value2) {
+									echo "L " . ($index2 + 1) . "> ". htmlspecialchars($value2) . "";
+								}
+								echo "</i><br>";
+							}
+							echo "</pre>";
+						}
+						break;
 					default:
 						echo "This is default case of Class 'Launch'.";
 				}
@@ -93,6 +110,7 @@
 	//$launch->Skeleton("pull");
 	//$launch->Skeleton("push");
 	//$launch->Skeleton("water");
+	//$launch->Skeleton("viewcodes");
 ?>
 
 <?php
