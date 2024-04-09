@@ -76,28 +76,37 @@
 						new lid\home\well\water\Specimen();
 						break;
 					case "viewcodes":
+					case "viewcodesprimary":
 						// Look into all code (non-binary) files (files in primary directories).
-						$compute = new lidheap\Compute();
-						if (lidjoint\Joint::SearchMaterialAsAuthentic($compute)) {
-							echo "<pre>";
-							$filesLines = $compute->LensTextSlip();
-							$i = 0;
-							$totalLinesOfCodes = 0;
-							foreach ($filesLines as $index1 => $value1) {
-								echo "<hr><b>[F " . ++$i . "] {$index1}</b><hr><i>";
-								foreach ($value1 as $index2 => $value2) {
-									echo "L " . ($index2 + 1) . "> ". htmlspecialchars($value2) . "";
-								}
-								echo "</i><br>";
-								$totalLinesOfCodes += count($value1);
-							}
-							echo "</pre>";
-							echo "<hr><hr><b>Total Lines of Codes:</b><i> {$totalLinesOfCodes}</i><hr><hr>";
-						}
+						$this->Viewcodes();
+						break;
+					case "viewcodesall":
+						// Look into all code (non-binary) files (files in all directories).
+						$this->Viewcodes(false);
 						break;
 					default:
 						echo "This is default case of Class 'Launch'.";
 				}
+			}
+		}
+
+		private function Viewcodes(bool $onlyPrimaryDirectory = true) {
+			$compute = new lidheap\Compute();
+			if (lidjoint\Joint::SearchMaterialAsAuthentic($compute)) {
+				echo "<pre>";
+				$filesLines = $compute->LensTextSlip($onlyPrimaryDirectory);
+				$i = 0;
+				$totalLinesOfCodes = 0;
+				foreach ($filesLines as $index1 => $value1) {
+					echo "<hr><b>[F " . ++$i . "] {$index1}</b><hr><i>";
+					foreach ($value1 as $index2 => $value2) {
+						echo "L " . ($index2 + 1) . "> ". htmlspecialchars($value2) . "";
+					}
+					echo "</i><br>";
+					$totalLinesOfCodes += count($value1);
+				}
+				echo "</pre>";
+				echo "<hr><hr><b>Total Lines of Codes:</b><i> {$totalLinesOfCodes}</i><hr><hr>";
 			}
 		}
 	}

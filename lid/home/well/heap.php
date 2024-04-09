@@ -627,7 +627,7 @@
 			$compute = new lidheap\Compute();
 			
 			if (lidjoint\Joint::SearchMaterialAsAuthentic($platform) && lidjoint\Joint::SearchMaterialAsAuthentic($directory) && lidjoint\Joint::SearchMaterialAsAuthentic($file) && lidjoint\Joint::SearchMaterialAsAuthentic($compute)) {
-				echo "<h6>X7: Compute - LensTextSlip | {Primary files}</h6>";
+				/*echo "<h6>X7: Compute - LensTextSlip | {Primary files}</h6>";
 				echo "<pre>";
 				$filesLines = $compute->LensTextSlip();
 				foreach ($filesLines as $index1 => $value1) {
@@ -637,7 +637,7 @@
 					}
 					echo "</i><br>";
 				}
-				echo "</pre>";
+				echo "</pre>";*/
 
 				$this->ChainSampling($platform, $directory, $file, $compute);
 			}
