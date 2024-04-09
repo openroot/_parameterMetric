@@ -31,6 +31,8 @@
 						array_push(Base::$resourceBaseIds, $material->baseId);
 					}
 				}
+				print_r(Base::$objectBaseIds);
+				echo "<pre>";print_r($material);echo "</pre>";
 			}
 		}
 
