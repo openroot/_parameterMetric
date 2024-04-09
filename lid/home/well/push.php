@@ -3,18 +3,18 @@
 ?>
 
 <?php
-	use lid\home\well\water as lidwater;
 	use lid\home\well\heap as lidheap;
+	use lid\home\well\water as lidwater;
 ?>
 
 <?php
 	class Push {
-		private lidwater\Dye $dye;
 		protected lidheap\Street $street;
+		private lidwater\Dye $dye;
 
 		public function __construct() {
-			$this->dye = new lidwater\Dye();
 			$this->street = new lidheap\Street();
+			$this->dye = new lidwater\Dye();
 
 			if ($this->dye && $this->street) {
 				$this->TripDyeRegions();

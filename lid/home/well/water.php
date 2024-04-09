@@ -286,11 +286,12 @@
 		}
 	}
 
-	class Dye {
+	class Dye extends lidjoint\Joint {
 		private array $regions;
 
 		public function __construct() {
 			$this->CapRegions();
+			parent::__construct($this);
 		}
 
 		public function ReadRegions() {
@@ -304,11 +305,12 @@
 		}
 	}
 
-	class Sand {
+	class Sand extends lidjoint\Joint {
 		private array $pdoAc;
 
 		public function __construct() {
 			$this->CapPdoAc();
+			parent::__construct($this);
 		}
 
 		public function ReadPdoAc() {

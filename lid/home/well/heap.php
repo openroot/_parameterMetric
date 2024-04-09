@@ -386,11 +386,12 @@
 	}
 
 	/* name */
-	class Street {
+	class Street extends lidjoint\Joint {
 		protected array $gets;
 
 		public function __construct() {
 			$this->gets = array();
+			parent::__construct($this);
 		}
 
 		public function ReadGets() {
@@ -436,19 +437,20 @@
 	}
 
 	/* rent */
-	class Lamp {
+	class Lamp extends lidjoint\Joint {
 		protected lidwater\Sand $sand;
 		protected ?\PDO $pdoAc;
 		protected string $pdoType;
 
 		public function __construct(string $pdoType = "mysql") {
+			$this->sand = new lidwater\Sand();
 			$this->pdoAc = null;
 			$this->pdoType = $pdoType;
-			$this->sand = new lidwater\Sand();
 
-			if ($this->sand) {
-				$this->constructPdoAc();
+			if (!(lidjoint\Joint::SearchMaterialAsAuthenticate($this->sand) && $this->constructPdoAc())) {
+				$this->baseId = -1;
 			}
+			parent::__construct($this);
 		}
 
 		public function ReadPdoAc() {
@@ -469,11 +471,13 @@
 						default:
 					}
 					$this->pdoAc->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+					return true;
 				}
 				catch (\PDOException $exception) {
 					// TODO: Log following
 				}
 			}
+			return false;
 		}
 
 		public function destroyPdoAc() {
@@ -633,7 +637,7 @@
 				echo "</pre>";
 			}
 
-			//$this->ChainSampling($platform, $directory, $file, $compute);
+			$this->ChainSampling($platform, $directory, $file, $compute);
 		}
 
 		private function ChainSampling(lidheap\Platform $platform, lidheap\Directory $directory, lidheap\File $file, lidheap\Compute $compute) {

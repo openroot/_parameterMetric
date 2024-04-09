@@ -3,18 +3,18 @@
 ?>
 
 <?php
-	use lid\home\well\water as lidwater;
 	use lid\home\well\heap as lidheap;
+	use lid\home\well\water as lidwater;
 ?>
 
 <?php
 	class Pull {
-		private lidwater\Brick $brick;
 		private lidheap\Directory $directory;
+		private lidwater\Brick $brick;
 
 		public function __construct() {
-			$this->brick = new lidwater\Brick();
 			$this->directory = new lidheap\Directory();
+			$this->brick = new lidwater\Brick();
 			if ($this->brick && $this->directory) {
 				$this->TripBrickFlats();
 				$this->TripBrickHids();

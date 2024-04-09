@@ -3,11 +3,14 @@
 ?>
 
 <?php
+	use lid\home\well\joint as lidjoint;
 ?>
 
 <?php
-	class Joins {
-		public function __construct() {}
+	class Joins extends lidjoint\Joint {
+		public function __construct() {
+			parent::__construct($this);
+		}
 
 		public function Test() {
 			return "I know PHP.";
