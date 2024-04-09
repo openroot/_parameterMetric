@@ -3,24 +3,35 @@
 ?>
 
 <?php
+	$GLOBALS["declaredClasses"] = get_declared_classes();
+	$GLOBALS["definedFunctions"] = get_defined_functions();
+	$GLOBALS["definedConstants"] = get_defined_constants();
 ?>
 
 <?php
 	class Branch {
 		private ?array $arguments;
+		private array $declaredClasses;
+		private array $definedFunctions;
+		private array $definedConstants;
 
 		public function __construct(?array $arguments = null) {
 			$this->arguments = $arguments;
+			$this->declaredClasses = $GLOBALS["declaredClasses"];
+			$this->definedFunctions = $GLOBALS["definedFunctions"];
+			$this->definedConstants = $GLOBALS["definedConstants"];
 		}
 
 		public function Around() {
-			for ($i = 1; $i <= 5 ; $i++) {
-				$this->Here();
-			}
+			return $this->Here();
 		}
 
 		public function Here() {
-			echo "Singing & Playing `PHP`.<br>";
+			$result = array();
+			$result["classes"] = $this->declaredClasses;
+			$result["functions"] = $this->definedFunctions;
+			$result["constants"] = $this->definedConstants;
+			return $result;
 		}
 	}
 ?>
@@ -33,7 +44,9 @@
 			$branch = new lidbranch\Branch();
 
 			echo "<h6>1</h6>";
-			$branch->Around();
+			echo "<pre>";
+			print_r($branch->Around());
+			echo "</pre>";
 		}
 	}
 ?>
