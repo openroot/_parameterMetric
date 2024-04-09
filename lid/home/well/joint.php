@@ -65,7 +65,7 @@
 
 		public function __construct(string $slipPath) {
 			$this->directory = new lidheap\Directory();
-			if (lidjoint\Joint::SearchMaterialAsAuthenticate($this->directory)) {
+			if (Joint::SearchMaterialAsAuthenticate($this->directory)) {
 				$this->slipPath = $slipPath;
 			}
 			else {

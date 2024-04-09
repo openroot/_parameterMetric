@@ -631,11 +631,11 @@
 				echo "<pre>";
 				$filesLines = $compute->LensTextSlip();
 				foreach ($filesLines as $index1 => $value1) {
-					echo "{$index1}<br><br>";
+					echo "{$index1}<br><br><i>";
 					foreach ($value1 as $index2 => $value2) {
-						echo ($index2 + 1) . "> ". htmlspecialchars($value2) . "<br>";
+						echo "Line " . ($index2 + 1) . "> ". htmlspecialchars($value2) . "";
 					}
-					echo "<br>";
+					echo "</i><br>";
 				}
 				echo "</pre>";
 
