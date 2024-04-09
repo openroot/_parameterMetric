@@ -22,7 +22,7 @@
 				if (is_object($material)) {
 					if ($material->baseId != -1) {
 						$material->baseId = ++Base::$objectBaseIdPointer;
-						array_push(Base::$objectBaseIds, $material->baseId);
+						Base::$objectBaseIds[$material->baseId] = get_class($material);
 					}
 				}
 				else if (is_resource($material)) {
@@ -31,8 +31,6 @@
 						array_push(Base::$resourceBaseIds, $material->baseId);
 					}
 				}
-				print_r(Base::$objectBaseIds);
-				echo "<pre>";print_r($material);echo "</pre>";
 			}
 		}
 
@@ -44,14 +42,14 @@
 			if (!is_null($material)) {
 				if (is_object($material)) {
 					foreach (Base::$objectBaseIds as $index => $value) {
-						if ($value == $material->ReadBaseId()) {
+						if ($index === $material->ReadBaseId()) {
 							return true;
 						}
 					}
 				}
 				else if (is_resource($material)) {
 					foreach (Base::$resourceBaseIds as $index => $value) {
-						if ($value == $material->ReadBaseId()) {
+						if ($index === $material->ReadBaseId()) {
 							return true;
 						}
 					}

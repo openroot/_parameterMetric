@@ -4,6 +4,7 @@
 
 <?php
 	use lid\home\well\heap as lidheap;
+	use lid\home\well\joint as lidjoint;
 ?>
 
 <?php
@@ -13,12 +14,16 @@
 
 		public function __construct(?string $blockName = null) {
 			$this->platform = new lidheap\Platform();
-			$this->street = $this->platform->ReadStreet();
-
-			$launchSkeleton = $this->street->FindGets("index_launch_skeleton");
-			$blockName = !empty($launchSkeleton) ? $launchSkeleton : $blockName;
-			if ($blockName != null) {
-				$this->Skeleton($blockName);
+			if (lidjoint\Joint::SearchMaterialAsAuthenticate($this->platform)) {
+				$this->street = $this->platform->ReadStreet();
+				$launchSkeleton = $this->street->FindGets("index_launch_skeleton");
+				$blockName = !empty($launchSkeleton) ? $launchSkeleton : $blockName;
+				if ($blockName != null) {
+					$this->Skeleton($blockName);
+				}			
+				echo "<pre><br><br><br><br><hr><i><b>Project generated:<br><br></b>[baseId] => namespace\Class<b><br>and, off exact order.<br><br>(for, otg development purpose)</b></i><hr><i>";
+				print_r(lidjoint\Base::$objectBaseIds);
+				echo "</i><hr><hr><br></pre>";
 			}
 		}
 
