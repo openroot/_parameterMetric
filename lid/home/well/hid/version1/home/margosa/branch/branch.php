@@ -3,13 +3,14 @@
 ?>
 
 <?php
+	use lid\home\well\joint as lidjoint;
 	$GLOBALS["declaredClasses"] = get_declared_classes();
 	$GLOBALS["definedFunctions"] = get_defined_functions();
 	$GLOBALS["definedConstants"] = get_defined_constants();
 ?>
 
 <?php
-	class Branch {
+	class Branch extends lidjoint\Joint  {
 		private ?array $arguments;
 		private array $declaredClasses;
 		private array $definedFunctions;
@@ -20,6 +21,7 @@
 			$this->declaredClasses = $GLOBALS["declaredClasses"];
 			$this->definedFunctions = $GLOBALS["definedFunctions"];
 			$this->definedConstants = $GLOBALS["definedConstants"];
+			parent::__construct($this);
 		}
 
 		public function Around() {
@@ -43,7 +45,12 @@
 		public function __construct() {
 			$branch = new lidbranch\Branch();
 
-			echo "<h6>1</h6>";
+			echo "<h6>1: Branch - Signature</h6>";
+			echo "<pre>";
+			print_r($branch->Signature());
+			echo "</pre>";
+
+			echo "<h6>2: Branch - Around</h6>";
 			echo "<pre>";
 			print_r($branch->Around());
 			echo "</pre>";

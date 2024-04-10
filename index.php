@@ -31,11 +31,18 @@
 			if ($this->platform) {
 				// Following cases to view to demonstrate of code-in-action in front-end as defined in respective.
 				switch ($blockName) {
-					case "margosanow":
+					case "margosanowflower":
 						// A demonstration of code convention used in this project in generic format.
 						if ($this->platform->RequireonceDirectory("home/margosa/now")) {
 							echo "<h5>Namespace: lid\home\margosa\\now\\flower</h5>";
 							new lid\home\margosa\now\flower\Specimen();
+						}
+						break;
+					case "margosanowleaf":
+						// A demonstration of code convention used in this project in generic format.
+						if ($this->platform->RequireonceDirectory("home/margosa/now")) {
+							echo "<h5>Namespace: lid\home\margosa\\now\leaf</h5>";
+							new lid\home\margosa\now\leaf\Specimen();
 						}
 						break;
 					case "margosabranch":
@@ -114,7 +121,8 @@
 
 <?php
 	$launch = new Launch();
-	//$launch->Skeleton("margosanow");
+	//$launch->Skeleton("margosanowflower");
+	//$launch->Skeleton("margosanowleaf");
 	//$launch->Skeleton("margosabranch");
 	//$launch->Skeleton("heap");
 	//$launch->Skeleton("joins");

@@ -15,27 +15,38 @@
 	}
 
 	class Joint {
-		protected int $baseId = 0;
+		protected int $baseId = 1;
+		private mixed $thisMaterial;
 
 		public function __construct(mixed $material) {
 			if (!is_null($material)) {
+				$this->thisMaterial = $material;
 				if (is_object($material)) {
-					if ($material->baseId != -1) {
+					if (isset($material->baseId) && $material->baseId != -1) {
 						$material->baseId = ++Base::$objectBaseIdPointer;
 						Base::$objectBaseIds[$material->baseId] = get_class($material);
 					}
 				}
 				else if (is_resource($material)) {
-					if ($material->baseId != -1) {
+					if (isset($material->baseId) && $material->baseId != -1) {
 						$material->baseId = ++Base::$resourceBaseIdPointer;
-						array_push(Base::$resourceBaseIds, $material->baseId);
+						// TODO: [NOT MISSION CRITICAL]
+						// TODO: Unblock following when implemented & verified (first) in this project (as is_resource()).
+						//Base::$resourceBaseIds[$material->baseId] = get_class($material);
 					}
 				}
 			}
 		}
 
 		public function ReadBaseId() {
-			return $this->baseId;
+			return isset($this->thisMaterial->baseId) ? $this->thisMaterial->baseId : -1;
+		}
+
+		public function Signature() {
+			$result = array();
+			$result["className"] = get_class($this->thisMaterial);
+			$result["classMethods"] = get_class_methods($this->thisMaterial);
+			return $result;
 		}
 
 		public static function SearchMaterialAsAuthentic(mixed $material) {
