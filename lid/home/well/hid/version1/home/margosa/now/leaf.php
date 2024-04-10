@@ -17,7 +17,7 @@
 
 	class Specimen {
 		public function __construct() {
-			echo "<h6>1: Leaf - __construct</h6>";
+			echo "<h6>1: Leaf - __construct | {Signature of PHP class - Leaf}</h6>";
 			echo "<pre>";
 			print_r((new lidjoint\Joint(new lidleave\Leaf()))->Signature());
 			echo "</pre>";
