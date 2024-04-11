@@ -604,6 +604,17 @@
 			return $result;
 		}
 
+		public function LensPhpCode(bool $onlyPrimaryDirectory = true) {
+			$result = array();
+			$filesLines = $this->LensTextSlip($onlyPrimaryDirectory);
+			foreach ($filesLines as $index1 => $value1) {
+				foreach ($value1 as $index2 => $value2) {
+					array_push($result, $value2);
+				}
+			}
+			return $result;
+		}
+
 		private function SearchArrayAsStringOutdepth(array $stringArray, string $searchString) {
 			if (count($stringArray) > 0) {
 				foreach ($stringArray as $index => $value) {

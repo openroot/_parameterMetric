@@ -82,14 +82,21 @@
 						echo "<h5>Namespace: lid\home\well\water</h5>";
 						new lid\home\well\water\Specimen();
 						break;
-					case "viewcodes":
-					case "viewcodesprimary":
-						// Look into all code (non-binary) files (files in primary directories).
-						$this->Viewcodes();
+					case "viewtextfilesprimary":
+						// Look into all (non-binary) files (files in primary directories).
+						$this->ViewTextfiles();
 						break;
-					case "viewcodesall":
-						// Look into all code (non-binary) files (files in all directories).
-						$this->Viewcodes(false);
+					case "viewtextfilesall":
+						// Look into all (non-binary) files (files in all directories).
+						$this->ViewTextfiles(false);
+						break;
+					case "viewphpcodesprimary":
+						// Look into php codes (non-binary) files (files in primary directories).
+						$this->ViewPhpcodes();
+						break;
+					case "viewphpcodesall":
+						// Look into php codes (non-binary) files (files in all directories).
+						$this->ViewPhpcodes(false);
 						break;
 					default:
 						echo "This is default case of Class 'Launch'.";
@@ -97,7 +104,7 @@
 			}
 		}
 
-		private function Viewcodes(bool $onlyPrimaryDirectory = true) {
+		private function ViewTextfiles(bool $onlyPrimaryDirectory = true) {
 			$compute = new lidheap\Compute();
 			if (lidjoint\Joint::SearchMaterialAsAuthentic($compute)) {
 				echo "<pre>";
@@ -116,6 +123,15 @@
 				echo "<hr><hr><b>Total Lines of Codes:</b><i> {$totalLinesOfCodes}</i><hr><hr>";
 			}
 		}
+
+		private function ViewPhpcodes(bool $onlyPrimaryDirectory = true) {
+			$compute = new lidheap\Compute();
+			if (lidjoint\Joint::SearchMaterialAsAuthentic($compute)) {
+				echo "<pre>";
+				print_r($compute->LensPhpCode($onlyPrimaryDirectory));
+				echo "</pre>";
+			}
+		}
 	}
 ?>
 
@@ -130,7 +146,10 @@
 	//$launch->Skeleton("pull");
 	//$launch->Skeleton("push");
 	//$launch->Skeleton("water");
-	//$launch->Skeleton("viewcodes");
+	//$launch->Skeleton("viewtextfilesprimary");
+	//$launch->Skeleton("viewtextfilesall");	
+	//$launch->Skeleton("viewphpcodesprimary");
+	//$launch->Skeleton("viewphpcodesall");
 ?>
 
 <?php
