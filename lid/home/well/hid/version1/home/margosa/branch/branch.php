@@ -11,12 +11,14 @@
 
 <?php
 	class Branch extends lidjoint\Joint  {
+		protected string $name;
 		private ?array $arguments;
 		private array $declaredClasses;
 		private array $definedFunctions;
 		private array $definedConstants;
 
 		public function __construct(?array $arguments = null) {
+			$this->name = "xbranch";
 			$this->arguments = $arguments;
 			$this->declaredClasses = $GLOBALS["declaredClasses"];
 			$this->definedFunctions = $GLOBALS["definedFunctions"];
@@ -35,6 +37,8 @@
 			$result["constants"] = $this->definedConstants;
 			return $result;
 		}
+
+		protected function There() {}
 	}
 ?>
 

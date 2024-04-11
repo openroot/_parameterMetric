@@ -15,11 +15,12 @@
 	}
 
 	class Joint {
-		protected int $baseId = 1;
+		protected int $baseId;
 		private mixed $thisMaterial;
 
 		public function __construct(mixed $material) {
 			if (!is_null($material)) {
+				$this->baseId = 1;
 				$this->thisMaterial = $material;
 				if (is_object($material)) {
 					if (isset($material->baseId) && $material->baseId != -1) {
@@ -42,10 +43,20 @@
 			return isset($this->thisMaterial->baseId) ? $this->thisMaterial->baseId : -1;
 		}
 
-		public function Signature() {
+		public function Signature(?string $className = null) {
 			$result = array();
-			$result["className"] = get_class($this->thisMaterial);
-			$result["classMethods"] = get_class_methods($this->thisMaterial);
+				$className = empty($className) ? get_class($this->thisMaterial) : $className;
+				if (!empty($className)) {
+					$result["className"] = $className;
+					$result["classVarsNonprivate"] = get_class_vars($className);
+					$result["classMethodsNonprivate"] = get_class_methods($className);
+
+					$result["parentClass"] = array();
+					$parentClassName = get_parent_class($className);
+					if (!empty($parentClassName)) {
+						$result["parentClass"] = $this->Signature($parentClassName);
+					}
+				}
 			return $result;
 		}
 
@@ -163,6 +174,21 @@
 				$this->baseId = -1;
 			}
 			parent::__construct($this);
+
+			if (Joint::SearchMaterialAsAuthentic($joint)) {
+				$textSlip = new lidreason\TextSlip("home/margosa/data/json/sample2.json");
+				if (lidreason\Joint::SearchMaterialAsAuthentic($textSlip)) {
+					echo "<h6>1: TextSlip - Signature</h6>";
+					echo "<pre>";
+					print_r($textSlip->Signature());
+					echo "</pre>";
+
+					echo "<h6>2: TextSlip - ReadSlip</h6>";
+					echo "<pre>";
+					print_r($textSlip->ReadSlip());
+					echo "</pre>";
+				}
+			}
 		}
 	}
 ?>

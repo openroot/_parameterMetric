@@ -17,9 +17,14 @@
 
 	class Specimen {
 		public function __construct() {
-			echo "<h6>1: Leaf - __construct | {Signature of PHP class - Leaf}</h6>";
+			echo "<h6>1: Joint - Signature | {Signature of PHP class - Leaf (by object)}</h6>";
 			echo "<pre>";
 			print_r((new lidjoint\Joint(new lidleave\Leaf()))->Signature());
+			echo "</pre>";
+
+			echo "<h6>2: Joint - Signature (\"lid\home\margosa\\now\\flower\Me\") | {Signature of PHP class - Me (by name)}</h6>";
+			echo "<pre>";
+			print_r((new lidjoint\Joint(null))->Signature("lid\home\margosa\\now\\flower\Me"));
 			echo "</pre>";
 		}
 	}
