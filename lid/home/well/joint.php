@@ -50,7 +50,6 @@
 					$result["className"] = $className;
 					$result["classVarsNonprivate"] = get_class_vars($className);
 					$result["classMethodsNonprivate"] = get_class_methods($className);
-
 					$result["parentClass"] = array();
 					$parentClassName = get_parent_class($className);
 					if (!empty($parentClassName)) {
