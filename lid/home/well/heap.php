@@ -625,7 +625,7 @@
 			$platform = new lidheap\Platform();
 			$directory = new lidheap\Directory();
 			$file = new lidheap\File();
-			$compute = new lidheap\Compute();			
+			$compute = new lidheap\Compute();
 			if (lidjoint\Joint::SearchMaterialAsAuthentic($platform) && lidjoint\Joint::SearchMaterialAsAuthentic($directory) && lidjoint\Joint::SearchMaterialAsAuthentic($file) && lidjoint\Joint::SearchMaterialAsAuthentic($compute)) {
 				/*
 				echo "<h6>X7: Compute - LensTextSlip | {Primary files}</h6>";
