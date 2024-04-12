@@ -123,8 +123,13 @@
 
 	class TextSlip extends Slip {
 		public function __construct(string $slipPath) {
-			// TODO: Verify as text mime, to put $this->baseId = -1; on unsuccess.
-			parent::__construct($slipPath);
+			$slipMime = mime_content_type("./lid/{$slipPath}");
+			if ($slipMime == "text/x-php" || $slipMime == "application/json") {
+				parent::__construct($slipPath);
+			}
+			else {
+				$this->baseId = -1;
+			}
 		}
 
 		public function ReadSlip() {
@@ -155,11 +160,39 @@
 	}
 	
 	class CodeTextSlip extends TextSlip {
-		public function __construct() {}
+		public function __construct(string $slipPath) {
+			$slipMime = mime_content_type("./lid/{$slipPath}");
+			if ($slipMime == "text/x-php" || $slipMime == "application/json") {
+				parent::__construct($slipPath);
+			}
+			else {
+				$this->baseId = -1;
+			}
+		}
 	}
 
 	class PhpCodeTextSlip extends CodeTextSlip {
-		public function __construct() {}
+		public function __construct(string $slipPath) {
+			$slipMime = mime_content_type("./lid/{$slipPath}");
+			if ($slipMime == "text/x-php") {
+				parent::__construct($slipPath);
+			}
+			else {
+				$this->baseId = -1;
+			}
+		}
+	}
+
+	class JsonCodeTextSlip extends CodeTextSlip {
+		public function __construct(string $slipPath) {
+			$slipMime = mime_content_type("./lid/{$slipPath}");
+			if ($slipMime == "application/json") {
+				parent::__construct($slipPath);
+			}
+			else {
+				$this->baseId = -1;
+			}
+		}
 	}
 ?>
 

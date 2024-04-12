@@ -590,12 +590,29 @@
 			return $result;
 		}
 
-		public function LensTextSlip(bool $onlyPrimaryDirectory = true) {
+		public function LensTextSlip(bool $onlyPrimaryDirectory = true, ?string $slipType = null) {
 			$result = array();
+			$slipType = empty($slipType) ? "text" : $slipType;
 			foreach ($this->LensFiles($onlyPrimaryDirectory) as $index1 => $value1) {
 				foreach ($value1 as $index2 => $value2) {
 					$slipPath = "{$index1}/{$value2}";
-					$textSlip = new lidjoint\TextSlip($slipPath);
+					$textSlip = null;
+					switch ($slipType) {
+						case "text":
+							$textSlip = new lidjoint\TextSlip($slipPath);
+							break;
+						case "codetextslip":
+							$textSlip = new lidjoint\CodeTextSlip($slipPath);
+							break;
+						case "phpcodetextslip":
+							$textSlip = new lidjoint\PhpCodeTextSlip($slipPath);
+							break;
+						case "jsoncodetextslip":
+							$textSlip = new lidjoint\JsonCodeTextSlip($slipPath);
+							break;
+						default:
+							$textSlip = new lidjoint\TextSlip($slipPath);
+					}					
 					if (lidjoint\Joint::SearchMaterialAsAuthentic($textSlip)) {
 						$result[$slipPath] = $textSlip->ReadSlip();
 					}
@@ -606,8 +623,11 @@
 
 		public function LensPhpCode(bool $onlyPrimaryDirectory = true) {
 			$result = array();
-			$filesLines = $this->LensTextSlip($onlyPrimaryDirectory);
+			$filesLines = $this->LensTextSlip($onlyPrimaryDirectory, "phpcodetextslip");
 			foreach ($filesLines as $index1 => $value1) {
+				$namespace = "";
+				echo $index1 . PHP_EOL;
+				//if (strstr())
 				foreach ($value1 as $index2 => $value2) {
 					array_push($result, $value2);
 				}
