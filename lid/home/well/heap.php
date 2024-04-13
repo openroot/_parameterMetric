@@ -626,7 +626,7 @@
 			$filesLines = $this->LensTextSlip($onlyPrimaryDirectory, "phpcodetextslip");
 			foreach ($filesLines as $index1 => $value1) {
 				$classNames = array();
-				$namespacePath = "";				
+				$namespacePath = "";
 				foreach ($value1 as $index2 => $value2) {
 					$value2 = trim($value2);
 					if (str_starts_with($value2, "namespace") && str_ends_with($value2, ";")) {

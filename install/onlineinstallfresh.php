@@ -26,6 +26,7 @@
 			}*/
 			if (unlink("{$repositoryBranch}.zip")) {
 				array_push($messages, "Downloaded zipped file deleted successfully.");
+				CopyDirectoriesIndepth("../", "temp/");
 			}
 			else {
 				array_push($messages, "Deletion of downloaded zipped file was failed.");
@@ -38,5 +39,27 @@
 
 	foreach ($messages as $index => $value) {
 		echo ($index + 1) . ": {$value}<br>";
+	}
+
+	function CopyDirectoriesIndepth(string $fromDirectory, string $toDirectoryAnother) {
+		if (is_dir($fromDirectory)) {
+			$toDirectoryAnotherExists = false;
+			if (!is_dir($toDirectoryAnother)) {
+				$toDirectoryAnotherExists = mkdir($toDirectoryAnother);
+			}
+			else {
+				$toDirectoryAnotherExists = true;
+			}
+			if ($toDirectoryAnotherExists) {
+				foreach (scandir($fromDirectory) as $index => $value) {
+					//if (!($value == "." || $value == ".."  || $value == "install" || $value == ".git")) {
+					if (!(str_starts_with($value, ".") || $value == "install")) {
+						echo $value . "<br>";
+
+						//CopyDirectoriesIndepth("{$fromDirectory}/{$value}", "{$toDirectoryAnother}/{$value}");
+					}
+				}
+			}
+		}
 	}
 ?>
