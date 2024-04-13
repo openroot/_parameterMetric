@@ -26,7 +26,7 @@
 			}*/
 			if (unlink("{$repositoryBranch}.zip")) {
 				array_push($messages, "Downloaded zipped file deleted successfully.");
-				array_push($messages, CopyDirectoriesIndepth("..", "temp") ? "Copy success" : "Copy unsuccess"); // TODO: Temp placement
+				array_push($messages, CopyDirectoriesIndepth("..", "temp") ? "Copy success." : "Copy unsuccess."); // TODO: Temp placement
 			}
 			else {
 				array_push($messages, "Deletion of downloaded zipped file was failed.");
@@ -45,7 +45,7 @@
 		$result = false;
 		if (is_dir($fromDirectory)) {
 			$toDirectoryAnotherExists = false;
-			$toDirectoryAnotherExists = (!is_dir($toDirectoryAnother) : mkdir($toDirectoryAnother) : true);
+			$toDirectoryAnotherExists = !is_dir($toDirectoryAnother) ? mkdir($toDirectoryAnother) : true;
 
 			if ($toDirectoryAnotherExists) {
 				$directoryIndepthExists = false;
@@ -77,7 +77,7 @@
 					}
 				}
 
-				$result = ($originalCount == $copiedCount ? true : false);
+				$result = $originalCount == $copiedCount ? true : false;
 				if ($directoryIndepthExists) {
 					$result = $directoryIndepthResult && $result;
 				}
