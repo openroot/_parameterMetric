@@ -13,11 +13,14 @@
 	if (!empty($content)) {
 		if (file_put_contents($fileName, $content)) {
 			array_push($messages, "File downloaded successfully.");
+			$extractToDirectory = "./";
 			/*$zip = new ZipArchive;
 			if ($zip->open("main.zip")) {
-				$zip->extractTo("../");
+				$zip->extractTo($extractToDirectory); // above directory
 				$zip->close();
 				array_push($messages, "Downloaded file unzipped successfully.");
+				$extractedDirectoryName = "{$extractToDirectory}{$githubRepositoryName}-{$repositoryBranch}";
+				echo $extractedDirectoryName . "<br>";
 			}
 			else {
 				array_push($messages, "File unzipping was failed.");
