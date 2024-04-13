@@ -40,6 +40,12 @@
 							AddFilesToZip($zip, $backupPath);
 							if ($zip->close()) {
 								array_push($messages, "Copied originals zipped successfully.");
+								if (DeleteDirectoriesIndepth($backupPath)) {
+									array_push($messages, "Copy of originals deleted successfully.");
+								}
+								else {
+									array_push($messages, "Deletion of copy of originals was failed.");
+								}
 							}
 							else {
 								array_push($messages, "Zipping of copied originals was failed.");
@@ -134,18 +140,51 @@
 		return $result;
 	}
 
-	function AddFilesToZip(ZipArchive $zip, string $directoryPath) {
-		$dir = opendir($directoryPath);
-		while ($file = readdir($dir)) {
-			if (!(str_starts_with($file, ".") || $file == "install")) {
-				$fileName = "{$directoryPath}/{$file}";
-				if (is_file($fileName)) {
-					$zip->addFile($fileName, $fileName);
-				}
-				if (is_dir($fileName)) {
-					AddFilesToZip($zip, $fileName);
+	function DeleteDirectoriesIndepth(string $directoryPath) {
+		$result = false;
+		if (is_dir($directoryPath)) {
+			$dir = opendir($directoryPath);
+			while ($file = readdir($dir)) {
+				if (!(str_starts_with($file, ".") || $file == "install")) {
+					$fileName = "{$directoryPath}/{$file}";
+					if (is_file($fileName)) {
+						unlink($fileName);
+					}
+					if (is_dir($fileName)) {
+						DeleteDirectoriesIndepth($fileName);
+						rmdir($fileName);
+					}
 				}
 			}
+			closedir($dir);
+			$countFilesStillExists = 0;
+			foreach (scandir($directoryPath) as $index => $value) {
+				if (!(str_starts_with($value, ".") || $value == "install")) {
+					$countFilesStillExists++;
+				}
+			}
+			if ($countFilesStillExists == 0) {
+				$result = true;
+			}
+		}
+		return $result;
+	}
+
+	function AddFilesToZip(ZipArchive $zip, string $directoryPath) {
+		if (is_dir($directoryPath)) {
+			$dir = opendir($directoryPath);
+			while ($file = readdir($dir)) {
+				if (!(str_starts_with($file, ".") || $file == "install")) {
+					$fileName = "{$directoryPath}/{$file}";
+					if (is_file($fileName)) {
+						$zip->addFile($fileName, $fileName);
+					}
+					if (is_dir($fileName)) {
+						AddFilesToZip($zip, $fileName);
+					}
+				}
+			}
+			closedir($dir);
 		}
 	}
 
