@@ -4,7 +4,9 @@
 <?php
 	$messages = array();
 
-	$fileUrl = "https://github.com/openroot/parametermetric/archive/refs/heads/main.zip";
+	$githubRepositoryName = "parametermetric";
+	$repositoryBranch = "main";
+	$fileUrl = "https://github.com/openroot/{$githubRepositoryName}/archive/refs/heads/{$repositoryBranch}.zip";
 	$fileName = basename($fileUrl);
 
 	$content = file_get_contents($fileUrl);
@@ -20,6 +22,12 @@
 			else {
 				array_push($messages, "File unzipping was failed.");
 			}*/
+			if (unlink("{$repositoryBranch}.zip")) {
+				array_push($messages, "Downloaded zipped file deleted successfully.");
+			}
+			else {
+				array_push($messages, "Deletion of downloaded zipped file was failed.");
+			}
 		}
 	}
 	else {
