@@ -1,0 +1,9 @@
+<?php
+
+?>
+
+<?php
+
+	echo "Installing..";
+
+?>
