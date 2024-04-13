@@ -15,45 +15,48 @@
 		if (file_put_contents($fileName, $content)) {
 			array_push($messages, "File downloaded successfully.");
 			$extractToDirectory = "swaps";
-			$extractedDirectoryName = "";
+			$extractedDirectoryName = null;
 			$zip = new ZipArchive;
 			if ($zip->open("main.zip")) {
 				$zip->extractTo($extractToDirectory);
-				$zip->close();
-				$extractedDirectoryName = "{$extractToDirectory}/{$githubRepositoryName}-{$repositoryBranch}";
-				array_push($messages, "Downloaded file unzipped successfully.");
+				if ($zip->close()) {
+					$extractedDirectoryName = "{$extractToDirectory}/{$githubRepositoryName}-{$repositoryBranch}";
+					array_push($messages, "Downloaded file unzipped successfully.");
+				}
 			}
 			else {
 				array_push($messages, "File unzipping was failed.");
 			}
-			if (unlink("{$repositoryBranch}.zip")) {
-				array_push($messages, "Downloaded zipped file deleted successfully.");
-				$backupName = "backup" . CurrentTimePlatformSafe();
-				$backupPath = "{$backupDirectoryName}/$backupName";
-				if (CopyDirectoriesIndepth("..", $backupPath)) {
-					array_push($messages, "Originals copied successfully.");
-					$zipFileName = "{$backupDirectoryName}/{$backupName}.zip";
-					$zip = new ZipArchive;
-					if($zip->open($zipFileName, ZipArchive::CREATE | ZipArchive::OVERWRITE) == true) {
-						AddFilesToZip($zip, $backupPath);
-						if ($zip->close()) {
-							array_push($messages, "Copied originals zipped successfully.");
-						}
-						else {
-							array_push($messages, "Zipping of copied originals was failed.");
+			if (file_exists("{$repositoryBranch}.zip")) {
+				if (unlink("{$repositoryBranch}.zip")) {
+					array_push($messages, "Downloaded zipped file deleted successfully.");
+					$backupName = "backup" . CurrentTimePlatformSafe();
+					$backupPath = "{$backupDirectoryName}/$backupName";
+					if (CopyDirectoriesIndepth("..", $backupPath)) {
+						array_push($messages, "Originals copied successfully.");
+						$zipFileName = "{$backupDirectoryName}/{$backupName}.zip";
+						$zip = new ZipArchive;
+						if($zip->open($zipFileName, ZipArchive::CREATE | ZipArchive::OVERWRITE) == true) {
+							AddFilesToZip($zip, $backupPath);
+							if ($zip->close()) {
+								array_push($messages, "Copied originals zipped successfully.");
+							}
+							else {
+								array_push($messages, "Zipping of copied originals was failed.");
+							}
 						}
 					}
+					else {
+						array_push($messages, "Originals copy was failed.");
+					}
+
+					// TODO: Delete zipped from directory in depth
+					// TODO: Delete root original directory in depth except install directory
+					//array_push($messages, MoveDirectoriesSeconddepth($extractedDirectoryName, "../swaps") ? "Move success." : "Move unsuccess.");
 				}
 				else {
-					array_push($messages, "Originals copy was failed.");
+					array_push($messages, "Deletion of downloaded zipped file was failed.");
 				}
-
-				// TODO: Delete zipped from directory in depth
-				// TODO: Delete root original directory in depth except install directory
-				//array_push($messages, MoveDirectoriesSeconddepth($extractedDirectoryName, "../swaps") ? "Move success." : "Move unsuccess.");
-			}
-			else {
-				array_push($messages, "Deletion of downloaded zipped file was failed.");
 			}
 		}
 	}
