@@ -32,7 +32,7 @@
 				array_push($messages, CopyDirectoriesIndepth("..", $backupFileName) ? "Copy success." : "Copy unsuccess."); // TODO: Temp placement
 				// TODO: Zip backedup directory
 				// TODO: Delete root original files
-				MoveDirectoriesSeconddepth($extractedDirectoryName, "../swaps");
+				array_push($messages, MoveDirectoriesSeconddepth($extractedDirectoryName, "../swaps") ? "Move success." : "Move unsuccess.");
 			}
 			else {
 				array_push($messages, "Deletion of downloaded zipped file was failed.");
