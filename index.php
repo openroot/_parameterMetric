@@ -114,7 +114,7 @@
 						$this->ViewPhpCodeClasses(false);
 						break;
 					default:
-						echo "This is default case of Class 'Launch'.";
+						echo "The default case of Launch class";
 				}
 			}
 		}
