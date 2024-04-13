@@ -2,13 +2,22 @@
 ?>
 
 <?php
-	$url = "https://github.com/openroot/parametermetric/archive/refs/heads/main.zip";
-	$fileBaseName = basename($url);
+	$fileUrl = "https://github.com/openroot/parametermetric/archive/refs/heads/main.zip";
+	$fileName = basename($fileUrl);
 
-	if (file_put_contents($fileBaseName, file_get_contents($url))) {
-		echo "File downloaded successfully"; 
+	$content = false;
+	try {
+		$content = file_get_contents($fileUrl);
+	}
+	catch (\Exception $exception) {
+		echo "<br>Error details: " . $exception->getMessage() . "<br>";
+	}
+	if (!empty($content)) {
+		if (file_put_contents($fileName, $content)) {
+			echo "File downloaded successfully"; 
+		}
 	}
 	else {
-		echo "File downloading failed.";
+		echo "File downloading from online source was failed.";
 	}
 ?>
