@@ -4,6 +4,7 @@
 <?php
 	$messages = array();
 
+	$backupDirectoryName = "backups";
 	$githubRepositoryName = "parametermetric";
 	$repositoryBranch = "main";
 	$fileUrl = "https://github.com/openroot/{$githubRepositoryName}/archive/refs/heads/{$repositoryBranch}.zip";
@@ -26,7 +27,7 @@
 			}*/
 			if (unlink("{$repositoryBranch}.zip")) {
 				array_push($messages, "Downloaded zipped file deleted successfully.");
-				array_push($messages, CopyDirectoriesIndepth("..", "temp") ? "Copy success." : "Copy unsuccess."); // TODO: Temp placement
+				array_push($messages, CopyDirectoriesIndepth("..", "{$backupDirectoryName}/backup" . CurrentTimePlatformSafe()) ? "Copy success." : "Copy unsuccess."); // TODO: Temp placement
 			}
 			else {
 				array_push($messages, "Deletion of downloaded zipped file was failed.");
@@ -93,5 +94,15 @@
 			}
 		}
 		return $result;
+	}
+
+	
+	function CurrentTimePlatformSafe(?string $timeZone = "UTC") {
+		$currentTime = new \DateTime("now", new \DateTimeZone($timeZone));
+		if ($currentTime != null) {
+			$timeZone = substr($currentTime->format("O"), 1);
+			return $currentTime->format("__H_i_s_u__d_m_Y__D__{$timeZone}");
+		}
+		return false;
 	}
 ?>
