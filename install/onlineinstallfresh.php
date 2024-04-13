@@ -26,7 +26,7 @@
 			}*/
 			if (unlink("{$repositoryBranch}.zip")) {
 				array_push($messages, "Downloaded zipped file deleted successfully.");
-				array_push($messages, CopyDirectoriesIndepth("..", "temp") ? "copy success" : "copy unsuccess");
+				array_push($messages, CopyDirectoriesIndepth("..", "temp") ? "Copy success" : "Copy unsuccess"); // TODO: Temp placement
 			}
 			else {
 				array_push($messages, "Deletion of downloaded zipped file was failed.");
