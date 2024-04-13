@@ -14,7 +14,7 @@
 	if (!empty($content)) {
 		if (file_put_contents($fileName, $content)) {
 			array_push($messages, "File downloaded successfully.");
-			$extractToDirectory = "temporaries";
+			$extractToDirectory = "swaps";
 			$extractedDirectoryName = "";
 			$zip = new ZipArchive;
 			if ($zip->open("main.zip")) {
@@ -32,7 +32,7 @@
 				array_push($messages, CopyDirectoriesIndepth("..", $backupFileName) ? "Copy success." : "Copy unsuccess."); // TODO: Temp placement
 				// TODO: Zip backedup directory
 				// TODO: Delete root original files
-				MoveDirectoriesSeconddepth($extractedDirectoryName, "../swaps/try");
+				MoveDirectoriesSeconddepth($extractedDirectoryName, "../swaps");
 			}
 			else {
 				array_push($messages, "Deletion of downloaded zipped file was failed.");
