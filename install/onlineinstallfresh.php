@@ -58,10 +58,7 @@
 						$sourceFilePath = "{$fromDirectory}/{$value}";
 						$destinationFilePath = "{$toDirectoryAnother}/{$value}";
 						if (is_file($sourceFilePath)) {
-							$oldFileDeleted = true;
-							if (file_exists($destinationFilePath) && is_file($destinationFilePath)) {
-								$oldFileDeleted = unlink($destinationFilePath);
-							}
+							$oldFileDeleted = (file_exists($destinationFilePath) && is_file($destinationFilePath)) ? unlink($destinationFilePath) : true;
 							if ($oldFileDeleted) {
 								copy($sourceFilePath, $destinationFilePath);
 							}
