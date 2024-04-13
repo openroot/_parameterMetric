@@ -11,19 +11,34 @@
 	class Launch {
 		private lidheap\Platform $platform;
 		private lidheap\Street $street;
+		private array $blockNames;
 
 		public function __construct(?string $blockName = null) {
 			$this->platform = new lidheap\Platform();
 			if (lidjoint\Joint::SearchMaterialAsAuthentic($this->platform)) {
 				$this->street = $this->platform->ReadStreet();
-				$launchSkeleton = $this->street->FindGets("index_launch_skeleton");
-				$blockName = !empty($launchSkeleton) ? $launchSkeleton : $blockName;
-				if ($blockName != null) {
-					$this->Skeleton($blockName);
-				}
-				echo "<pre><br><br><br><br><hr><i><b>Project generated:<br><br></b>[baseId] => namespace\Class<b><br>and, off exact order.<br><br>(for, otg development purpose)</b></i><hr><i>";
-				print_r(lidjoint\Base::$objectBaseIds);
-				echo "</i><hr><hr><br></pre>";
+				$this->blockNames = array(
+					"deafult" => "Home",
+					"margosanowflower" => "Home->Margosa->Now->Flower",
+					"margosanowleaf" => "Home->Margosa->Now->Leaf",
+					"margosabranch" => "Home->Margosa->Branch",
+					"heap" => "Home->Well->Heap",
+					"joins" => "Home->Well->Joins",
+					"joint" => "Home->Well->Joint",
+					"pull" => "Home->Well->Pull",
+					"push" => "Home->Well->Push",
+					"water" => "Home->Well->Water",
+					"viewtextfilesprimary" => "Home->Well->Heap|Compute->LensTextSlip:Primary",
+					"viewtextfilesall" => "Home->Well->Heap|Compute->LensTextSlip:All",
+					"viewphpcodeclassesprimary" => "Home->Well->Heap|Compute->LensPhpCodeClasses:Primary",
+					"viewphpcodeclassesall" => "Home->Well->Heap|Compute->LensPhpCodeClasses:All"
+				);
+				$this->AttachHeader();
+				$this->AttachBody($blockName);
+				$this->AttachFooter();
+			}
+			else {
+				die("Execution interrupted. Possibly it gets fixed on page refresh.");
 			}
 		}
 
@@ -104,6 +119,36 @@
 			}
 		}
 
+		private function AttachHeader() {
+			echo "<hr><hr><pre>";
+			echo "<i><b>Menu</b></i><br><br>";
+			foreach ($this->blockNames as $index => $value) {
+				echo "<i>";
+				if (str_ends_with($_SERVER['REQUEST_URI'], $index)) {
+					echo "{$value}<br>";
+				}
+				else {
+					echo "<a href=\"?index_launch_skeleton={$index}\">{$value}</a><br>";
+				}
+				echo "</i>";
+			}
+			echo "</pre><hr><hr><br><br>";
+		}
+
+		private function AttachFooter() {
+			echo "<pre><br><br><hr><hr><i><b>Project generated:<br><br></b>[baseId] => namespace\Class<b><br>and, off exact order.<br><br>(for, otg development purpose)</b></i><hr><i>";
+			print_r(lidjoint\Base::$objectBaseIds);
+			echo "</i><hr><hr><br></pre>";
+		}
+
+		private function AttachBody(?string $blockName = null) {
+			$launchSkeleton = $this->street->FindGets("index_launch_skeleton");
+			$blockName = !empty($launchSkeleton) ? $launchSkeleton : $blockName;
+			if ($blockName != null) {
+				$this->Skeleton($blockName);
+			}
+		}
+
 		private function ViewTextFiles(bool $onlyPrimaryDirectory = true) {
 			$compute = new lidheap\Compute();
 			if (lidjoint\Joint::SearchMaterialAsAuthentic($compute)) {
@@ -148,21 +193,6 @@
 
 <?php
 	$launch = new Launch();
-	//$launch->Skeleton("margosanowflower");
-	//$launch->Skeleton("margosanowleaf");
-	//$launch->Skeleton("margosabranch");
-	//$launch->Skeleton("heap");
-	//$launch->Skeleton("joins");
-	//$launch->Skeleton("joint");
-	//$launch->Skeleton("pull");
-	//$launch->Skeleton("push");
-	//$launch->Skeleton("water");
-	//$launch->Skeleton("viewtextfilesprimary");
-	//$launch->Skeleton("viewtextfilesall");
-	//$launch->Skeleton("viewphpcodeclassesprimary");
-	//$launch->Skeleton("viewphpcodeclassesall");
-	//$launch->Skeleton("viewphpcodesprimary");
-	//$launch->Skeleton("viewphpcodesall");
 ?>
 
 <?php
