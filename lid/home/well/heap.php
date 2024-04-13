@@ -621,19 +621,41 @@
 			return $result;
 		}
 
-		public function LensPhpCode(bool $onlyPrimaryDirectory = true) {
+		public function LensPhpCodeClasses(bool $onlyPrimaryDirectory = true) {
 			$result = array();
 			$filesLines = $this->LensTextSlip($onlyPrimaryDirectory, "phpcodetextslip");
 			foreach ($filesLines as $index1 => $value1) {
-				$namespace = "";
-				echo $index1 . PHP_EOL;
-				//if (strstr())
+				$classNames = array();
+				$namespacePath = "";				
 				foreach ($value1 as $index2 => $value2) {
-					array_push($result, $value2);
+					$value2 = trim($value2);
+					if (str_starts_with($value2, "namespace") && str_ends_with($value2, ";")) {
+						$temp = ltrim($value2, "namespace ");
+						$namespacePath = rtrim($temp, ";");
+					}
+					else if (str_starts_with($value2, "class")) {
+						$temp = ltrim($value2, "class ");
+						$className = explode(" ", $temp, 2)[0];
+						array_push($classNames, $className);
+					}
+				}
+				$classNamesWithNamespace = array();
+				if (count($classNames) > 0) {
+					if (empty($namespacePath)) {
+						$classNamesWithNamespace = $classNames;
+					}
+					else {
+						foreach ($classNames as $index => $value) {
+							array_push($classNamesWithNamespace, "{$namespacePath}\\{$value}");
+						}
+					}
+					$result[$index1] = $classNamesWithNamespace;
 				}
 			}
 			return $result;
 		}
+
+		public function LensPhpCode(bool $onlyPrimaryDirectory = true) { }
 
 		private function SearchArrayAsStringOutdepth(array $stringArray, string $searchString) {
 			if (count($stringArray) > 0) {
@@ -658,19 +680,6 @@
 			$file = new lidheap\File();
 			$compute = new lidheap\Compute();
 			if (lidjoint\Joint::SearchMaterialAsAuthentic($platform) && lidjoint\Joint::SearchMaterialAsAuthentic($directory) && lidjoint\Joint::SearchMaterialAsAuthentic($file) && lidjoint\Joint::SearchMaterialAsAuthentic($compute)) {
-				/*
-				echo "<h6>X7: Compute - LensTextSlip | {Primary files}</h6>";
-				echo "<pre>";
-				$filesLines = $compute->LensTextSlip();
-				foreach ($filesLines as $index1 => $value1) {
-					echo "{$index1}<br><br><i>";
-					foreach ($value1 as $index2 => $value2) {
-						echo "Line " . ($index2 + 1) . "> ". htmlspecialchars($value2) . "";
-					}
-					echo "</i><br>";
-				}
-				echo "</pre>";
-				*/
 				$this->ChainSampling($platform, $directory, $file, $compute);
 			}
 			else {

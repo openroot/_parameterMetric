@@ -83,20 +83,20 @@
 						new lid\home\well\water\Specimen();
 						break;
 					case "viewtextfilesprimary":
-						// Look into all (non-binary) files (files in primary directories).
-						$this->ViewTextfiles();
+						// Look into all text (non-binary) files (files in primary directories).
+						$this->ViewTextFiles();
 						break;
 					case "viewtextfilesall":
-						// Look into all (non-binary) files (files in all directories).
-						$this->ViewTextfiles(false);
+						// Look into all text (non-binary) files (files in all directories).
+						$this->ViewTextFiles(false);
 						break;
-					case "viewphpcodesprimary":
-						// Look into php codes (non-binary) files (files in primary directories).
-						$this->ViewPhpcodes();
+					case "viewphpcodeclassesprimary":
+						// Look into PHP code classes (files in primary directories).
+						$this->ViewPhpCodeClasses();
 						break;
-					case "viewphpcodesall":
-						// Look into php codes (non-binary) files (files in all directories).
-						$this->ViewPhpcodes(false);
+					case "viewphpcodeclassesall":
+						// Look into PHP code classes (files in all directories).
+						$this->ViewPhpCodeClasses(false);
 						break;
 					default:
 						echo "This is default case of Class 'Launch'.";
@@ -104,32 +104,43 @@
 			}
 		}
 
-		private function ViewTextfiles(bool $onlyPrimaryDirectory = true) {
+		private function ViewTextFiles(bool $onlyPrimaryDirectory = true) {
 			$compute = new lidheap\Compute();
 			if (lidjoint\Joint::SearchMaterialAsAuthentic($compute)) {
-				echo "<pre>";
 				$filesLines = $compute->LensTextSlip($onlyPrimaryDirectory);
 				$i = 0;
-				$totalLinesOfCodes = 0;
+				$totalLinesOfTexts = 0;
+				echo "<pre>";
 				foreach ($filesLines as $index1 => $value1) {
 					echo "<hr><b>[F " . ++$i . "] {$index1}</b><hr><i>";
 					foreach ($value1 as $index2 => $value2) {
 						echo "L " . ($index2 + 1) . "> ". htmlspecialchars($value2) . "";
 					}
 					echo "</i><br>";
-					$totalLinesOfCodes += count($value1);
+					$totalLinesOfTexts += count($value1);
 				}
 				echo "</pre>";
-				echo "<hr><hr><b>Total Lines of Codes:</b><i> {$totalLinesOfCodes}</i><hr><hr>";
+				echo "<hr><hr>" . ($onlyPrimaryDirectory ? "[Primary Directories] " : "[All Directories] ") . "<b>Total Lines of Texts:</b><i> {$totalLinesOfTexts}</i><hr><hr>";
 			}
 		}
 
-		private function ViewPhpcodes(bool $onlyPrimaryDirectory = true) {
+		private function ViewPhpCodeClasses(bool $onlyPrimaryDirectory = true) {
 			$compute = new lidheap\Compute();
 			if (lidjoint\Joint::SearchMaterialAsAuthentic($compute)) {
+				$phpClasses = $compute->LensPhpCodeClasses($onlyPrimaryDirectory);
+				$i = 0;
+				$totalNumbersOfPhpClasses = 0;
 				echo "<pre>";
-				print_r($compute->LensPhpCode($onlyPrimaryDirectory));
+				foreach ($phpClasses as $index1 => $value1) {
+					echo "<hr><b>[F " . ++$i . "] {$index1}</b><hr><i>";
+					foreach ($value1 as $index2 => $value2) {
+						echo "C " . ($index2 + 1) . "> ". htmlspecialchars($value2) . PHP_EOL;
+					}
+					echo "</i><br>";
+					$totalNumbersOfPhpClasses += count($value1);
+				}
 				echo "</pre>";
+				echo "<hr><hr>" . ($onlyPrimaryDirectory ? "[Primary Directories] " : "[All Directories] ") . "<b>Total Numbers of PHP Classes:</b><i> {$totalNumbersOfPhpClasses}</i><hr><hr>";
 			}
 		}
 	}
@@ -147,7 +158,9 @@
 	//$launch->Skeleton("push");
 	//$launch->Skeleton("water");
 	//$launch->Skeleton("viewtextfilesprimary");
-	//$launch->Skeleton("viewtextfilesall");	
+	//$launch->Skeleton("viewtextfilesall");
+	//$launch->Skeleton("viewphpcodeclassesprimary");
+	//$launch->Skeleton("viewphpcodeclassesall");
 	//$launch->Skeleton("viewphpcodesprimary");
 	//$launch->Skeleton("viewphpcodesall");
 ?>
