@@ -15,12 +15,13 @@
 		if (file_put_contents($fileName, $content)) {
 			array_push($messages, "File downloaded successfully.");
 			$extractToDirectory = "temporaries";
+			$extractedDirectoryName = "";
 			$zip = new ZipArchive;
 			if ($zip->open("main.zip")) {
 				$zip->extractTo($extractToDirectory);
 				$zip->close();
+				$extractedDirectoryName = "{$extractToDirectory}/{$githubRepositoryName}-{$repositoryBranch}";
 				array_push($messages, "Downloaded file unzipped successfully.");
-				$extractedDirectoryName = "{$extractToDirectory}{$githubRepositoryName}-{$repositoryBranch}";
 			}
 			else {
 				array_push($messages, "File unzipping was failed.");
@@ -28,9 +29,10 @@
 			if (unlink("{$repositoryBranch}.zip")) {
 				array_push($messages, "Downloaded zipped file deleted successfully.");
 				$backupFileName = "{$backupDirectoryName}/backup" . CurrentTimePlatformSafe();
-				//array_push($messages, CopyDirectoriesIndepth("..", $backupFileName) ? "Copy success." : "Copy unsuccess."); // TODO: Temp placement
-
-				//MoveDirectoriesIndepth()
+				array_push($messages, CopyDirectoriesIndepth("..", $backupFileName) ? "Copy success." : "Copy unsuccess."); // TODO: Temp placement
+				// TODO: Zip backedup directory
+				// TODO: Delete root original files
+				MoveDirectoriesSeconddepth($extractedDirectoryName, "../swaps/try");
 			}
 			else {
 				array_push($messages, "Deletion of downloaded zipped file was failed.");
@@ -99,10 +101,14 @@
 		return $result;
 	}
 
-	function MoveDirectoriesIndepth(string $fromDirectory, string $toDirectoryAnother) {
+	function MoveDirectoriesSeconddepth(string $fromDirectory, string $toDirectoryAnother) {
 		$result = false;
-		if (is_dir($fromDirectory) && !file_exists($toDirectoryAnother)) {
-			$result = rename($fromDirectory, $toDirectoryAnother);
+		if (is_dir($fromDirectory) && is_dir($toDirectoryAnother)) {
+			foreach (scandir($fromDirectory) as $index => $value) {
+				if (!(str_starts_with($value, ".") || $value == "install")) {
+					$result = rename("{$fromDirectory}/{$value}", "{$toDirectoryAnother}/{$value}");
+				}
+			}
 		}
 		return $result;
 	}
