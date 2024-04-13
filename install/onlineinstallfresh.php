@@ -52,24 +52,27 @@
 				$toDirectoryAnotherExists = true;
 			}
 			if ($toDirectoryAnotherExists) {
+				$directoryIndepthExists = false;
+				$directoryIndepthResult = false;
 				$originalCount = 0;
 				foreach (scandir($fromDirectory) as $index => $value) {
 					if (!(str_starts_with($value, ".") || $value == "install")) {
 						$originalCount++;
 						$sourceFilePath = "{$fromDirectory}/{$value}";
+						$destinationFilePath = "{$toDirectoryAnother}/{$value}";
 						if (is_file($sourceFilePath)) {
-							$destinationFilePath = "{$toDirectoryAnother}/{$value}";
-							//echo "> {$destinationFilePath}" . "<br>";
 							$oldFileDeleted = true;
 							if (file_exists($destinationFilePath) && is_file($destinationFilePath)) {
 								$oldFileDeleted = unlink($destinationFilePath);
 							}
 							if ($oldFileDeleted) {
-								echo "{$sourceFilePath} -> {$destinationFilePath}<br>";
-								//$result = copy("{$fromDirectory}/{$value}", "{$toDirectoryAnother}/{$value}");
+								copy($sourceFilePath, $destinationFilePath);
 							}
 						}
-						$result = CopyDirectoriesIndepth("{$fromDirectory}/{$value}", "{$toDirectoryAnother}/{$value}");
+						if (is_dir($sourceFilePath)) {
+							$directoryIndepthExists = true;
+							$directoryIndepthResult = CopyDirectoriesIndepth($sourceFilePath, $destinationFilePath);
+						}
 					}
 				}
 
@@ -80,12 +83,9 @@
 					}
 				}
 
-				//echo "{$originalCount} | {$copiedCount}<br>";
-				if ($originalCount == $copiedCount) {
-					$result = true;
-				}
-				else {
-					$result = false;
+				$result = ($originalCount == $copiedCount ? true : false);
+				if ($directoryIndepthExists) {
+					$result = $directoryIndepthResult && $result;
 				}
 			}
 		}
