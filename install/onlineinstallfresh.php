@@ -45,15 +45,12 @@
 		$result = false;
 		if (is_dir($fromDirectory)) {
 			$toDirectoryAnotherExists = false;
-			if (!is_dir($toDirectoryAnother)) {
-				$toDirectoryAnotherExists = mkdir($toDirectoryAnother);
-			}
-			else {
-				$toDirectoryAnotherExists = true;
-			}
+			$toDirectoryAnotherExists = (!is_dir($toDirectoryAnother) : mkdir($toDirectoryAnother) : true);
+
 			if ($toDirectoryAnotherExists) {
 				$directoryIndepthExists = false;
 				$directoryIndepthResult = false;
+
 				$originalCount = 0;
 				foreach (scandir($fromDirectory) as $index => $value) {
 					if (!(str_starts_with($value, ".") || $value == "install")) {
