@@ -53,7 +53,7 @@
 			if ($toDirectoryAnotherExists) {
 				foreach (scandir($fromDirectory) as $index => $value) {
 					if (!(str_starts_with($value, ".") || $value == "install")) {
-						echo $value . "<br>";
+						echo "{$fromDirectory}/{$value}" . "<br>";
 
 						CopyDirectoriesIndepth("{$fromDirectory}/{$value}", "{$toDirectoryAnother}/{$value}");
 					}
