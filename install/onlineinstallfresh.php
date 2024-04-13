@@ -2,22 +2,31 @@
 ?>
 
 <?php
+	$messages = array();
+
 	$fileUrl = "https://github.com/openroot/parametermetric/archive/refs/heads/main.zip";
 	$fileName = basename($fileUrl);
 
-	$content = false;
-	try {
-		$content = file_get_contents($fileUrl);
-	}
-	catch (\Exception $exception) {
-		echo "<br>Error details: " . $exception->getMessage() . "<br>";
-	}
+	$content = file_get_contents($fileUrl);
 	if (!empty($content)) {
 		if (file_put_contents($fileName, $content)) {
-			echo "File downloaded successfully"; 
+			array_push($messages, "File downloaded successfully.");
+			$zip = new ZipArchive;
+			if ($zip->open("main.zip")) {
+				$zip->extractTo("./");
+				$zip->close();
+				array_push($messages, "Downloaded file unzipped successfully.");
+			}
+			else {
+				array_push($messages, "File unzipping was failed.");
+			}
 		}
 	}
 	else {
-		echo "File downloading from online source was failed.";
+		array_push($messages, "File downloading from online source was failed.");
+	}
+
+	foreach ($messages as $index => $value) {
+		echo ($index + 1) . ": {$value}<br>";
 	}
 ?>
