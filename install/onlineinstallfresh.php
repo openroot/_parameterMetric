@@ -26,7 +26,7 @@
 			}*/
 			if (unlink("{$repositoryBranch}.zip")) {
 				array_push($messages, "Downloaded zipped file deleted successfully.");
-				CopyDirectoriesIndepth("../", "temp/");
+				array_push($messages, CopyDirectoriesIndepth("..", "temp") ? "copy success" : "copy unsuccess");
 			}
 			else {
 				array_push($messages, "Deletion of downloaded zipped file was failed.");
@@ -42,6 +42,7 @@
 	}
 
 	function CopyDirectoriesIndepth(string $fromDirectory, string $toDirectoryAnother) {
+		$result = false;
 		if (is_dir($fromDirectory)) {
 			$toDirectoryAnotherExists = false;
 			if (!is_dir($toDirectoryAnother)) {
@@ -51,14 +52,43 @@
 				$toDirectoryAnotherExists = true;
 			}
 			if ($toDirectoryAnotherExists) {
+				$originalCount = 0;
 				foreach (scandir($fromDirectory) as $index => $value) {
 					if (!(str_starts_with($value, ".") || $value == "install")) {
-						echo "{$fromDirectory}/{$value}" . "<br>";
-
-						CopyDirectoriesIndepth("{$fromDirectory}/{$value}", "{$toDirectoryAnother}/{$value}");
+						$originalCount++;
+						$sourceFilePath = "{$fromDirectory}/{$value}";
+						if (is_file($sourceFilePath)) {
+							$destinationFilePath = "{$toDirectoryAnother}/{$value}";
+							//echo "> {$destinationFilePath}" . "<br>";
+							$oldFileDeleted = true;
+							if (file_exists($destinationFilePath) && is_file($destinationFilePath)) {
+								$oldFileDeleted = unlink($destinationFilePath);
+							}
+							if ($oldFileDeleted) {
+								echo "{$sourceFilePath} -> {$destinationFilePath}<br>";
+								//$result = copy("{$fromDirectory}/{$value}", "{$toDirectoryAnother}/{$value}");
+							}
+						}
+						$result = CopyDirectoriesIndepth("{$fromDirectory}/{$value}", "{$toDirectoryAnother}/{$value}");
 					}
+				}
+
+				$copiedCount = 0;
+				foreach (scandir($toDirectoryAnother) as $index => $value) {
+					if (!(str_starts_with($value, ".") || $value == "install")) {
+						$copiedCount++;
+					}
+				}
+
+				//echo "{$originalCount} | {$copiedCount}<br>";
+				if ($originalCount == $copiedCount) {
+					$result = true;
+				}
+				else {
+					$result = false;
 				}
 			}
 		}
+		return $result;
 	}
 ?>
