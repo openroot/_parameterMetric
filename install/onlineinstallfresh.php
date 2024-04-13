@@ -14,8 +14,8 @@
 	if (!empty($content)) {
 		if (file_put_contents($fileName, $content)) {
 			array_push($messages, "File downloaded successfully.");
-			$extractToDirectory = "./";
-			/*$zip = new ZipArchive;
+			$extractToDirectory = "temporaries";
+			$zip = new ZipArchive;
 			if ($zip->open("main.zip")) {
 				$zip->extractTo($extractToDirectory);
 				$zip->close();
@@ -24,11 +24,13 @@
 			}
 			else {
 				array_push($messages, "File unzipping was failed.");
-			}*/
+			}
 			if (unlink("{$repositoryBranch}.zip")) {
 				array_push($messages, "Downloaded zipped file deleted successfully.");
 				$backupFileName = "{$backupDirectoryName}/backup" . CurrentTimePlatformSafe();
-				array_push($messages, CopyDirectoriesIndepth("..", $backupFileName) ? "Copy success." : "Copy unsuccess."); // TODO: Temp placement
+				//array_push($messages, CopyDirectoriesIndepth("..", $backupFileName) ? "Copy success." : "Copy unsuccess."); // TODO: Temp placement
+
+				//MoveDirectoriesIndepth()
 			}
 			else {
 				array_push($messages, "Deletion of downloaded zipped file was failed.");
@@ -93,6 +95,14 @@
 					$result = $directoryIndepthResult && $result;
 				}
 			}
+		}
+		return $result;
+	}
+
+	function MoveDirectoriesIndepth(string $fromDirectory, string $toDirectoryAnother) {
+		$result = false;
+		if (is_dir($fromDirectory) && !file_exists($toDirectoryAnother)) {
+			$result = rename($fromDirectory, $toDirectoryAnother);
 		}
 		return $result;
 	}
