@@ -31,7 +31,8 @@
 				$backupFileName = "{$backupDirectoryName}/backup" . CurrentTimePlatformSafe();
 				array_push($messages, CopyDirectoriesIndepth("..", $backupFileName) ? "Copy success." : "Copy unsuccess."); // TODO: Temp placement
 				// TODO: Zip backedup directory
-				// TODO: Delete root original files
+				// TODO: Delete zipped from directory in depth
+				// TODO: Delete root original directory in depth except install directory
 				array_push($messages, MoveDirectoriesSeconddepth($extractedDirectoryName, "../swaps") ? "Move success." : "Move unsuccess.");
 			}
 			else {
