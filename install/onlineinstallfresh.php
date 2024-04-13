@@ -16,11 +16,10 @@
 			$extractToDirectory = "./";
 			/*$zip = new ZipArchive;
 			if ($zip->open("main.zip")) {
-				$zip->extractTo($extractToDirectory); // above directory
+				$zip->extractTo($extractToDirectory);
 				$zip->close();
 				array_push($messages, "Downloaded file unzipped successfully.");
 				$extractedDirectoryName = "{$extractToDirectory}{$githubRepositoryName}-{$repositoryBranch}";
-				echo $extractedDirectoryName . "<br>";
 			}
 			else {
 				array_push($messages, "File unzipping was failed.");
