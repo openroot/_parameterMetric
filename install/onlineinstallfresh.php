@@ -51,6 +51,16 @@
 				$directoryIndepthExists = false;
 				$directoryIndepthResult = false;
 
+				$oldFilesDeleted = true;
+				foreach (scandir($toDirectoryAnother) as $index => $value) {
+					if (!(str_starts_with($value, ".") || $value == "install")) {
+						$oldFileToDelete = "{$toDirectoryAnother}/{$value}";
+						if (is_file($oldFileToDelete)) {
+							$oldFilesDeleted = unlink($oldFileToDelete);
+						}
+					}
+				}
+
 				$originalCount = 0;
 				foreach (scandir($fromDirectory) as $index => $value) {
 					if (!(str_starts_with($value, ".") || $value == "install")) {
@@ -58,8 +68,7 @@
 						$sourceFilePath = "{$fromDirectory}/{$value}";
 						$destinationFilePath = "{$toDirectoryAnother}/{$value}";
 						if (is_file($sourceFilePath)) {
-							$oldFileDeleted = (file_exists($destinationFilePath) && is_file($destinationFilePath)) ? unlink($destinationFilePath) : true;
-							if ($oldFileDeleted) {
+							if ($oldFilesDeleted) {
 								copy($sourceFilePath, $destinationFilePath);
 							}
 						}
