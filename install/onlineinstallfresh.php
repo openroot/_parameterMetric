@@ -52,11 +52,10 @@
 			}
 			if ($toDirectoryAnotherExists) {
 				foreach (scandir($fromDirectory) as $index => $value) {
-					//if (!($value == "." || $value == ".."  || $value == "install" || $value == ".git")) {
 					if (!(str_starts_with($value, ".") || $value == "install")) {
 						echo $value . "<br>";
 
-						//CopyDirectoriesIndepth("{$fromDirectory}/{$value}", "{$toDirectoryAnother}/{$value}");
+						CopyDirectoriesIndepth("{$fromDirectory}/{$value}", "{$toDirectoryAnother}/{$value}");
 					}
 				}
 			}
