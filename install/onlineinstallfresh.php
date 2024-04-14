@@ -228,7 +228,7 @@
 		}
 		foreach (scandir($backupDirectoryName) as $index => $value) {
 			if (!($value == "." || $value == "..")) {
-				if (str_starts_with($value, $backupFilePreponeName)) {
+				if (is_dir("{$backupDirectoryName}/{$value}") && str_starts_with($value, $backupFilePreponeName)) {
 					$result = rmdir("{$backupDirectoryName}/{$value}");
 				}
 			}
