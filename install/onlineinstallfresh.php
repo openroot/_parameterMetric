@@ -161,7 +161,7 @@
 			$dir = opendir($directoryPath);
 			while ($file = readdir($dir)) {
 				if ($removeAll) {
-					if (!($file == ".") || $file == "..")) {
+					if (!($file == "." || $file == "..")) {
 						array_push($filteredFiles, $file);
 					}
 				}
