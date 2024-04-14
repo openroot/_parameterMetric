@@ -16,11 +16,12 @@
 	if (!empty($content)) {
 		if (file_put_contents($fileName, $content)) {
 			array_push($messages, "File downloaded successfully.");
+			$extractedDirectoryName = null;
 			$zip = new ZipArchive;
 			if ($zip->open("main.zip")) {
 				$zip->extractTo($extractToDirectory);
 				if ($zip->close()) {
-					//$extractedDirectoryName = "{$extractToDirectory}/{$githubRepositoryName}-{$repositoryBranch}";
+					$extractedDirectoryName = "{$extractToDirectory}/{$githubRepositoryName}-{$repositoryBranch}";
 					array_push($messages, "Downloaded file unzipped successfully.");
 				}
 			}
