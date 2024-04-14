@@ -9,8 +9,9 @@
 	$repositoryBranch = "main";
 	$fileUrl = "https://github.com/openroot/{$githubRepositoryName}/archive/refs/heads/{$repositoryBranch}.zip";
 	$fileName = basename($fileUrl);
-	$backupDirectoryName = "backups";
 	$extractToDirectory = "swaps";
+	$backupDirectoryName = "backups";
+	$backupFilePreponeName = "backup";
 
 	$content = file_get_contents($fileUrl);
 	if (!empty($content)) {
@@ -31,11 +32,11 @@
 			if (file_exists("{$repositoryBranch}.zip")) {
 				if (unlink("{$repositoryBranch}.zip")) {
 					array_push($messages, "Downloaded zipped file deleted successfully.");
-					$backupName = "backup" . CurrentTimePlatformSafe();
-					$backupPath = "{$backupDirectoryName}/$backupName";
+					$backupFileName = $backupFilePreponeName . CurrentTimePlatformSafe();
+					$backupPath = "{$backupDirectoryName}/$backupFileName";
 					if (CopyDirectoriesIndepth("..", $backupPath)) {
 						array_push($messages, "Originals copied successfully.");
-						$zipFileName = "{$backupDirectoryName}/{$backupName}.zip";
+						$zipFileName = "{$backupDirectoryName}/{$backupFileName}.zip";
 						$zip = new ZipArchive;
 						if($zip->open($zipFileName, ZipArchive::CREATE | ZipArchive::OVERWRITE) == true) {
 							AddFilesToZip($zip, $backupPath);
@@ -216,13 +217,21 @@
 
 	function SanitizeSwapsAndBackupsDirectory() {
 		$result = false;
-		global $backupDirectoryName;
 		global $extractToDirectory;
+		global $backupDirectoryName;
+		global $backupFilePreponeName;
 		global $githubRepositoryName;
 		global $repositoryBranch;
 		$result = DeleteDirectoriesIndepth("{$extractToDirectory}/{$githubRepositoryName}-{$repositoryBranch}", true);
 		if ($result) {
 			$result = rmdir("{$extractToDirectory}/{$githubRepositoryName}-{$repositoryBranch}");
+		}
+		foreach (scandir($backupDirectoryName) as $index => $value) {
+			if (!($value == "." || $value == "..")) {
+				if (str_starts_with($value, $backupFilePreponeName)) {
+					$result = rmdir("{$backupDirectoryName}/{$value}");
+				}
+			}
 		}
 		return $result;
 	}
