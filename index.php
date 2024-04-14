@@ -18,7 +18,7 @@
 			if (lidjoint\Joint::SearchMaterialAsAuthentic($this->platform)) {
 				$this->street = $this->platform->ReadStreet();
 				$this->blockNames = array(
-					"deafult" => "Home",
+					"default" => "Home",
 					"margosanowflower" => "Home->Margosa->Now->Flower",
 					"margosanowleaf" => "Home->Margosa->Now->Leaf",
 					"margosabranch" => "Home->Margosa->Branch",
@@ -114,7 +114,7 @@
 						$this->ViewPhpCodeClasses(false);
 						break;
 					default:
-						echo "The default case of Launch class";
+						echo "The default case of Launch class.";
 				}
 			}
 		}
