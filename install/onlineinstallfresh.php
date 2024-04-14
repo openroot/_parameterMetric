@@ -216,8 +216,8 @@
 
 	function SanitizeSwapsAndBackupsDirectory() {
 		$result = false;
-		$backupDirectoryName = global $backupDirectoryName;
-		$extractToDirectory = global $extractToDirectory;
+		global $backupDirectoryName;
+		global $extractToDirectory;
 		$result = DeleteDirectoriesIndepth("{$extractToDirectory}/{$githubRepositoryName}-{$repositoryBranch}", true);
 		return $result;
 	}
