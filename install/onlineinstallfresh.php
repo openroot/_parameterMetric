@@ -34,7 +34,7 @@
 					array_push($messages, "Downloaded zipped file deleted successfully.");
 					$backupFileName = $backupFilePreponeName . CurrentTimePlatformSafe();
 					$backupPath = "{$backupDirectoryName}/$backupFileName";
-					if (CopyDirectoriesIndepth("..", $backupPath)) {
+					if (CopyDirectoriesIndepth("../", $backupPath)) {
 						array_push($messages, "Originals copied successfully.");
 						$zipFileName = "{$backupDirectoryName}/{$backupFileName}.zip";
 						$zip = new ZipArchive;
@@ -52,7 +52,7 @@
 												array_push($messages, "Swaps and backups directory sanitized successfully.");
 											}
 											else {
-												array_push($messages, "Saniitzation of swaps and backups directory was failed.");
+												array_push($messages, "Sanitization of swaps and backups directory was failed.");
 											}
 										}
 										else {
@@ -199,9 +199,11 @@
 
 	function AddFilesToZip(ZipArchive $zip, string $directoryPath) {
 		if (is_dir($directoryPath)) {
+			$count = 0;
 			$dir = opendir($directoryPath);
 			while ($file = readdir($dir)) {
 				if (!(str_starts_with($file, ".") || $file == "install")) {
+					$count++;
 					$fileName = "{$directoryPath}/{$file}";
 					if (is_file($fileName)) {
 						$zip->addFile($fileName, $fileName);
@@ -212,6 +214,9 @@
 				}
 			}
 			closedir($dir);
+			if ($count == 0) {
+				$zip->addEmptyDir($directoryPath);
+			}
 		}
 	}
 
