@@ -13,12 +13,21 @@
 	$fileUrl = "https://github.com/openroot/{$githubRepositoryName}/archive/refs/heads/{$repositoryBranch}.zip";
 	$fileName = basename($fileUrl);
 
+	$extractAndBackupDirectoriesExists = false;
+	if (!file_exists($extractToDirectory) && mkdir($extractToDirectory)) {
+		file_put_contents("{$extractToDirectory}/blank.file", "");
+	}
+	if (!file_exists($backupDirectoryName) && mkdir($backupDirectoryName)) {
+		file_put_contents("{$backupDirectoryName}/blank.file", "");
+	}
+	$extractAndBackupDirectoriesExists = file_exists("{$extractToDirectory}/blank.file") && file_exists("{$backupDirectoryName}/blank.file") ? true : false;
+
 	$content = file_get_contents($fileUrl);
-	if (!empty($content)) {
+	if ($extractAndBackupDirectoriesExists && !empty($content)) {
 		if (file_put_contents($fileName, $content)) {
 			array_push($messages, "File downloaded successfully.");
 			$extractedDirectoryName = null;
-			$zip = new ZipArchive;
+			$zip = new \ZipArchive;
 			if ($zip->open("main.zip")) {
 				$zip->extractTo($extractToDirectory);
 				if ($zip->close()) {
@@ -37,8 +46,8 @@
 					if (CopyDirectoriesIndepth("../", $backupPath)) {
 						array_push($messages, "Originals copied successfully.");
 						$zipFileName = "{$backupDirectoryName}/{$backupFileName}.zip";
-						$zip = new ZipArchive;
-						if($zip->open($zipFileName, ZipArchive::CREATE | ZipArchive::OVERWRITE) == true) {
+						$zip = new \ZipArchive;
+						if($zip->open($zipFileName, \ZipArchive::CREATE | \ZipArchive::OVERWRITE) == true) {
 							AddFilesToZip($zip, $backupPath);
 							if ($zip->close()) {
 								array_push($messages, "Copied originals zipped successfully.");
@@ -102,7 +111,7 @@
 
 				$oldFilesDeleted = true;
 				foreach (scandir($toDirectoryAnother) as $index => $value) {
-					if (!(str_starts_with($value, ".") || $value == "install")) {
+					if (!(str_starts_with($value, ".") || $value == "install" || $value == "cgi-bin")) {
 						$oldFileToDelete = "{$toDirectoryAnother}/{$value}";
 						if (is_file($oldFileToDelete)) {
 							$oldFilesDeleted = unlink($oldFileToDelete);
@@ -112,7 +121,7 @@
 
 				$originalCount = 0;
 				foreach (scandir($fromDirectory) as $index => $value) {
-					if (!(str_starts_with($value, ".") || $value == "install")) {
+					if (!(str_starts_with($value, ".") || $value == "install" || $value == "cgi-bin")) {
 						$originalCount++;
 						$sourceFilePath = "{$fromDirectory}/{$value}";
 						$destinationFilePath = "{$toDirectoryAnother}/{$value}";
@@ -130,7 +139,7 @@
 
 				$copiedCount = 0;
 				foreach (scandir($toDirectoryAnother) as $index => $value) {
-					if (!(str_starts_with($value, ".") || $value == "install")) {
+					if (!(str_starts_with($value, ".") || $value == "install" || $value == "cgi-bin")) {
 						$copiedCount++;
 					}
 				}
@@ -148,7 +157,7 @@
 		$result = false;
 		if (is_dir($fromDirectory) && is_dir($toDirectoryAnother)) {
 			foreach (scandir($fromDirectory) as $index => $value) {
-				if (!(str_starts_with($value, ".") || $value == "install")) {
+				if (!(str_starts_with($value, ".") || $value == "install" || $value == "cgi-bin")) {
 					$result = rename("{$fromDirectory}/{$value}", "{$toDirectoryAnother}/{$value}");
 				}
 			}
@@ -168,11 +177,12 @@
 					}
 				}
 				else {
-					if (!(str_starts_with($file, ".") || $file == "install")) {
+					if (!(str_starts_with($file, ".") || $file == "install" || $file == "cgi-bin")) {
 						array_push($filteredFiles, $file);
 					}
 				}
 			}
+			closedir($dir);
 			foreach ($filteredFiles as $index => $value) {
 				$fileName = "{$directoryPath}/{$value}";
 				if (is_file($fileName)) {
@@ -183,10 +193,9 @@
 					rmdir($fileName);
 				}
 			}
-			closedir($dir);
 			$countFilesStillExists = 0;
 			foreach (scandir($directoryPath) as $index => $value) {
-				if (!(str_starts_with($value, ".") || $value == "install")) {
+				if (!(str_starts_with($value, ".") || $value == "install" || $value == "cgi-bin")) {
 					$countFilesStillExists++;
 				}
 			}
@@ -197,12 +206,12 @@
 		return $result;
 	}
 
-	function AddFilesToZip(ZipArchive $zip, string $directoryPath) {
+	function AddFilesToZip(\ZipArchive $zip, string $directoryPath) {
 		if (is_dir($directoryPath)) {
 			$count = 0;
 			$dir = opendir($directoryPath);
 			while ($file = readdir($dir)) {
-				if (!(str_starts_with($file, ".") || $file == "install")) {
+				if (!(str_starts_with($file, ".") || $file == "install" || $file == "cgi-bin")) {
 					$count++;
 					$fileName = "{$directoryPath}/{$file}";
 					if (is_file($fileName)) {
@@ -231,10 +240,15 @@
 		if ($result) {
 			$result = rmdir("{$extractToDirectory}/{$githubRepositoryName}-{$repositoryBranch}");
 		}
-		foreach (scandir($backupDirectoryName) as $index => $value) {
-			if (!($value == "." || $value == "..")) {
-				if (is_dir("{$backupDirectoryName}/{$value}") && str_starts_with($value, $backupFilePreponeName)) {
-					$result = rmdir("{$backupDirectoryName}/{$value}");
+		if ($result) {
+			foreach (scandir($backupDirectoryName) as $index => $value) {
+				if (!($value == "." || $value == "..")) {
+					if (is_dir("{$backupDirectoryName}/{$value}") && str_starts_with($value, $backupFilePreponeName)) {
+						if (is_dir("{$backupDirectoryName}/{$value}/cgi-bin")) {
+							$result = rmdir("{$backupDirectoryName}/{$value}/cgi-bin");
+						}
+						$result = rmdir("{$backupDirectoryName}/{$value}");
+					}
 				}
 			}
 		}
