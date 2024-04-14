@@ -221,6 +221,9 @@
 		global $githubRepositoryName;
 		global $repositoryBranch;
 		$result = DeleteDirectoriesIndepth("{$extractToDirectory}/{$githubRepositoryName}-{$repositoryBranch}", true);
+		if ($result) {
+			$result = rmdir("{$extractToDirectory}/{$githubRepositoryName}-{$repositoryBranch}");
+		}
 		return $result;
 	}
 
