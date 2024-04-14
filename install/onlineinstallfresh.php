@@ -5,13 +5,13 @@
 <?php
 	$messages = array();
 
+	$extractToDirectory = "swaps";
+	$backupDirectoryName = "backups";
+	$backupFilePreponeName = "backup";
 	$githubRepositoryName = "parametermetric";
 	$repositoryBranch = "main";
 	$fileUrl = "https://github.com/openroot/{$githubRepositoryName}/archive/refs/heads/{$repositoryBranch}.zip";
 	$fileName = basename($fileUrl);
-	$extractToDirectory = "swaps";
-	$backupDirectoryName = "backups";
-	$backupFilePreponeName = "backup";
 
 	$content = file_get_contents($fileUrl);
 	if (!empty($content)) {
