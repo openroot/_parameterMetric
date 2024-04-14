@@ -1,4 +1,5 @@
 <?php
+	$timeStart = microtime(true);
 ?>
 
 <?php
@@ -204,4 +205,10 @@
 		}
 		return false;
 	}
+?>
+
+<?php
+	$timeEnd = microtime(true);
+	$executionTime = $timeEnd - $timeStart;
+	echo "<br><hr><i><b>Execution Time:</b> {$executionTime} seconds</i><hr><br>";
 ?>
