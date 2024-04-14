@@ -46,6 +46,12 @@
 										array_push($messages, "Originals deleted successfully.");
 										if (MoveDirectoriesSeconddepth($extractedDirectoryName, "../")) {
 											array_push($messages, "Downloaded files moved to original successfully.");
+											if (SanitizeSwapsAndBackupsDirectory()) {
+												array_push($messages, "Swaps and backups directory sanitized successfully.");
+											}
+											else {
+												array_push($messages, "Saniitzation of swaps and backups directory was failed.");
+											}
 										}
 										else {
 											array_push($messages, "Moving downloaded files to original was failed.");
