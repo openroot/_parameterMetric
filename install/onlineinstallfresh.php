@@ -5,23 +5,22 @@
 <?php
 	$messages = array();
 
-	$backupDirectoryName = "backups";
 	$githubRepositoryName = "parametermetric";
 	$repositoryBranch = "main";
 	$fileUrl = "https://github.com/openroot/{$githubRepositoryName}/archive/refs/heads/{$repositoryBranch}.zip";
 	$fileName = basename($fileUrl);
+	$backupDirectoryName = "backups";
+	$extractToDirectory = "swaps";
 
 	$content = file_get_contents($fileUrl);
 	if (!empty($content)) {
 		if (file_put_contents($fileName, $content)) {
 			array_push($messages, "File downloaded successfully.");
-			$extractToDirectory = "swaps";
-			$extractedDirectoryName = null;
 			$zip = new ZipArchive;
 			if ($zip->open("main.zip")) {
 				$zip->extractTo($extractToDirectory);
 				if ($zip->close()) {
-					$extractedDirectoryName = "{$extractToDirectory}/{$githubRepositoryName}-{$repositoryBranch}";
+					//$extractedDirectoryName = "{$extractToDirectory}/{$githubRepositoryName}-{$repositoryBranch}";
 					array_push($messages, "Downloaded file unzipped successfully.");
 				}
 			}
@@ -149,20 +148,31 @@
 		return $result;
 	}
 
-	function DeleteDirectoriesIndepth(string $directoryPath) {
+	function DeleteDirectoriesIndepth(string $directoryPath, bool $removeAll = false) {
 		$result = false;
 		if (is_dir($directoryPath)) {
+			$filteredFiles = array();
 			$dir = opendir($directoryPath);
 			while ($file = readdir($dir)) {
-				if (!(str_starts_with($file, ".") || $file == "install")) {
-					$fileName = "{$directoryPath}/{$file}";
-					if (is_file($fileName)) {
-						unlink($fileName);
+				if ($removeAll) {
+					if (!($file == ".") || $file == "..")) {
+						array_push($filteredFiles, $file);
 					}
-					if (is_dir($fileName)) {
-						DeleteDirectoriesIndepth($fileName);
-						rmdir($fileName);
+				}
+				else {
+					if (!(str_starts_with($file, ".") || $file == "install")) {
+						array_push($filteredFiles, $file);
 					}
+				}
+			}
+			foreach ($filteredFiles as $index => $value) {
+				$fileName = "{$directoryPath}/{$value}";
+				if (is_file($fileName)) {
+					unlink($fileName);
+				}
+				if (is_dir($fileName)) {
+					DeleteDirectoriesIndepth($fileName);
+					rmdir($fileName);
 				}
 			}
 			closedir($dir);
@@ -195,6 +205,12 @@
 			}
 			closedir($dir);
 		}
+	}
+
+	function SanitizeSwapsAndBackupsDirectory() {
+		$result = false;
+		$result = DeleteDirectoriesIndepth("{$extractToDirectory}/{$githubRepositoryName}-{$repositoryBranch}", true);
+		return $result;
 	}
 
 	function CurrentTimePlatformSafe(?string $timeZone = "UTC") {
