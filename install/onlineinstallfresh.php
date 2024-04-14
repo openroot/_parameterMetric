@@ -218,6 +218,8 @@
 		$result = false;
 		global $backupDirectoryName;
 		global $extractToDirectory;
+		global $githubRepositoryName;
+		global $repositoryBranch;
 		$result = DeleteDirectoriesIndepth("{$extractToDirectory}/{$githubRepositoryName}-{$repositoryBranch}", true);
 		return $result;
 	}
