@@ -42,8 +42,18 @@
 								array_push($messages, "Copied originals zipped successfully.");
 								if (DeleteDirectoriesIndepth($backupPath)) {
 									array_push($messages, "Copy of originals deleted successfully.");
-									// TODO: Delete root original directory in depth except install directory
-									//array_push($messages, MoveDirectoriesSeconddepth($extractedDirectoryName, "../swaps") ? "Move success." : "Move unsuccess.");
+									if (DeleteDirectoriesIndepth("../")) {
+										array_push($messages, "Originals deleted successfully.");
+										if (MoveDirectoriesSeconddepth($extractedDirectoryName, "../")) {
+											array_push($messages, "Downloaded files moved to original successfully.");
+										}
+										else {
+											array_push($messages, "Moving downloaded files to original was failed.");
+										}
+									}
+									else {
+										array_push($messages, "Deletion of originals was failed.");
+									}
 								}
 								else {
 									array_push($messages, "Deletion of copy of originals was failed.");
