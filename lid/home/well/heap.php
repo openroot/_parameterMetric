@@ -655,7 +655,9 @@
 			return $result;
 		}
 
-		public function LensPhpCode(bool $onlyPrimaryDirectory = true) { }
+		public function LensPhpCodeClassStructures(bool $onlyPrimaryDirectory = true) {
+			return "Hello";
+		}
 
 		private function SearchArrayAsStringOutdepth(array $stringArray, string $searchString) {
 			if (count($stringArray) > 0) {

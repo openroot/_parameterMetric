@@ -31,7 +31,9 @@
 					"viewtextfilesprimary" => "Home->Well->Heap|Compute->LensTextSlip:Primary",
 					"viewtextfilesall" => "Home->Well->Heap|Compute->LensTextSlip:All",
 					"viewphpcodeclassesprimary" => "Home->Well->Heap|Compute->LensPhpCodeClasses:Primary",
-					"viewphpcodeclassesall" => "Home->Well->Heap|Compute->LensPhpCodeClasses:All"
+					"viewphpcodeclassesall" => "Home->Well->Heap|Compute->LensPhpCodeClasses:All",
+					"viewphpcodeclassstructuresprimary" =>  "Home->Well->Heap|Compute->LensPhpCodeClassStructures:Primary",
+					"viewphpcodeclassstructuresall" =>  "Home->Well->Heap|Compute->LensPhpCodeClassStructures:All"
 				);
 				$this->AttachHeader();
 				$this->AttachBody($blockName);
@@ -113,6 +115,14 @@
 						// Look into PHP code classes (files in all directories).
 						$this->ViewPhpCodeClasses(false);
 						break;
+					case "viewphpcodeclassstructuresprimary":
+						// Look into PHP code class structures (files in primary directories).
+						$this->ViewPhpCodeClassStructures();
+						break;
+					case "viewphpcodeclassstructuresall":
+						// Look into PHP code class structures (files in all directories).
+						$this->ViewPhpCodeClassStructures(false);
+						break;
 					default:
 						echo "The default case of Launch class.";
 				}
@@ -186,6 +196,18 @@
 				}
 				echo "</pre>";
 				echo "<hr><hr>" . ($onlyPrimaryDirectory ? "[Primary Directories] " : "[All Directories] ") . "<b>Total Numbers of PHP Classes:</b><i> {$totalNumbersOfPhpClasses}</i><hr><hr>";
+			}
+		}
+
+		private function ViewPhpCodeClassStructures(bool $onlyPrimaryDirectory = true) {
+			$compute = new lidheap\Compute();
+			if (lidjoint\Joint::SearchMaterialAsAuthentic($compute)) {
+				$phpClassStructures = $compute->LensPhpCodeClassStructures($onlyPrimaryDirectory);
+				$i = 0;
+				$totalNumbersOfPhpClasses = 0;
+				echo "<pre>";
+				print_r($phpClassStructures);
+				echo "</pre>";
 			}
 		}
 	}
