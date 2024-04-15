@@ -532,15 +532,17 @@
 	/* reason */
 	class Compute extends lidjoint\Joint {
 		private lidwater\Brick $brick;
+		private Platform $platform;
 		private Directory $directory;
 		private File $file;
 
 		public function __construct() {
 			// TODO: API : Service
 			$this->brick = new lidwater\Brick();
+			$this->platform = new Platform();
 			$this->directory = new Directory();
 			$this->file = new File();
-			if (!(lidjoint\Joint::SearchMaterialAsAuthentic($this->brick) && lidjoint\Joint::SearchMaterialAsAuthentic($this->directory) && lidjoint\Joint::SearchMaterialAsAuthentic($this->file))) {
+			if (!(lidjoint\Joint::SearchMaterialAsAuthentic($this->brick) && lidjoint\Joint::SearchMaterialAsAuthentic($this->platform) && lidjoint\Joint::SearchMaterialAsAuthentic($this->directory) && lidjoint\Joint::SearchMaterialAsAuthentic($this->file))) {
 				$this->baseId = -1;
 			}
 			parent::__construct($this);
@@ -612,7 +614,7 @@
 							break;
 						default:
 							$textSlip = new lidjoint\TextSlip($slipPath);
-					}					
+					}
 					if (lidjoint\Joint::SearchMaterialAsAuthentic($textSlip)) {
 						$result[$slipPath] = $textSlip->ReadSlip();
 					}
@@ -623,8 +625,8 @@
 
 		public function LensPhpCodeClasses(bool $onlyPrimaryDirectory = true) {
 			$result = array();
-			$filesLines = $this->LensTextSlip($onlyPrimaryDirectory, "phpcodetextslip");
-			foreach ($filesLines as $index1 => $value1) {
+			$slipLines = $this->LensTextSlip($onlyPrimaryDirectory, "phpcodetextslip");
+			foreach ($slipLines as $index1 => $value1) {
 				$classNames = array();
 				$namespacePath = "";
 				foreach ($value1 as $index2 => $value2) {
@@ -656,7 +658,21 @@
 		}
 
 		public function LensPhpCodeClassStructures(bool $onlyPrimaryDirectory = true) {
-			return "Hello";
+			$result = array();
+			
+			$this->platform->RequireonceDirectory("home/margosa/now");
+			
+			$joint = new lidjoint\Joint(null);
+			$phpClasses = $this->LensPhpCodeClasses($onlyPrimaryDirectory);
+			foreach ($phpClasses as $index1 => $value1) {
+				$classStructures = array();
+				foreach ($value1 as $index2 => $value2) {
+					//array_push($classStructures, $joint->Signature($value2));
+					array_push($classStructures, $joint->Signature("lid\home\margosa\\now\\flower\Me"));
+				}
+				$result[$index1] = $classStructures;
+			}
+			return $result;
 		}
 
 		private function SearchArrayAsStringOutdepth(array $stringArray, string $searchString) {
