@@ -659,9 +659,9 @@
 
 		public function LensPhpCodeClassStructures(bool $onlyPrimaryDirectory = true) {
 			$result = array();
-			
+
 			$this->platform->RequireonceDirectory("home/margosa/now");
-			
+
 			$joint = new lidjoint\Joint(null);
 			$phpClasses = $this->LensPhpCodeClasses($onlyPrimaryDirectory);
 			foreach ($phpClasses as $index1 => $value1) {
