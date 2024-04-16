@@ -52,6 +52,14 @@
 			parent::__construct($this);
 		}
 
+		public function ReadDirectory() {
+			return $this->directory;
+		}
+
+		public function ReadFile() {
+			return $this->file;
+		}
+
 		public function ReadStreet() {
 			return $this->street;
 		}
@@ -536,16 +544,12 @@
 	class Compute extends lidjoint\Joint {
 		private lidwater\Brick $brick;
 		private Platform $platform;
-		private Directory $directory;
-		private File $file;
 
 		public function __construct() {
 			// TODO: API : Service
 			$this->brick = new lidwater\Brick();
 			$this->platform = new Platform();
-			$this->directory = new Directory();
-			$this->file = new File();
-			if (!(lidjoint\Joint::SeeAuthentic($this->brick) && lidjoint\Joint::SeeAuthentic($this->platform) && lidjoint\Joint::SeeAuthentic($this->directory) && lidjoint\Joint::SeeAuthentic($this->file))) {
+			if (!(lidjoint\Joint::SeeAuthentic($this->brick) && lidjoint\Joint::SeeAuthentic($this->platform))) {
 				$this->baseId = -1;
 			}
 			parent::__construct($this);
@@ -557,7 +561,7 @@
 			$result1 = array();
 			$result2 = array();
 			$brickFlats = $this->brick->ReadFlats();
-			$directoryPaths = $this->directory->RefreshRecentDirectoriesIndepth();
+			$directoryPaths = $this->platform->ReadDirectory()->RefreshRecentDirectoriesIndepth();
 			if ($onlyPrimaryDirectory) {
 				foreach ($brickFlats as $index => $value) {
 					if ($this->SearchArrayAsStringOutdepth($directoryPaths, $value)) {
@@ -587,7 +591,7 @@
 		public function LensFiles(bool $onlyPrimaryDirectory = true) {
 			$result = array();
 			foreach (array_merge($this->LensDirectories($onlyPrimaryDirectory)[0], $this->LensDirectories($onlyPrimaryDirectory)[1]) as $index => $value) {
-				$fileNames = $this->file->CollectNamesInPath($value);
+				$fileNames = $this->platform->ReadFile()->CollectNamesInPath($value);
 				if (count($fileNames) > 0) {
 					$result[$value] = $fileNames;
 				}
