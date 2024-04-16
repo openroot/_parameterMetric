@@ -16,7 +16,7 @@
 		public function __construct() {
 			$this->directory = new lidheap\Directory();
 			$this->brick = new lidwater\Brick();
-			if (lidjoint\Joint::SearchMaterialAsAuthentic($this->brick) && lidjoint\Joint::SearchMaterialAsAuthentic($this->directory)) {
+			if (lidjoint\Joint::SeeAuthentic($this->brick) && lidjoint\Joint::SeeAuthentic($this->directory)) {
 				$this->TripBrickFlats();
 				$this->TripBrickHids();
 			}

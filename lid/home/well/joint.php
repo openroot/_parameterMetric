@@ -59,7 +59,7 @@
 			return $result;
 		}
 
-		public static function SearchMaterialAsAuthentic(mixed $material) {
+		public static function SeeAuthentic(mixed $material) {
 			if (!is_null($material)) {
 				if (is_object($material)) {
 					foreach (Base::$objectBaseIds as $index => $value) {
@@ -88,7 +88,7 @@
 
 		public function __construct(string $slipPath) {
 			$this->directory = new lidheap\Directory();
-			if (Joint::SearchMaterialAsAuthentic($this->directory)) {
+			if (Joint::SeeAuthentic($this->directory)) {
 				$this->slipPath = $slipPath;
 			}
 			else {
@@ -204,14 +204,14 @@
 	class Specimen extends Joint {
 		public function __construct() {
 			$joint = new lidreason\Joint($this);
-			if (!Joint::SearchMaterialAsAuthentic($joint)) {
+			if (!Joint::SeeAuthentic($joint)) {
 				$this->baseId = -1;
 			}
 			parent::__construct($this);
 
-			if (Joint::SearchMaterialAsAuthentic($joint)) {
+			if (Joint::SeeAuthentic($joint)) {
 				$textSlip = new lidreason\TextSlip("home/margosa/data/json/sample2.json");
-				if (lidreason\Joint::SearchMaterialAsAuthentic($textSlip)) {
+				if (lidreason\Joint::SeeAuthentic($textSlip)) {
 					echo "<h6>1: TextSlip - Signature</h6>";
 					echo "<pre>";
 					print_r($textSlip->Signature());

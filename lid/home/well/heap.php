@@ -28,7 +28,7 @@
 			$success = false;
 			$this->directory = new Directory();
 			$this->file = new File();
-			if (lidjoint\Joint::SearchMaterialAsAuthentic($this->directory) && lidjoint\Joint::SearchMaterialAsAuthentic($this->file) && $this->RequireonceDirectory("home/well")) {
+			if (lidjoint\Joint::SeeAuthentic($this->directory) && lidjoint\Joint::SeeAuthentic($this->file) && $this->RequireonceDirectory("home/well")) {
 				$this->pull = new lidpull\Pull();
 				if ($this->pull) {
 					$this->push = new lidpush\Push();
@@ -39,7 +39,7 @@
 						$this->notice = new Notice();
 						$this->run = new Run();
 						$this->dive = new Dive();
-						if (lidjoint\Joint::SearchMaterialAsAuthentic($this->street) && lidjoint\Joint::SearchMaterialAsAuthentic($this->lamp) && lidjoint\Joint::SearchMaterialAsAuthentic($this->wide) && lidjoint\Joint::SearchMaterialAsAuthentic($this->notice) && lidjoint\Joint::SearchMaterialAsAuthentic($this->run) && lidjoint\Joint::SearchMaterialAsAuthentic($this->dive)) {
+						if (lidjoint\Joint::SeeAuthentic($this->street) && lidjoint\Joint::SeeAuthentic($this->lamp) && lidjoint\Joint::SeeAuthentic($this->wide) && lidjoint\Joint::SeeAuthentic($this->notice) && lidjoint\Joint::SeeAuthentic($this->run) && lidjoint\Joint::SeeAuthentic($this->dive)) {
 							$success = true;
 						}
 					}
@@ -348,7 +348,7 @@
 
 		public function __construct() {
 			$this->directory = new Directory();
-			if (!lidjoint\Joint::SearchMaterialAsAuthentic($this->directory)) {
+			if (!lidjoint\Joint::SeeAuthentic($this->directory)) {
 				$this->baseId = -1;
 			}
 			parent::__construct($this);
@@ -448,7 +448,7 @@
 			$this->sand = new lidwater\Sand();
 			$this->pdoAc = null;
 			$this->pdoType = $pdoType;
-			if (lidjoint\Joint::SearchMaterialAsAuthentic($this->sand)) {
+			if (lidjoint\Joint::SeeAuthentic($this->sand)) {
 				$this->constructPdoAc();
 			}
 			else {
@@ -545,7 +545,7 @@
 			$this->platform = new Platform();
 			$this->directory = new Directory();
 			$this->file = new File();
-			if (!(lidjoint\Joint::SearchMaterialAsAuthentic($this->brick) && lidjoint\Joint::SearchMaterialAsAuthentic($this->platform) && lidjoint\Joint::SearchMaterialAsAuthentic($this->directory) && lidjoint\Joint::SearchMaterialAsAuthentic($this->file))) {
+			if (!(lidjoint\Joint::SeeAuthentic($this->brick) && lidjoint\Joint::SeeAuthentic($this->platform) && lidjoint\Joint::SeeAuthentic($this->directory) && lidjoint\Joint::SeeAuthentic($this->file))) {
 				$this->baseId = -1;
 			}
 			parent::__construct($this);
@@ -618,7 +618,7 @@
 						default:
 							$textSlip = new lidjoint\TextSlip($slipPath);
 					}
-					if (lidjoint\Joint::SearchMaterialAsAuthentic($textSlip)) {
+					if (lidjoint\Joint::SeeAuthentic($textSlip)) {
 						$result[$slipPath] = $textSlip->ReadSlip();
 					}
 				}
@@ -698,7 +698,7 @@
 			$directory = new lidheap\Directory();
 			$file = new lidheap\File();
 			$compute = new lidheap\Compute();
-			if (lidjoint\Joint::SearchMaterialAsAuthentic($platform) && lidjoint\Joint::SearchMaterialAsAuthentic($directory) && lidjoint\Joint::SearchMaterialAsAuthentic($file) && lidjoint\Joint::SearchMaterialAsAuthentic($compute)) {
+			if (lidjoint\Joint::SeeAuthentic($platform) && lidjoint\Joint::SeeAuthentic($directory) && lidjoint\Joint::SeeAuthentic($file) && lidjoint\Joint::SeeAuthentic($compute)) {
 				$this->ChainSampling($platform, $directory, $file, $compute);
 			}
 			else {

@@ -16,7 +16,7 @@
 		public function __construct() {
 			$this->street = new lidheap\Street();
 			$this->dye = new lidwater\Dye();
-			if (lidjoint\Joint::SearchMaterialAsAuthentic($this->dye) && lidjoint\Joint::SearchMaterialAsAuthentic($this->street)) {
+			if (lidjoint\Joint::SeeAuthentic($this->dye) && lidjoint\Joint::SeeAuthentic($this->street)) {
 				$this->TripDyeRegions();
 			}
 			else {

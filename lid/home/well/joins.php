@@ -24,7 +24,7 @@
 	class Specimen extends lidjoint\Joint {
 		public function __construct() {
 			$joins = new lidseason\Joins();
-			if (lidjoint\Joint::SearchMaterialAsAuthentic($joins)) {
+			if (lidjoint\Joint::SeeAuthentic($joins)) {
 				echo "<h6>1</h6>";
 				echo $joins->Test();
 			}

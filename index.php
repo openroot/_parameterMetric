@@ -15,7 +15,7 @@
 
 		public function __construct(?string $blockName = null) {
 			$this->platform = new lidheap\Platform();
-			if (lidjoint\Joint::SearchMaterialAsAuthentic($this->platform)) {
+			if (lidjoint\Joint::SeeAuthentic($this->platform)) {
 				$this->street = $this->platform->ReadStreet();
 				$this->blockNames = array(
 					"default" => "Home",
@@ -156,7 +156,7 @@
 
 		private function ViewTextFiles(bool $onlyPrimaryDirectory = true) {
 			$compute = new lidheap\Compute();
-			if (lidjoint\Joint::SearchMaterialAsAuthentic($compute)) {
+			if (lidjoint\Joint::SeeAuthentic($compute)) {
 				$filesLines = $compute->LensTextSlip($onlyPrimaryDirectory);
 				$i = 0;
 				$totalLinesOfTexts = 0;
@@ -176,7 +176,7 @@
 
 		private function ViewPhpCodeClasses(bool $onlyPrimaryDirectory = true) {
 			$compute = new lidheap\Compute();
-			if (lidjoint\Joint::SearchMaterialAsAuthentic($compute)) {
+			if (lidjoint\Joint::SeeAuthentic($compute)) {
 				$phpClasses = $compute->LensPhpCodeClasses($onlyPrimaryDirectory);
 				$i = 0;
 				$totalNumbersOfPhpClasses = 0;
@@ -196,7 +196,7 @@
 
 		private function ViewPhpCodeClassStructures() {
 			$compute = new lidheap\Compute();
-			if (lidjoint\Joint::SearchMaterialAsAuthentic($compute)) {
+			if (lidjoint\Joint::SeeAuthentic($compute)) {
 				$phpClassStructures = $compute->LensPhpCodeClassStructures();
 				echo "<pre>";
 				print_r($phpClassStructures);

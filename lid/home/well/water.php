@@ -335,7 +335,7 @@
 		public function __construct() {
 			$brick = new lidwater\Brick();
 			$dye = new lidwater\Dye();
-			if (lidjoint\Joint::SearchMaterialAsAuthentic($brick) && lidjoint\Joint::SearchMaterialAsAuthentic($dye)) {
+			if (lidjoint\Joint::SeeAuthentic($brick) && lidjoint\Joint::SeeAuthentic($dye)) {
 				echo "<h6>1: Brick - ReadFlats</h6>";
 				echo "<pre>";
 				print_r($brick->ReadFlats());
