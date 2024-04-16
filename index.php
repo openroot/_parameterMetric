@@ -147,7 +147,7 @@
 		}
 
 		private function AttachBody(?string $blockName = null) {
-			$launchSkeleton = $this->street->FindGets("index_launch_skeleton");
+			$launchSkeleton = $this->street->FindGet("index_launch_skeleton");
 			$blockName = !empty($launchSkeleton) ? $launchSkeleton : $blockName;
 			if ($blockName != null) {
 				$this->Skeleton($blockName);

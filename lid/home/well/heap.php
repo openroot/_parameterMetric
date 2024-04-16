@@ -78,7 +78,7 @@
 
 		public function RequireonceDirectory(string $directoryPath) {
 			$filteredFileFullPaths = array();
-			$fileFullPaths = $this->file->EnlistFilelist($directoryPath);
+			$fileFullPaths = $this->file->CollectNamesInPath($directoryPath);
 			if (count($fileFullPaths) == 0) {
 				return true;
 			}
@@ -354,7 +354,7 @@
 			parent::__construct($this);
 		}
 
-		public function SearchFilepathAsFilename(string $filePath, string $fileName) {
+		public function SeeNameInPath(string $filePath, string $fileName) {
 			if (strcmp(substr($filePath, strrpos($filePath, "/") + 1), $fileName) == 0) {
 				return true;
 			}
@@ -364,7 +364,7 @@
 		public function LetFile(array $filePaths, string $fileName) {
 			$result = false;
 			foreach ($filePaths as $index => $value) {
-				if ($this->SearchFilepathAsFilename($value, $fileName)) {
+				if ($this->SeeNameInPath($value, $fileName)) {
 					if (is_file($this->directory->DirectDirectoryPath($value))) {
 						$result = true;
 					}
@@ -373,7 +373,7 @@
 			return $result;
 		}
 
-		public function EnlistFilelist(string $directoryPath) {
+		public function CollectNamesInPath(string $directoryPath) {
 			$fileList = array();
 			$directDirectoryPath = $this->directory->DirectDirectoryPath($directoryPath);
 			if (is_dir($directDirectoryPath)) {
@@ -408,7 +408,7 @@
 			return false;
 		}
 
-		public function FindGets(string $key) {
+		public function FindGet(string $key) {
 			if (array_key_exists($key, $this->gets)) {
 				return $this->gets[$key];
 			}
@@ -587,7 +587,7 @@
 		public function LensFiles(bool $onlyPrimaryDirectory = true) {
 			$result = array();
 			foreach (array_merge($this->LensDirectories($onlyPrimaryDirectory)[0], $this->LensDirectories($onlyPrimaryDirectory)[1]) as $index => $value) {
-				$fileNames = $this->file->EnlistFilelist($value);
+				$fileNames = $this->file->CollectNamesInPath($value);
 				if (count($fileNames) > 0) {
 					$result[$value] = $fileNames;
 				}
@@ -760,9 +760,9 @@
 			echo "<h6>14: File - LetFile (home/margosa/now/flower.php | home/margosa/now/leaf.php, Leaf.php)</h6>";
 			echo $file->LetFile(array("home/margosa/now/flower.php", "home/margosa/now/leaf.php"), "Leaf.php") ? "Success" : "Unsuccess";
 
-			echo "<h6>15: File - EnlistFilelist (home/margosa/now)</h6>";
+			echo "<h6>15: File - CollectNamesInPath (home/margosa/now)</h6>";
 			echo "<pre>";
-			print_r($file->EnlistFilelist("home/margosa/now"));
+			print_r($file->CollectNamesInPath("home/margosa/now"));
 			echo "</pre>";
 
 			echo "<h6>16: Street - ReadGets</h6>";
