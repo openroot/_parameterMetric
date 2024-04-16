@@ -78,7 +78,11 @@
 
 		public function RequireonceDirectory(string $directoryPath) {
 			$filteredFileFullPaths = array();
-			foreach ($this->file->EnlistFilelist($directoryPath) as $index => $value) {
+			$fileFullPaths = $this->file->EnlistFilelist($directoryPath);
+			if (count($fileFullPaths) == 0) {
+				return true;
+			}
+			foreach ($fileFullPaths as $index => $value) {
 				$fileFullPath = $this->directory->ReadTopDirectory() . "/{$directoryPath}/{$value}";
 				if (!$this->SearchScriptAsCurrentscript($fileFullPath)) {
 					array_push($filteredFileFullPaths, $fileFullPath);
@@ -100,7 +104,6 @@
 		}
 
 		public function RequireonceDirectories(array $directoryPaths) {
-			// TODO: This function is not verified yet, verify after real implementation.
 			$result = true;
 			if (count($directoryPaths) > 0) {
 				foreach($directoryPaths as $index => $value) {
@@ -657,20 +660,18 @@
 			return $result;
 		}
 
-		public function LensPhpCodeClassStructures(bool $onlyPrimaryDirectory = true) {
+		public function LensPhpCodeClassStructures() {
 			$result = array();
-
-			$this->platform->RequireonceDirectory("home/margosa/now");
-
 			$joint = new lidjoint\Joint(null);
-			$phpClasses = $this->LensPhpCodeClasses($onlyPrimaryDirectory);
-			foreach ($phpClasses as $index1 => $value1) {
-				$classStructures = array();
-				foreach ($value1 as $index2 => $value2) {
-					//array_push($classStructures, $joint->Signature($value2));
-					array_push($classStructures, $joint->Signature("lid\home\margosa\\now\\flower\Me"));
+			if ($this->platform->RequireonceDirectories($this->brick->ReadFlats())) {
+				$phpClasses = $this->LensPhpCodeClasses();
+				foreach ($phpClasses as $index1 => $value1) {
+					$classStructures = array();
+					foreach ($value1 as $index2 => $value2) {
+						array_push($classStructures, $joint->Signature($value2));
+					}
+					$result[$index1] = $classStructures;
 				}
-				$result[$index1] = $classStructures;
 			}
 			return $result;
 		}
