@@ -126,7 +126,7 @@
 	class TextSlip extends Slip {
 		public function __construct(string $slipPath) {
 			$slipMime = mime_content_type("./lid/{$slipPath}");
-			if ($slipMime == "text/x-php" || $slipMime == "application/json") {
+			if ($slipMime == "application/x-empty" || $slipMime == "text/plain" || $slipMime == "text/x-php" || $slipMime == "application/json") {
 				parent::__construct($slipPath);
 			}
 			else {
