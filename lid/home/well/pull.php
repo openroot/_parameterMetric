@@ -29,7 +29,7 @@
 		protected function TripBrickFlats() {
 			if (count($this->brick->ReadFlats()) > 0) {
 				foreach ($this->brick->ReadFlats() as $index => $value) {
-					$this->directory->MakeDirectory($value);
+					$this->directory->Make($value);
 				}
 			}
 			return true;
@@ -38,7 +38,7 @@
 		protected function TripBrickHids() {
 			if (count($this->brick->ReadHids()) > 0) {
 				foreach ($this->brick->ReadHids() as $index => $value) {
-					$this->directory->CopyDirectoryLeaveIndepth($this->brick->ReadHidDirectoryPath() . "/{$value}", "");
+					$this->directory->CopyLeaveIndepth($this->brick->ReadHidDirectoryPath() . "/{$value}", "");
 				}
 			}
 			return true;

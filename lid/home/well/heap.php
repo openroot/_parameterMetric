@@ -173,7 +173,7 @@
 			return strpos($directDirectoryPath, $this->topDirectory) == 0 ? substr($directDirectoryPath, strlen($this->topDirectory) + 1) : false;
 		}
 
-		public function ContainsDirectoryName(array $directoryPaths, string $directoryName) {
+		public function LetDirectory(array $directoryPaths, string $directoryName) {
 			$result = false;
 			foreach ($directoryPaths as $index => $value) {
 				if (strcmp(substr($value, strrpos($value, "/") + 1), $directoryName) == 0) {
@@ -191,7 +191,7 @@
 			return $this->recentDirectorylist;
 		}
 
-		public function MakeDirectory(string $directoryPath) {
+		public function Make(string $directoryPath) {
 			$directDirectoryPath = $this->DirectDirectoryPath($directoryPath);
 			if (!file_exists($directDirectoryPath)) {
 				return mkdir($directDirectoryPath);
@@ -199,14 +199,14 @@
 			return false;
 		}
 
-		public function DeleteDirectory(string $directoryPath) {
+		public function Delete(string $directoryPath) {
 			$result = false;
 			$directDirectoryPath = $this->DirectDirectoryPath($directoryPath);
 			if (is_dir($directDirectoryPath)) {
 				$parentDirectoryPath = substr($directDirectoryPath, 0, strrpos($directDirectoryPath, "/"));
 				$directoryName = substr($directDirectoryPath, strrpos($directDirectoryPath, "/") + 1);
-				if ($this->ContainsDirectoryName($this->RefreshRecentDirectorylistIndepth($this->IndirectDirectoryPath($parentDirectoryPath)), $directoryName)) {
-					$this->MakeDirectory($this->recyclebinDirectory);
+				if ($this->LetDirectory($this->RefreshRecentDirectorylistIndepth($this->IndirectDirectoryPath($parentDirectoryPath)), $directoryName)) {
+					$this->Make($this->recyclebinDirectory);
 					if (is_dir($this->DirectDirectoryPath($this->recyclebinDirectory))) {
 						return rename($directDirectoryPath, "{$this->topDirectory}/{$this->recyclebinDirectory}/{$directoryName}" . $this->CurrentTimePlatformSafe());
 					}
@@ -215,20 +215,20 @@
 			return $result;
 		}
 
-		public function CopyDirectoryLeaveIndepth(string $directoryPath, string $locationPath) {
-			return $this->YieldCopyDirectory($directoryPath, $locationPath, "leaveindepth");
+		public function CopyLeaveIndepth(string $directoryPath, string $locationPath) {
+			return $this->YieldCopy($directoryPath, $locationPath, "leaveindepth");
 		}
 
-		public function CopyDirectoryMergeIndepth(string $directoryPath, string $locationPath) {
-			return $this->YieldCopyDirectory($directoryPath, $locationPath, "mergeindepth");
+		public function CopyMergeIndepth(string $directoryPath, string $locationPath) {
+			return $this->YieldCopy($directoryPath, $locationPath, "mergeindepth");
 		}
 
-		public function CopyDirectoryLeaveOutdepth(string $directoryPath, string $locationPath) {
-			return $this->YieldCopyDirectory($directoryPath, $locationPath, "leaveoutdepth");
+		public function CopyLeaveOutdepth(string $directoryPath, string $locationPath) {
+			return $this->YieldCopy($directoryPath, $locationPath, "leaveoutdepth");
 		}
 
-		public function CopyDirectoryMergeOutdepth(string $directoryPath, string $locationPath) {
-			return $this->YieldCopyDirectory($directoryPath, $locationPath, "mergeoutdepth");
+		public function CopyMergeOutdepth(string $directoryPath, string $locationPath) {
+			return $this->YieldCopy($directoryPath, $locationPath, "mergeoutdepth");
 		}
 
 		private function EnlistRecentDirectorylistIndepth(string $directoryPath) {
@@ -264,20 +264,20 @@
 			return $directoriesandfiles;
 		}
 
-		private function YieldCopyDirectory(string $directoryPath, string $locationPath, string $copyType) {
+		private function YieldCopy(string $directoryPath, string $locationPath, string $copyType) {
 			$result = false;
 			$directDirectoryPath = $this->DirectDirectoryPath($directoryPath);
 			if (is_dir($directDirectoryPath)) {
-				$this->MakeDirectory($locationPath);
+				$this->Make($locationPath);
 				$fineLocationPath = $this->DirectDirectoryPath($locationPath);
 				if (is_dir($fineLocationPath)) {
-					$result = $this->CopyDirectoryIndepth($directDirectoryPath, $fineLocationPath, $copyType);
+					$result = $this->Copy($directDirectoryPath, $fineLocationPath, $copyType);
 				}
 			}
 			return $result;
 		}
 
-		private function CopyDirectoryIndepth(string $directDirectoryPath, string $fineLocationPath, string $copyType) {
+		private function Copy(string $directDirectoryPath, string $fineLocationPath, string $copyType) {
 			$result = true;
 			$directoriesandfiles = $this->EnlistDirectoriesAndFilesOutdepth($directDirectoryPath);
 			if (count($directoriesandfiles) == 0) {
@@ -297,7 +297,7 @@
 									$result = copy($copySource, $copyTo);
 								}
 							}
-							$result = $this->CopyDirectoryIndepth("{$directDirectoryPath}/{$value}", "{$fineLocationPath}/{$value}", $copyType);
+							$result = $this->Copy("{$directDirectoryPath}/{$value}", "{$fineLocationPath}/{$value}", $copyType);
 							break;
 						case "mergeindepth":
 							if (is_file($copySource)) {
@@ -306,7 +306,7 @@
 							else if (is_dir($copySource) && !file_exists($copyTo)) {
 								$result = mkdir($copyTo);
 							}
-							$result = $this->CopyDirectoryIndepth("{$directDirectoryPath}/{$value}", "{$fineLocationPath}/{$value}", $copyType);
+							$result = $this->Copy("{$directDirectoryPath}/{$value}", "{$fineLocationPath}/{$value}", $copyType);
 							break;
 						case "leaveoutdepth":
 							if (!file_exists($copyTo)) {
@@ -361,7 +361,7 @@
 			return false;
 		}
 
-		public function ContainsFileName(array $filePaths, string $fileName) {
+		public function LetFile(array $filePaths, string $fileName) {
 			$result = false;
 			foreach ($filePaths as $index => $value) {
 				if ($this->SearchFilepathAsFilename($value, $fileName)) {
@@ -728,8 +728,8 @@
 			echo "<h6>6: Directory - IndirectDirectoryPath (./lid/home/margosa/now)</h6>";
 			echo $directory->IndirectDirectoryPath("./lid/home/margosa/now");
 
-			echo "<h6>7: Directory - ContainsDirectoryName (home/margosa/now | home/margosa/spin, Spin)</h6>";
-			echo $directory->ContainsDirectoryName(array("home/margosa/now", "home/margosa/spin"), "Spin") ? "Success" : "Unsuccess";
+			echo "<h6>7: Directory - LetDirectory (home/margosa/now | home/margosa/spin, Spin)</h6>";
+			echo $directory->LetDirectory(array("home/margosa/now", "home/margosa/spin"), "Spin") ? "Success" : "Unsuccess";
 
 			echo "<h6>8: Directory - ReadRecentDirectorylist ()</h6>";
 			echo "<pre>";
@@ -746,19 +746,19 @@
 			print_r($directory->ReadRecentDirectorylist());
 			echo "</pre>";
 
-			echo "<h6>11: Directory - MakeDirectory (home/margosa/spin/algebrafate/ARandomDirectory)</h6>";
-			echo $directory->MakeDirectory("home/margosa/spin/algebrafate/ARandomDirectory") ? "Success" : "Directory not made or already exists";
+			echo "<h6>11: Directory - Make (home/margosa/spin/algebrafate/ARandomDirectory)</h6>";
+			echo $directory->Make("home/margosa/spin/algebrafate/ARandomDirectory") ? "Success" : "Directory not made or already exists";
 			
-			echo "<h6>12: Directory - DeleteDirectory (home/margosa/spin/algebrafate/ARandomDirectory)</h6>";
-			echo $directory->DeleteDirectory("home/margosa/spin/algebrafate/ARandomDirectory") ? "Success" : "Directory not deleted or not exists";
+			echo "<h6>12: Directory - Delete (home/margosa/spin/algebrafate/ARandomDirectory)</h6>";
+			echo $directory->Delete("home/margosa/spin/algebrafate/ARandomDirectory") ? "Success" : "Directory not deleted or not exists";
 		
 			echo "<h6>13: Directory - RefreshRecentDirectorylistIndepth ()</h6>";
 			echo "<pre>";
 			print_r($directory->RefreshRecentDirectorylistIndepth());
 			echo "</pre>";
 
-			echo "<h6>14: File - ContainsFileName (home/margosa/now/flower.php | home/margosa/now/leaf.php, Leaf.php)</h6>";
-			echo $file->ContainsFileName(array("home/margosa/now/flower.php", "home/margosa/now/leaf.php"), "Leaf.php") ? "Success" : "Unsuccess";
+			echo "<h6>14: File - LetFile (home/margosa/now/flower.php | home/margosa/now/leaf.php, Leaf.php)</h6>";
+			echo $file->LetFile(array("home/margosa/now/flower.php", "home/margosa/now/leaf.php"), "Leaf.php") ? "Success" : "Unsuccess";
 
 			echo "<h6>15: File - EnlistFilelist (home/margosa/now)</h6>";
 			echo "<pre>";
