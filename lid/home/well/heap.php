@@ -139,12 +139,12 @@
 	/* eat */
 	class Directory extends lidjoint\Joint {
 		protected string $topDirectory;
-		protected array $recentDirectorylist;
+		protected array $recentDirectories;
 		private string $defaultTopDirectory;
 		private string $recyclebinDirectory;
 
 		public function __construct(?string $topDirectory = null) {
-			$this->recentDirectorylist = array();
+			$this->recentDirectories = array();
 			$this->defaultTopDirectory = "./lid";
 			$this->recyclebinDirectory = "home/margosa/spin/algebrafate/recyclebin";
 			$this->topDirectory = empty($topDirectory) ? $this->defaultTopDirectory : $topDirectory;
@@ -155,8 +155,8 @@
 			return $this->topDirectory;
 		}
 
-		public function ReadRecentDirectorylist() {
-			return $this->recentDirectorylist;
+		public function ReadRecentDirectories() {
+			return $this->recentDirectories;
 		}
 
 		public function DirectDirectoryPath(string $directoryPath) {
@@ -185,10 +185,43 @@
 			return $result;
 		}
 
-		public function RefreshRecentDirectorylistIndepth(?string $directoryPath = null) {
-			array_splice($this->recentDirectorylist, 0, count($this->recentDirectorylist));
-			$this->EnlistRecentDirectorylistIndepth(empty($directoryPath) ? "" : $directoryPath);
-			return $this->recentDirectorylist;
+		public function RefreshRecentDirectoriesIndepth(?string $directoryPath = null) {
+			array_splice($this->recentDirectories, 0, count($this->recentDirectories));
+			$this->CollectRecentDirectoriesIndepth(empty($directoryPath) ? "" : $directoryPath);
+			return $this->recentDirectories;
+		}
+
+		public function CollectRecentDirectoriesIndepth(string $directoryPath) {
+			foreach ($this->CollectDirectoriesOutdepth($this->DirectDirectoryPath($directoryPath)) as $index => $value) {
+				$foundDirectoryPath = "{$directoryPath}/{$value}";
+				$foundDirectoryPath = strpos($foundDirectoryPath, "/") == 0 ? substr($foundDirectoryPath, 1) : $foundDirectoryPath;
+				array_push($this->recentDirectories, $foundDirectoryPath);
+				$this->CollectRecentDirectoriesIndepth($foundDirectoryPath);
+			}
+		}
+
+		public function CollectDirectoriesOutdepth(string $directoryPath) {
+			$filteredList = array();
+			if (is_dir($directoryPath)) {
+				foreach (scandir($directoryPath) as $index => $value) {
+					if (!($value == "." || $value == "..") && is_dir("{$directoryPath}/{$value}")) {
+						array_push($filteredList, $value);
+					}
+				}
+			}
+			return $filteredList;
+		}
+
+		public function CollectDirectoriesFilesOutdepth(string $directDirectoryPath) {
+			$directoriesandfiles = array();
+			if (!($directDirectoryPath == "." || $directDirectoryPath == "..") && is_dir($directDirectoryPath)) {
+				foreach(scandir($directDirectoryPath) as $index => $value) {
+					if (!($value == "." || $value == "..")) {
+						array_push($directoriesandfiles, $value);
+					}
+				}
+			}
+			return $directoriesandfiles;
 		}
 
 		public function Make(string $directoryPath) {
@@ -205,7 +238,7 @@
 			if (is_dir($directDirectoryPath)) {
 				$parentDirectoryPath = substr($directDirectoryPath, 0, strrpos($directDirectoryPath, "/"));
 				$directoryName = substr($directDirectoryPath, strrpos($directDirectoryPath, "/") + 1);
-				if ($this->LetDirectory($this->RefreshRecentDirectorylistIndepth($this->IndirectDirectoryPath($parentDirectoryPath)), $directoryName)) {
+				if ($this->LetDirectory($this->RefreshRecentDirectoriesIndepth($this->IndirectDirectoryPath($parentDirectoryPath)), $directoryName)) {
 					$this->Make($this->recyclebinDirectory);
 					if (is_dir($this->DirectDirectoryPath($this->recyclebinDirectory))) {
 						return rename($directDirectoryPath, "{$this->topDirectory}/{$this->recyclebinDirectory}/{$directoryName}" . $this->CurrentTimePlatformSafe());
@@ -231,39 +264,6 @@
 			return $this->YieldCopy($directoryPath, $locationPath, "mergeoutdepth");
 		}
 
-		private function EnlistRecentDirectorylistIndepth(string $directoryPath) {
-			foreach ($this->EnlistDirectorylistOutdepth($this->DirectDirectoryPath($directoryPath)) as $index => $value) {
-				$foundDirectoryPath = "{$directoryPath}/{$value}";
-				$foundDirectoryPath = strpos($foundDirectoryPath, "/") == 0 ? substr($foundDirectoryPath, 1) : $foundDirectoryPath;
-				array_push($this->recentDirectorylist, $foundDirectoryPath);
-				$this->EnlistRecentDirectorylistIndepth($foundDirectoryPath);
-			}
-		}
-
-		private function EnlistDirectorylistOutdepth(string $directoryPath) {
-			$filteredList = array();
-			if (is_dir($directoryPath)) {
-				foreach (scandir($directoryPath) as $index => $value) {
-					if (!($value == "." || $value == "..") && is_dir("{$directoryPath}/{$value}")) {
-						array_push($filteredList, $value);
-					}
-				}
-			}
-			return $filteredList;
-		}
-
-		private function EnlistDirectoriesAndFilesOutdepth(string $directDirectoryPath) {
-			$directoriesandfiles = array();
-			if (!($directDirectoryPath == "." || $directDirectoryPath == "..") && is_dir($directDirectoryPath)) {
-				foreach(scandir($directDirectoryPath) as $index => $value) {
-					if (!($value == "." || $value == "..")) {
-						array_push($directoriesandfiles, $value);
-					}
-				}
-			}
-			return $directoriesandfiles;
-		}
-
 		private function YieldCopy(string $directoryPath, string $locationPath, string $copyType) {
 			$result = false;
 			$directDirectoryPath = $this->DirectDirectoryPath($directoryPath);
@@ -279,7 +279,7 @@
 
 		private function Copy(string $directDirectoryPath, string $fineLocationPath, string $copyType) {
 			$result = true;
-			$directoriesandfiles = $this->EnlistDirectoriesAndFilesOutdepth($directDirectoryPath);
+			$directoriesandfiles = $this->CollectDirectoriesFilesOutdepth($directDirectoryPath);
 			if (count($directoriesandfiles) == 0) {
 				return;
 			}
@@ -557,7 +557,7 @@
 			$result1 = array();
 			$result2 = array();
 			$brickFlats = $this->brick->ReadFlats();
-			$directoryPaths = $this->directory->RefreshRecentDirectorylistIndepth();
+			$directoryPaths = $this->directory->RefreshRecentDirectoriesIndepth();
 			if ($onlyPrimaryDirectory) {
 				foreach ($brickFlats as $index => $value) {
 					if ($this->SearchArrayAsStringOutdepth($directoryPaths, $value)) {
@@ -731,19 +731,19 @@
 			echo "<h6>7: Directory - LetDirectory (home/margosa/now | home/margosa/spin, Spin)</h6>";
 			echo $directory->LetDirectory(array("home/margosa/now", "home/margosa/spin"), "Spin") ? "Success" : "Unsuccess";
 
-			echo "<h6>8: Directory - ReadRecentDirectorylist ()</h6>";
+			echo "<h6>8: Directory - ReadRecentDirectories ()</h6>";
 			echo "<pre>";
-			print_r($directory->ReadRecentDirectorylist());
+			print_r($directory->ReadRecentDirectories());
 			echo "</pre>";
 			
-			echo "<h6>9: Directory - RefreshRecentDirectorylistIndepth (home/margosa)</h6>";
+			echo "<h6>9: Directory - RefreshRecentDirectoriesIndepth (home/margosa)</h6>";
 			echo "<pre>";
-			print_r($directory->RefreshRecentDirectorylistIndepth("home/margosa"));
+			print_r($directory->RefreshRecentDirectoriesIndepth("home/margosa"));
 			echo "</pre>";
 
-			echo "<h6>10: Directory - ReadRecentDirectorylist ()</h6>";
+			echo "<h6>10: Directory - ReadRecentDirectories ()</h6>";
 			echo "<pre>";
-			print_r($directory->ReadRecentDirectorylist());
+			print_r($directory->ReadRecentDirectories());
 			echo "</pre>";
 
 			echo "<h6>11: Directory - Make (home/margosa/spin/algebrafate/ARandomDirectory)</h6>";
@@ -752,9 +752,9 @@
 			echo "<h6>12: Directory - Delete (home/margosa/spin/algebrafate/ARandomDirectory)</h6>";
 			echo $directory->Delete("home/margosa/spin/algebrafate/ARandomDirectory") ? "Success" : "Directory not deleted or not exists";
 		
-			echo "<h6>13: Directory - RefreshRecentDirectorylistIndepth ()</h6>";
+			echo "<h6>13: Directory - RefreshRecentDirectoriesIndepth ()</h6>";
 			echo "<pre>";
-			print_r($directory->RefreshRecentDirectorylistIndepth());
+			print_r($directory->RefreshRecentDirectoriesIndepth());
 			echo "</pre>";
 
 			echo "<h6>14: File - LetFile (home/margosa/now/flower.php | home/margosa/now/leaf.php, Leaf.php)</h6>";
