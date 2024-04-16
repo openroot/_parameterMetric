@@ -101,21 +101,21 @@
 			return $this->slipPath;
 		}
 
-		public function CreateSlip() {}
+		public function Create() {}
 
-		public function CopySlip(string $newSlipPath) {}
+		public function Copy(string $newSlipPath) {}
 
-		public function MoveSlip(string $directoryPath) {}
+		public function Move(string $directoryPath) {}
 
-		public function TrashSlip() {}
+		public function Trash() {}
 
-		public function DeleteSlip() {}
+		public function Delete() {}
 
 		protected function FineSlipPath() {
 			return $this->directory->FineDirectoryPath($this->slipPath);
 		}
 
-		protected function SearchSlipAsExists() {
+		protected function SeeFairSlip() {
 			if (is_file($this->FineSlipPath())) {
 				return true;
 			}
@@ -136,7 +136,7 @@
 
 		public function ReadSlip() {
 			$result = array();
-			if ($this->SearchSlipAsExists()) {
+			if ($this->SeeFairSlip()) {
 				$result = file($this->FineSlipPath());
 			}
 			return $result;
