@@ -210,17 +210,20 @@
 			parent::__construct($this);
 
 			if (Joint::SeeAuthentic($joint)) {
-				$textSlip = new lidreason\TextSlip("home/margosa/data/json/sample2.json");
-				if (lidreason\Joint::SeeAuthentic($textSlip)) {
-					echo "<h6>1: TextSlip - Signature</h6>";
+				$jsonCodeTextSlip = new lidreason\JsonCodeTextSlip("home/margosa/data/json/sample2.json");
+				if (lidreason\Joint::SeeAuthentic($jsonCodeTextSlip)) {
+					echo "<h6>1: JsonCodeTextSlip - Signature</h6>";
 					echo "<pre>";
-					print_r($textSlip->Signature());
+					print_r($jsonCodeTextSlip->Signature());
 					echo "</pre>";
 
-					echo "<h6>2: TextSlip - ReadSlip</h6>";
+					echo "<h6>2: JsonCodeTextSlip - ReadSlip</h6>";
 					echo "<pre>";
-					print_r($textSlip->ReadSlip());
+					print_r($jsonCodeTextSlip->ReadSlip());
 					echo "</pre>";
+				}
+				else {
+					echo "JsonCodeTextSlip is not authenticated.";
 				}
 			}
 		}
