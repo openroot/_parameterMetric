@@ -166,11 +166,11 @@
 			return $directoryPath != "" ? "{$this->topDirectory}/{$directoryPath}" : $this->topDirectory;
 		}
 
-		public function IndirectDirectoryPath(string $DirectDirectoryPath) {
+		public function IndirectDirectoryPath(string $directDirectoryPath) {
 			// TODO: [NOT MISSION CRITICAL]
 			// TODO: Process only after verifying if passed value do contain topDirectory at start.
 			// TODO: Further rectify any false slashes.
-			return strpos($DirectDirectoryPath, $this->topDirectory) == 0 ? substr($DirectDirectoryPath, strlen($this->topDirectory) + 1) : false;
+			return strpos($directDirectoryPath, $this->topDirectory) == 0 ? substr($directDirectoryPath, strlen($this->topDirectory) + 1) : false;
 		}
 
 		public function ContainsDirectoryName(array $directoryPaths, string $directoryName) {
@@ -192,23 +192,23 @@
 		}
 
 		public function MakeDirectory(string $directoryPath) {
-			$DirectDirectoryPath = $this->DirectDirectoryPath($directoryPath);
-			if (!file_exists($DirectDirectoryPath)) {
-				return mkdir($DirectDirectoryPath);
+			$directDirectoryPath = $this->DirectDirectoryPath($directoryPath);
+			if (!file_exists($directDirectoryPath)) {
+				return mkdir($directDirectoryPath);
 			}
 			return false;
 		}
 
 		public function DeleteDirectory(string $directoryPath) {
 			$result = false;
-			$DirectDirectoryPath = $this->DirectDirectoryPath($directoryPath);
-			if (is_dir($DirectDirectoryPath)) {
-				$parentDirectoryPath = substr($DirectDirectoryPath, 0, strrpos($DirectDirectoryPath, "/"));
-				$directoryName = substr($DirectDirectoryPath, strrpos($DirectDirectoryPath, "/") + 1);
+			$directDirectoryPath = $this->DirectDirectoryPath($directoryPath);
+			if (is_dir($directDirectoryPath)) {
+				$parentDirectoryPath = substr($directDirectoryPath, 0, strrpos($directDirectoryPath, "/"));
+				$directoryName = substr($directDirectoryPath, strrpos($directDirectoryPath, "/") + 1);
 				if ($this->ContainsDirectoryName($this->RefreshRecentDirectorylistIndepth($this->IndirectDirectoryPath($parentDirectoryPath)), $directoryName)) {
 					$this->MakeDirectory($this->recyclebinDirectory);
 					if (is_dir($this->DirectDirectoryPath($this->recyclebinDirectory))) {
-						return rename($DirectDirectoryPath, "{$this->topDirectory}/{$this->recyclebinDirectory}/{$directoryName}" . $this->CurrentTimePlatformSafe());
+						return rename($directDirectoryPath, "{$this->topDirectory}/{$this->recyclebinDirectory}/{$directoryName}" . $this->CurrentTimePlatformSafe());
 					}
 				}
 			}
@@ -252,10 +252,10 @@
 			return $filteredList;
 		}
 
-		private function EnlistDirectoriesAndFilesOutdepth(string $DirectDirectoryPath) {
+		private function EnlistDirectoriesAndFilesOutdepth(string $directDirectoryPath) {
 			$directoriesandfiles = array();
-			if (!($DirectDirectoryPath == "." || $DirectDirectoryPath == "..") && is_dir($DirectDirectoryPath)) {
-				foreach(scandir($DirectDirectoryPath) as $index => $value) {
+			if (!($directDirectoryPath == "." || $directDirectoryPath == "..") && is_dir($directDirectoryPath)) {
+				foreach(scandir($directDirectoryPath) as $index => $value) {
 					if (!($value == "." || $value == "..")) {
 						array_push($directoriesandfiles, $value);
 					}
@@ -266,26 +266,26 @@
 
 		private function YieldCopyDirectory(string $directoryPath, string $locationPath, string $copyType) {
 			$result = false;
-			$DirectDirectoryPath = $this->DirectDirectoryPath($directoryPath);
-			if (is_dir($DirectDirectoryPath)) {
+			$directDirectoryPath = $this->DirectDirectoryPath($directoryPath);
+			if (is_dir($directDirectoryPath)) {
 				$this->MakeDirectory($locationPath);
 				$fineLocationPath = $this->DirectDirectoryPath($locationPath);
 				if (is_dir($fineLocationPath)) {
-					$result = $this->CopyDirectoryIndepth($DirectDirectoryPath, $fineLocationPath, $copyType);
+					$result = $this->CopyDirectoryIndepth($directDirectoryPath, $fineLocationPath, $copyType);
 				}
 			}
 			return $result;
 		}
 
-		private function CopyDirectoryIndepth(string $DirectDirectoryPath, string $fineLocationPath, string $copyType) {
+		private function CopyDirectoryIndepth(string $directDirectoryPath, string $fineLocationPath, string $copyType) {
 			$result = true;
-			$directoriesandfiles = $this->EnlistDirectoriesAndFilesOutdepth($DirectDirectoryPath);
+			$directoriesandfiles = $this->EnlistDirectoriesAndFilesOutdepth($directDirectoryPath);
 			if (count($directoriesandfiles) == 0) {
 				return;
 			}
 			else {
 				foreach ($directoriesandfiles as $index => $value) {
-					$copySource = "{$DirectDirectoryPath}/{$value}";
+					$copySource = "{$directDirectoryPath}/{$value}";
 					$copyTo = "{$fineLocationPath}/{$value}";
 					switch ($copyType) {
 						case "leaveindepth":
@@ -297,7 +297,7 @@
 									$result = copy($copySource, $copyTo);
 								}
 							}
-							$result = $this->CopyDirectoryIndepth("{$DirectDirectoryPath}/{$value}", "{$fineLocationPath}/{$value}", $copyType);
+							$result = $this->CopyDirectoryIndepth("{$directDirectoryPath}/{$value}", "{$fineLocationPath}/{$value}", $copyType);
 							break;
 						case "mergeindepth":
 							if (is_file($copySource)) {
@@ -306,7 +306,7 @@
 							else if (is_dir($copySource) && !file_exists($copyTo)) {
 								$result = mkdir($copyTo);
 							}
-							$result = $this->CopyDirectoryIndepth("{$DirectDirectoryPath}/{$value}", "{$fineLocationPath}/{$value}", $copyType);
+							$result = $this->CopyDirectoryIndepth("{$directDirectoryPath}/{$value}", "{$fineLocationPath}/{$value}", $copyType);
 							break;
 						case "leaveoutdepth":
 							if (!file_exists($copyTo)) {
@@ -375,10 +375,10 @@
 
 		public function EnlistFilelist(string $directoryPath) {
 			$fileList = array();
-			$DirectDirectoryPath = $this->directory->DirectDirectoryPath($directoryPath);
-			if (is_dir($DirectDirectoryPath)) {
-				foreach (scandir($DirectDirectoryPath) as $index => $value) {
-					if (!($value == "." || $value == "..") && is_file("{$DirectDirectoryPath}/{$value}")) {
+			$directDirectoryPath = $this->directory->DirectDirectoryPath($directoryPath);
+			if (is_dir($directDirectoryPath)) {
+				foreach (scandir($directDirectoryPath) as $index => $value) {
+					if (!($value == "." || $value == "..") && is_file("{$directDirectoryPath}/{$value}")) {
 						array_push($fileList, $value);
 					}
 				}
