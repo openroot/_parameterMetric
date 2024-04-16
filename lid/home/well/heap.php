@@ -30,16 +30,16 @@
 			$this->file = new File();
 			if (lidjoint\Joint::SeeAuthentic($this->directory) && lidjoint\Joint::SeeAuthentic($this->file) && $this->RequireonceDirectory("home/well")) {
 				$this->pull = new lidpull\Pull();
-				if ($this->pull) {
+				if (lidjoint\Joint::SeeAuthentic($this->pull)) {
 					$this->push = new lidpush\Push();
-					if ($this->push) {
+					if (lidjoint\Joint::SeeAuthentic($this->push)) {
 						$this->street = $this->push->ReadStreet();
 						$this->lamp = new Lamp();
 						$this->wide = new Wide();
 						$this->notice = new Notice();
 						$this->run = new Run();
 						$this->dive = new Dive();
-						if (lidjoint\Joint::SeeAuthentic($this->street) && lidjoint\Joint::SeeAuthentic($this->lamp) && lidjoint\Joint::SeeAuthentic($this->wide) && lidjoint\Joint::SeeAuthentic($this->notice) && lidjoint\Joint::SeeAuthentic($this->run) && lidjoint\Joint::SeeAuthentic($this->dive)) {
+						if (lidjoint\Joint::SeeAuthentic($this->lamp) && lidjoint\Joint::SeeAuthentic($this->wide) && lidjoint\Joint::SeeAuthentic($this->notice) && lidjoint\Joint::SeeAuthentic($this->run) && lidjoint\Joint::SeeAuthentic($this->dive)) {
 							$success = true;
 						}
 					}

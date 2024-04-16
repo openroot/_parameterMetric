@@ -4,3 +4,4 @@
 4. ABcD()							?[public|protected|private]		+[public|protected|private]		*{unique}
 5. See(ABcD)						?[public|protected]				+[protected|private]]			*{search}
 6. Direct(ABcD)						?[public|protected|private]		+[protected|private]			*{restore}
+7. Sip(ABcD)						?[public]						+[public|protected|private]		*{array}
