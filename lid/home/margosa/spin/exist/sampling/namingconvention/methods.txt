@@ -1,3 +1,3 @@
 1. Read(ABcD)						?[public|protected]				+[private]						*{return}
 2. Cap(ABcD)						?[private]						+[private]						*{fill}
-3. Trip(ABcD)						?[protected|private]			+[protected|private]			*{validate & fill}
+3. Trip(ABcD)						?[protected|private]			+[protected|private]			*{jam}
