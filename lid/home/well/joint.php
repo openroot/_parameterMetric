@@ -111,12 +111,12 @@
 
 		public function Delete() {}
 
-		protected function FineSlipPath() {
+		protected function DirectSlipPath() {
 			return $this->directory->FineDirectoryPath($this->slipPath);
 		}
 
 		protected function SeeFairSlip() {
-			if (is_file($this->FineSlipPath())) {
+			if (is_file($this->DirectSlipPath())) {
 				return true;
 			}
 			return false;
@@ -137,16 +137,16 @@
 		public function ReadSlip() {
 			$result = array();
 			if ($this->SeeFairSlip()) {
-				$result = file($this->FineSlipPath());
+				$result = file($this->DirectSlipPath());
 			}
 			return $result;
 		}
 
-		public function WriteSlip(string $filePath, array $lines) {}
+		public function Write(string $filePath, array $lines) {}
 
-		public function AppendSlip(string $filePath, array $lines) {}
+		public function Append(string $filePath, array $lines) {}
 
-		public function OverwriteSlip(string $filePath, array $lines) {}
+		public function Overwrite(string $filePath, array $lines) {}
 	}
 
 	class GraphicSlip extends Slip {
