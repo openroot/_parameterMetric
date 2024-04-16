@@ -84,7 +84,7 @@
 			}
 			foreach ($fileFullPaths as $index => $value) {
 				$fileFullPath = $this->directory->ReadTopDirectory() . "/{$directoryPath}/{$value}";
-				if (!$this->SearchScriptAsCurrentscript($fileFullPath)) {
+				if (!$this->SeeRunningScript($fileFullPath)) {
 					array_push($filteredFileFullPaths, $fileFullPath);
 				}
 			}
@@ -121,7 +121,7 @@
 
 		public function RequireonceFile(string $directoryPath, string $fileName) {
 			$fullFilePath = $this->directory->ReadTopDirectory() . "/{$directoryPath}/{$fileName}";
-			if (!$this->SearchScriptAsCurrentscript($fullFilePath)) {
+			if (!$this->SeeRunningScript($fullFilePath)) {
 				if (is_file($fullFilePath)) {
 					return require_once($fullFilePath);
 				}
@@ -129,7 +129,7 @@
 			return false;
 		}
 
-		public function SearchScriptAsCurrentscript(string $fileName) {
+		public function SeeRunningScript(string $fileName) {
 			$presentScriptFile = str_replace("\\", "/", __FILE__);
 			$fileName = $fileName[0] == "." ? substr($fileName, 1) : $fileName;
 			return str_contains($presentScriptFile, $fileName) ? true : false;
@@ -716,8 +716,8 @@
 			echo "<h6>2: Platform - RequireonceFile (home/well, water.php)</h6>";
 			echo $platform->RequireonceFile("home/well", "water.php") ? "Success" : "Unsuccess";
 
-			echo "<h6>3: Platform - SearchScriptAsCurrentscript (well/heap.php)</h6>";
-			echo $platform->SearchScriptAsCurrentscript("well/heap.php") ? "Success" : "Unsuccess";
+			echo "<h6>3: Platform - SeeRunningScript (well/heap.php)</h6>";
+			echo $platform->SeeRunningScript("well/heap.php") ? "Success" : "Unsuccess";
 
 			echo "<h6>4: Directory - ReadTopDirectory</h6>";
 			echo $directory->ReadTopDirectory();
