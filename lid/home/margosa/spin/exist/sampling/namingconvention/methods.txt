@@ -1,3 +1,5 @@
 1. Read(ABcD)						?[public|protected]				+[private]						*{return}
 2. Cap(ABcD)						?[private]						+[private]						*{fill}
 3. Trip(ABcD)						?[protected|private]			+[protected|private]			*{jam}
+4. ABcD()							?[public|protected|private]		+[public|protected|private]		*{unique}
+5. See(ABcD)						?[public|protected]				+[protected|private]]			*{search}

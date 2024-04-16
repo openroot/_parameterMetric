@@ -29,12 +29,12 @@
 					}
 				}
 				else if (is_resource($material)) {
-					if (isset($material->baseId) && $material->baseId != -1) {
+					// TODO: [NOT MISSION CRITICAL]
+					// TODO: Unblock following when implemented & verified (first) in this project (as is_resource()).
+					//Base::$resourceBaseIds[$material->baseId] = get_class($material);
+					/*if (isset($material->baseId) && $material->baseId != -1) {
 						$material->baseId = ++Base::$resourceBaseIdPointer;
-						// TODO: [NOT MISSION CRITICAL]
-						// TODO: Unblock following when implemented & verified (first) in this project (as is_resource()).
-						//Base::$resourceBaseIds[$material->baseId] = get_class($material);
-					}
+					}*/
 				}
 			}
 		}
@@ -69,11 +69,13 @@
 					}
 				}
 				else if (is_resource($material)) {
-					foreach (Base::$resourceBaseIds as $index => $value) {
+					// TODO: [NOT MISSION CRITICAL]
+					// TODO: Unblock following when implemented & verified (first) in this project (as is_resource()).
+					/*foreach (Base::$resourceBaseIds as $index => $value) {
 						if ($index === $material->ReadBaseId()) {
 							return true;
 						}
-					}
+					}*/
 				}
 				return false;
 			}
