@@ -103,7 +103,7 @@
 			return $filteredFileFullPathsCount == $successCount ? true : false;
 		}
 
-		public function RequireonceDirectories(array $directoryPaths) {
+		public function SipRequireonceDirectory(array $directoryPaths) {
 			$result = true;
 			if (count($directoryPaths) > 0) {
 				foreach($directoryPaths as $index => $value) {
@@ -663,7 +663,7 @@
 		public function LensPhpCodeClassStructures() {
 			$result = array();
 			$joint = new lidjoint\Joint(null);
-			if ($this->platform->RequireonceDirectories($this->brick->ReadFlats())) {
+			if ($this->platform->SipRequireonceDirectory($this->brick->ReadFlats())) {
 				$phpClasses = $this->LensPhpCodeClasses();
 				foreach ($phpClasses as $index1 => $value1) {
 					$classStructures = array();
