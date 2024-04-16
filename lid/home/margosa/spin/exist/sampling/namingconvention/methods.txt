@@ -5,4 +5,5 @@
 5. See(ABcD)						?[public|protected]				+[protected|private]]			*{search}
 6. Direct(ABcD)						?[public|protected|private]		+[protected|private]			*{restore}
 7. Sip(ABcD)						?[public]						+[public|protected|private]		*{array}
-8. 
+8. Indirect(ABcD)
+9. Collection(ABcD)

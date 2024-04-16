@@ -112,7 +112,7 @@
 		public function Delete() {}
 
 		protected function DirectSlipPath() {
-			return $this->directory->FineDirectoryPath($this->slipPath);
+			return $this->directory->DirectDirectoryPath($this->slipPath);
 		}
 
 		protected function SeeFairSlip() {
