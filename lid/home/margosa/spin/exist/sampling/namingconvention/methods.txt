@@ -1,12 +1,12 @@
 n.	Method(Name)			?return[type(s)]				+member[type(s)]				*function{this}		function{explanation}		<product>
 ------------------------------------------------------------------------------------------------------------------------------------------------------
-1.	Read(ABcD)				?[public|protected]				+[private]						*{return}
-2.	Cap(ABcD)				?[private]						+[private]						*{fill}
-3.	Trip(ABcD)				?[protected|private]			+[protected|private]			*{jam}				jam{Local Installs}			<each>
-4.	ABcD(ABcD)				?[public|protected|private]		+[public|protected|private]		*{unique}
-5.	See(ABcD)				?[public|protected]				+[protected|private]]			*{search}
+1.	Read(ABcD)				?[public|protected]				+[private]						*{return}			return{Hidden Theory}		<repeat>
+2.	Cap(ABcD)				?[private]						+[private]						*{fill}				fill{Information Bit}		<identity>
+3.	Trip(ABcD)				?[protected|private]			+[protected|private]			*{jam}				jam{Local Installing}		<each>
+4.	ABcD(ABcD)				?[public|protected|private]		+[public|protected|private]		*{unique}			unique{}
+5.	See(ABcD)				?[public|protected]				+[protected|private]]			*{search}			search{}
 6.	Direct(ABcD)			?[public|protected|private]		+[protected|private]			*{restore}			restore{Data Convert}		<harddisk>
-7.	Sip(ABcD)				?[public]						+[public|protected|private]		*{array}
+7.	Sip(ABcD)				?[public]						+[public|protected|private]		*{array}			array{}
 8.	Indirect(ABcD)			?[public|protected|private]		+[public|private]				*{backup}			backup{Clean Version}		<busy>
 9.	Collect(ABcD)			?[public|private]				+[protected|private]			*{access}			access{Platform Free}		<append>
 10.	Let(ABcD)				?[public|protected]				+[public|protected|private]		*{sense}			sense{Valid Business}		<else-if>
