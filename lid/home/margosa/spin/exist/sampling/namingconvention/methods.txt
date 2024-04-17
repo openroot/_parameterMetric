@@ -1,10 +1,12 @@
-1. Read(ABcD)						?[public|protected]				+[private]						*{return}
-2. Cap(ABcD)						?[private]						+[private]						*{fill}
-3. Trip(ABcD)						?[protected|private]			+[protected|private]			*{jam}
-4. ABcD(ABcD)						?[public|protected|private]		+[public|protected|private]		*{unique}
-5. See(ABcD)						?[public|protected]				+[protected|private]]			*{search}
-6. Direct(ABcD)						?[public|protected|private]		+[protected|private]			*{restore}
-7. Sip(ABcD)						?[public]						+[public|protected|private]		*{array}
-8. Indirect(ABcD)
-9. Collect(ABcD)
-10. Let(ABcD)
+n.	Method(Name)			?return[type(s)]				+member[type(s)]				*function{this}		function{explanation}
+-------------------------------------------------------------------------------------------------------------------------------------
+1.	Read(ABcD)				?[public|protected]				+[private]						*{return}
+2.	Cap(ABcD)				?[private]						+[private]						*{fill}
+3.	Trip(ABcD)				?[protected|private]			+[protected|private]			*{jam}				jam{Local Installs}
+4.	ABcD(ABcD)				?[public|protected|private]		+[public|protected|private]		*{unique}
+5.	See(ABcD)				?[public|protected]				+[protected|private]]			*{search}
+6.	Direct(ABcD)			?[public|protected|private]		+[protected|private]			*{restore}
+7.	Sip(ABcD)				?[public]						+[public|protected|private]		*{array}
+8.	Indirect(ABcD)			?[public|protected|private]		+[public|private]				*{backup}
+9.	Collect(ABcD)
+10.	Let(ABcD)
