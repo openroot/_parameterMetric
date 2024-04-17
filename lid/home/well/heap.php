@@ -564,7 +564,7 @@
 			$directoryPaths = $this->platform->ReadDirectory()->RefreshRecentDirectoriesIndepth();
 			if ($onlyPrimaryDirectory) {
 				foreach ($brickFlats as $index => $value) {
-					if ($this->SearchArrayAsStringOutdepth($directoryPaths, $value)) {
+					if ($this->SeeStringInArrayRow($directoryPaths, $value)) {
 						array_push($result1, $value);
 					}
 					else {
@@ -574,7 +574,7 @@
 			}
 			else {
 				foreach ($directoryPaths as $index => $value) {
-					if ($this->SearchArrayAsStringOutdepth($brickFlats, $value)) {
+					if ($this->SeeStringInArrayRow($brickFlats, $value)) {
 						array_push($result1, $value);
 					}
 					else {
@@ -680,10 +680,10 @@
 			return $result;
 		}
 
-		private function SearchArrayAsStringOutdepth(array $stringArray, string $searchString) {
-			if (count($stringArray) > 0) {
-				foreach ($stringArray as $index => $value) {
-					if ($value === $searchString) {
+		private function SeeStringInArrayRow(array $arrayRow, string $search) {
+			if (count($arrayRow) > 0) {
+				foreach ($arrayRow as $index => $value) {
+					if ($value === $search) {
 						return true;
 					}
 				}
