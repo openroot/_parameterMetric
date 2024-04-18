@@ -10,5 +10,5 @@ n.	Method(Name)			?return[type(s)]				+member[type(s)]				*function{this}		funct
 8.	Indirect(ABcD)			?[public|protected|private]		+[public|private]				*{backup}			backup{Clean Version}		<busy>		<appeal>	|Rest|				.a_aam.ma
 9.	Collect(ABcD)			?[public|private]				+[protected|private]			*{access}			access{Platform Free}		<append>	<relate>	|Commit|			.the_ai.ma
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-10.	Let(ABcD)				?[public|protected]				+[public|protected|private]		*{sense}			sense{Valid Business}		<else-if>	<reason>	|Calculate|			.snaan_le.ma
+10.	Let(ABcD)				?[public|protected]				+[public|protected|private]		*{sense}			sense{Valid Business}		<else-if>	<reason>	|Calculate|			.snaan_leh.ma
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
