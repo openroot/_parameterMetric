@@ -168,6 +168,7 @@
 		}
 
 		public function DirectDirectoryPath(string $directoryPath) {
+			$directoryPath = trim($directoryPath, "/");
 			if (empty($directoryPath)) {
 				return $this->topDirectory;
 			}
@@ -180,10 +181,16 @@
 		}
 
 		public function IndirectDirectoryPath(string $directDirectoryPath) {
-			// TODO: [NOT MISSION CRITICAL]
-			// TODO: Process only after verifying if passed value do contain topDirectory at start.
-			// TODO: Further rectify any false slashes.
-			return strpos($directDirectoryPath, $this->topDirectory) == 0 ? substr($directDirectoryPath, strlen($this->topDirectory) + 1) : false;
+			$directDirectoryPath = trim($directDirectoryPath, "/");
+			if ($directDirectoryPath === $this->topDirectory) {
+				return "";
+			}
+			else if (!str_starts_with($directDirectoryPath, $this->topDirectory)) {
+				return $directDirectoryPath;
+			}
+			else {
+				return trim(ltrim($directDirectoryPath, $this->topDirectory), "/");
+			}
 		}
 
 		public function LetDirectory(array $directoryPaths, string $directoryName) {
