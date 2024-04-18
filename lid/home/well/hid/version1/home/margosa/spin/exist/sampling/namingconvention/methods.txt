@@ -1,13 +1,13 @@
-n.	Method(Name)			?return[type(s)]				+member[type(s)]				*function{this}		function{explanation}		<product>	<margosa>
--------------------------------------------------------------------------------------------------------------------------------------------------------------------
-1.	Read(ABcD)				?[public|protected]				+[private]						*{return}			return{Hidden Theory}		<repeat>	<recognize>
-2.	Cap(ABcD)				?[private]						+[private]						*{fill}				fill{Information Bit}		<identity>	<eat>
-3.	Trip(ABcD)				?[protected|private]			+[protected|private]			*{jam}				jam{Local Installing}		<each>		<vehicle>
-4.	ABcD(ABcD)				?[public|protected|private]		+[public|protected|private]		*{unique}			unique{Select Corner}		<seconds>	<name>
-5.	See(ABcD)				?[public|protected]				+[protected|private]]			*{search}			search{Panorama Hist}		<pictures>	<rent>
-6.	Direct(ABcD)			?[public|protected|private]		+[protected|private]			*{restore}			restore{Data Convert}		<harddisk>	<likes>
-7.	Sip(ABcD)				?[public]						+[public|protected|private]		*{array}			array{Numeric Orders}		<note>		<hate>
-8.	Indirect(ABcD)			?[public|protected|private]		+[public|private]				*{backup}			backup{Clean Version}		<busy>		<appeal>
-9.	Collect(ABcD)			?[public|private]				+[protected|private]			*{access}			access{Platform Free}		<append>	<relate>
-10.	Let(ABcD)				?[public|protected]				+[public|protected|private]		*{sense}			sense{Valid Business}		<else-if>	<reason>
--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+n.	Method(Name)			?return[type(s)]				+member[type(s)]				*function{this}		function{explanation}		<product>	<margosa>	|Build<Base>|
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+1.	Read(ABcD)				?[public|protected]				+[private]						*{return}			return{Hidden Theory}		<repeat>	<recognize>	|Reference|
+2.	Cap(ABcD)				?[private]						+[private]						*{fill}				fill{Information Bit}		<identity>	<eat>		|Shape|
+3.	Trip(ABcD)				?[protected|private]			+[protected|private]			*{jam}				jam{Local Installing}		<each>		<vehicle>	|Algorithm|
+4.	ABcD(ABcD)				?[public|protected|private]		+[public|protected|private]		*{unique}			unique{Select Corner}		<seconds>	<name>		|Pair|
+5.	See(ABcD)				?[public|protected]				+[protected|private]]			*{search}			search{Panorama Hist}		<pictures>	<rent>		|Visual|
+6.	Direct(ABcD)			?[public|protected|private]		+[protected|private]			*{restore}			restore{Data Convert}		<harddisk>	<likes>		|Transform|
+7.	Sip(ABcD)				?[public]						+[public|protected|private]		*{array}			array{Numeric Orders}		<note>		<hate>		|Instrument|
+8.	Indirect(ABcD)			?[public|protected|private]		+[public|private]				*{backup}			backup{Clean Version}		<busy>		<appeal>	|Rest|
+9.	Collect(ABcD)			?[public|private]				+[protected|private]			*{access}			access{Platform Free}		<append>	<relate>	|Commit|
+10.	Let(ABcD)				?[public|protected]				+[public|protected|private]		*{sense}			sense{Valid Business}		<else-if>	<reason>	|Calculate|
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
