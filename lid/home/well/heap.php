@@ -168,10 +168,15 @@
 		}
 
 		public function DirectDirectoryPath(string $directoryPath) {
-			// TODO: [NOT MISSION CRITICAL]
-			// TODO: Process only after verifying if passed value do not already contain topDirectory at start.
-			// TODO: Further rectify any false slashes.
-			return $directoryPath != "" ? "{$this->topDirectory}/{$directoryPath}" : $this->topDirectory;
+			if (empty($directoryPath)) {
+				return $this->topDirectory;
+			}
+			else if (str_starts_with($directoryPath, $this->topDirectory)) {
+				return $directoryPath;
+			}
+			else {
+				return "{$this->topDirectory}/{$directoryPath}";
+			}
 		}
 
 		public function IndirectDirectoryPath(string $directDirectoryPath) {
