@@ -5,7 +5,7 @@ n.	Method(Name)			?return[type(s)]				+member[type(s)]				*function{this}		funct
 3.	Trip(ABcD)				?[protected|private]			+[protected|private]			*{jam}				jam{Local Installing}		<each>		<vehicle>	|Algorithm|			.the_id.ma
 4.	ABcD(ABcD)				?[public|protected|private]		+[public|protected|private]		*{unique}			unique{Select Corner}		<seconds>	<name>		|Pair|				.the_themoney.ma
 5.	See(ABcD)				?[public|protected]				+[protected|private]]			*{search}			search{Panorama Hist}		<pictures>	<rent>		|Visual|			.mas_shi.ma
-6.	Direct(ABcD)			?[public|protected|private]		+[protected|private]			*{restore}			restore{Data Convert}		<harddisk>	<likes>		|Transform|			.pie_shi.ma
+6.	Direct(ABcD)			?[public|protected|private]		+[protected|private]			*{restore}			restore{Data Convert}		<harddisk>	<likes>		|Transform|			.pi_easy.ma
 7.	Sip(ABcD)				?[public]						+[public|protected|private]		*{array}			array{Numeric Orders}		<note>		<hate>		|Instrument|		.the_core.ma
 8.	Indirect(ABcD)			?[public|protected|private]		+[public|private]				*{backup}			backup{Clean Version}		<busy>		<appeal>	|Rest|				.a_aam.ma
 9.	Collect(ABcD)			?[public|private]				+[protected|private]			*{access}			access{Platform Free}		<append>	<relate>	|Commit|			.the_ai.ma
