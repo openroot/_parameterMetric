@@ -91,7 +91,7 @@
 				return true;
 			}
 			foreach ($fileFullPaths as $index => $value) {
-				$fileFullPath = $this->directory->ReadTopDirectory() . "/{$directoryPath}/{$value}";
+				$fileFullPath = $this->directory->ReadPathTop() . "/{$directoryPath}/{$value}";
 				if (!$this->SeeRunningScript($fileFullPath)) {
 					array_push($filteredFileFullPaths, $fileFullPath);
 				}
@@ -128,7 +128,7 @@
 		}
 
 		public function RequireonceFile(string $directoryPath, string $fileName) {
-			$fullFilePath = $this->directory->ReadTopDirectory() . "/{$directoryPath}/{$fileName}";
+			$fullFilePath = $this->directory->ReadPathTop() . "/{$directoryPath}/{$fileName}";
 			if (!$this->SeeRunningScript($fullFilePath)) {
 				if (is_file($fullFilePath)) {
 					return require_once($fullFilePath);
@@ -146,76 +146,90 @@
 
 	/* eat */
 	class Directory extends lidjoint\Joint {
-		protected string $topDirectory;
-		protected array $recentDirectories;
-		private string $defaultTopDirectory;
-		private string $recyclebinDirectory;
+		protected array $pathsRecent;
+		protected string $pathTop;
+		private string $pathTopDefault;
+		private string $pathRecyclebin;
 
-		public function __construct(?string $topDirectory = null) {
-			$this->recentDirectories = array();
-			$this->defaultTopDirectory = "./lid";
-			$this->recyclebinDirectory = "home/margosa/spin/algebrafate/recyclebin";
-			$this->topDirectory = empty($topDirectory) ? $this->defaultTopDirectory : $topDirectory;
+		public function __construct(?string $pathTop = null) {
+			$this->pathsRecent = array();
+			$this->pathTopDefault = "./lid";
+			$this->pathRecyclebin = "home/margosa/spin/algebrafate/recyclebin";
+			$this->pathTop = empty($pathTop) ? $this->pathTopDefault : $pathTop;
 			parent::__construct($this);
 		}
 
-		public function ReadTopDirectory() {
-			return $this->topDirectory;
+		public function ReadPathTop() {
+			return $this->pathTop;
 		}
 
-		public function ReadRecentDirectories() {
-			return $this->recentDirectories;
+		public function ReadPathsRecent() {
+			return $this->pathsRecent;
 		}
 
-		public function DirectDirectoryPath(string $directoryPath) {
-			$directoryPath = trim($directoryPath, "/");
-			if (empty($directoryPath)) {
-				return $this->topDirectory;
+		public function DirectPath(string $path) {
+			$path = trim($path, "/");
+			if (empty($path)) {
+				return $this->pathTop;
 			}
-			else if (str_starts_with($directoryPath, $this->topDirectory)) {
-				return $directoryPath;
+			else if (str_starts_with($path, $this->pathTop)) {
+				return $path;
 			}
 			else {
-				return "{$this->topDirectory}/{$directoryPath}";
+				return "{$this->pathTop}/{$path}";
 			}
 		}
 
-		public function IndirectDirectoryPath(string $directDirectoryPath) {
-			$directDirectoryPath = trim($directDirectoryPath, "/");
-			if ($directDirectoryPath === $this->topDirectory) {
+		public function IndirectPath(string $directPath) {
+			$directPath = trim($directPath, "/");
+			if ($directPath === $this->pathTop) {
 				return "";
 			}
-			else if (!str_starts_with($directDirectoryPath, $this->topDirectory)) {
-				return $directDirectoryPath;
+			else if (!str_starts_with($directPath, $this->pathTop)) {
+				return $directPath;
 			}
 			else {
-				return trim(ltrim($directDirectoryPath, $this->topDirectory), "/");
+				return trim(ltrim($directPath, $this->pathTop), "/");
 			}
 		}
 
-		public function LetDirectory(array $directoryPaths, string $directoryName) {
+		public function LetExisting($path) {
+			$directPath = $this->DirectPath($path);
+			return file_exists($directPath) && is_dir($directPath) ? true : false;
+		}
+
+		public function LetDirectory(array $paths, string $name) {
 			$result = false;
-			foreach ($directoryPaths as $index => $value) {
-				if (strcmp(substr($value, strrpos($value, "/") + 1), $directoryName) == 0) {
-					if (is_dir($this->DirectDirectoryPath($value))) {
-						$result = true;
-					}
+			$name = trim($name, "/");
+			foreach ($paths as $value) {
+				if (str_ends_with($value, "/{$name}") && $this->LetExisting($value)) {
+					$result = true;
+					break;
 				}
 			}
 			return $result;
 		}
 
+		public function SeePathParent(string $path) {
+			return $this->LetExisting($path) ? dirname($this->DirectPath($path)) : "";
+		}
+
+		public function SeeName($path) {
+			$directPath = $this->DirectPath($path);
+			return $this->LetExisting($path) ? substr($directPath, strrpos($directPath, "/") + 1) : "";
+		}
+
 		public function RefreshRecentDirectoriesIndepth(?string $directoryPath = null) {
-			array_splice($this->recentDirectories, 0, count($this->recentDirectories));
+			array_splice($this->pathsRecent, 0, count($this->pathsRecent));
 			$this->CollectRecentDirectoriesIndepth(empty($directoryPath) ? "" : $directoryPath);
-			return $this->recentDirectories;
+			return $this->pathsRecent;
 		}
 
 		public function CollectRecentDirectoriesIndepth(string $directoryPath) {
-			foreach ($this->CollectDirectoriesOutdepth($this->DirectDirectoryPath($directoryPath)) as $index => $value) {
+			foreach ($this->CollectDirectoriesOutdepth($this->DirectPath($directoryPath)) as $index => $value) {
 				$foundDirectoryPath = "{$directoryPath}/{$value}";
 				$foundDirectoryPath = strpos($foundDirectoryPath, "/") == 0 ? substr($foundDirectoryPath, 1) : $foundDirectoryPath;
-				array_push($this->recentDirectories, $foundDirectoryPath);
+				array_push($this->pathsRecent, $foundDirectoryPath);
 				$this->CollectRecentDirectoriesIndepth($foundDirectoryPath);
 			}
 		}
@@ -244,24 +258,36 @@
 			return $directoriesandfiles;
 		}
 
-		public function Make(string $directoryPath) {
-			$directDirectoryPath = $this->DirectDirectoryPath($directoryPath);
-			if (!file_exists($directDirectoryPath)) {
-				return mkdir($directDirectoryPath);
+		public function Make(string $path) {
+			if (!$this->LetExisting($path)) {
+				return mkdir($this->DirectPath($path));
 			}
 			return false;
 		}
 
-		public function Delete(string $directoryPath) {
+		public function Move(string $path, string $pathLocation, ?string $name = null) {
+			if ($this->LetExisting($path) && $this->LetExisting($pathLocation)) {
+				if (empty($name)) {
+					$name = $this->SeeName($path);
+				}
+				if (!empty($name)) {
+					return rename($this->DirectPath($path), $this->DirectPath($pathLocation) . "/{$name}");
+				}
+			}
+			return false;
+		}
+
+		public function Delete(string $path) {
 			$result = false;
-			$directDirectoryPath = $this->DirectDirectoryPath($directoryPath);
-			if (is_dir($directDirectoryPath)) {
-				$parentDirectoryPath = substr($directDirectoryPath, 0, strrpos($directDirectoryPath, "/"));
-				$directoryName = substr($directDirectoryPath, strrpos($directDirectoryPath, "/") + 1);
-				if ($this->LetDirectory($this->RefreshRecentDirectoriesIndepth($this->IndirectDirectoryPath($parentDirectoryPath)), $directoryName)) {
-					$this->Make($this->recyclebinDirectory);
-					if (is_dir($this->DirectDirectoryPath($this->recyclebinDirectory))) {
-						return rename($directDirectoryPath, "{$this->topDirectory}/{$this->recyclebinDirectory}/{$directoryName}" . $this->CurrentTimePlatformSafe());
+			if ($this->LetExisting($path)) {
+				$pathParent = $this->SeePathParent($path);
+				$name = $this->SeeName($path);
+				if (!empty($pathParent) && !empty($name)) {
+					if ($this->LetDirectory($this->RefreshRecentDirectoriesIndepth($this->IndirectPath($pathParent)), $name)) {
+						$this->Make($this->pathRecyclebin);
+						if ($this->LetExisting($this->pathRecyclebin)) {
+							return $this->Move($path, $this->pathRecyclebin, "{$name}" . $this->CurrentTimePlatformSafe());
+						}
 					}
 				}
 			}
@@ -286,10 +312,10 @@
 
 		private function YieldCopy(string $directoryPath, string $locationPath, string $copyType) {
 			$result = false;
-			$directDirectoryPath = $this->DirectDirectoryPath($directoryPath);
+			$directDirectoryPath = $this->DirectPath($directoryPath);
 			if (is_dir($directDirectoryPath)) {
 				$this->Make($locationPath);
-				$fineLocationPath = $this->DirectDirectoryPath($locationPath);
+				$fineLocationPath = $this->DirectPath($locationPath);
 				if (is_dir($fineLocationPath)) {
 					$result = $this->Copy($directDirectoryPath, $fineLocationPath, $copyType);
 				}
@@ -385,7 +411,7 @@
 			$result = false;
 			foreach ($filePaths as $index => $value) {
 				if ($this->SeeNameInPath($value, $fileName)) {
-					if (is_file($this->directory->DirectDirectoryPath($value))) {
+					if (is_file($this->directory->DirectPath($value))) {
 						$result = true;
 					}
 				}
@@ -395,7 +421,7 @@
 
 		public function CollectNamesInPath(string $directoryPath) {
 			$fileList = array();
-			$directDirectoryPath = $this->directory->DirectDirectoryPath($directoryPath);
+			$directDirectoryPath = $this->directory->DirectPath($directoryPath);
 			if (is_dir($directDirectoryPath)) {
 				foreach (scandir($directDirectoryPath) as $index => $value) {
 					if (!($value == "." || $value == "..") && is_file("{$directDirectoryPath}/{$value}")) {
@@ -735,21 +761,21 @@
 			echo "<h6>3: Platform - SeeRunningScript (well/heap.php)</h6>";
 			echo $platform->SeeRunningScript("well/heap.php") ? "Success" : "Unsuccess";
 
-			echo "<h6>4: Directory - ReadTopDirectory</h6>";
-			echo $directory->ReadTopDirectory();
+			echo "<h6>4: Directory - ReadPathTop</h6>";
+			echo $directory->ReadPathTop();
 
-			echo "<h6>5: Directory - DirectDirectoryPath (home/margosa/now)</h6>";
-			echo $directory->DirectDirectoryPath("home/margosa/now");
+			echo "<h6>5: Directory - DirectPath (home/margosa/now)</h6>";
+			echo $directory->DirectPath("home/margosa/now");
 
-			echo "<h6>6: Directory - IndirectDirectoryPath (./lid/home/margosa/now)</h6>";
-			echo $directory->IndirectDirectoryPath("./lid/home/margosa/now");
+			echo "<h6>6: Directory - IndirectPath (./lid/home/margosa/now)</h6>";
+			echo $directory->IndirectPath("./lid/home/margosa/now");
 
-			echo "<h6>7: Directory - LetDirectory (home/margosa/now | home/margosa/spin, Spin)</h6>";
-			echo $directory->LetDirectory(array("home/margosa/now", "home/margosa/spin"), "Spin") ? "Success" : "Unsuccess";
+			echo "<h6>7: Directory - LetDirectory (home/margosa/now | home/margosa/spin, spin)</h6>";
+			echo $directory->LetDirectory(array("home/margosa/now", "home/margosa/spin"), "spin") ? "Success" : "Unsuccess";
 
-			echo "<h6>8: Directory - ReadRecentDirectories ()</h6>";
+			echo "<h6>8: Directory - ReadPathsRecent ()</h6>";
 			echo "<pre>";
-			print_r($directory->ReadRecentDirectories());
+			print_r($directory->ReadPathsRecent());
 			echo "</pre>";
 			
 			echo "<h6>9: Directory - RefreshRecentDirectoriesIndepth (home/margosa)</h6>";
@@ -757,9 +783,9 @@
 			print_r($directory->RefreshRecentDirectoriesIndepth("home/margosa"));
 			echo "</pre>";
 
-			echo "<h6>10: Directory - ReadRecentDirectories ()</h6>";
+			echo "<h6>10: Directory - ReadPathsRecent ()</h6>";
 			echo "<pre>";
-			print_r($directory->ReadRecentDirectories());
+			print_r($directory->ReadPathsRecent());
 			echo "</pre>";
 
 			echo "<h6>11: Directory - Make (home/margosa/spin/algebrafate/ARandomDirectory)</h6>";
