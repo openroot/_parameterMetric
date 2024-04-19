@@ -226,7 +226,7 @@
 		}
 
 		public function CollectTree(string $path, ?bool $directory = true, ?bool $file = false, ?bool $depth = true) {
-			$result = array();			
+			$result = array();
 			if ($this->LetExisting($path)) {
 				foreach (scandir($this->DirectPath($path)) as $value) {
 					if (!($value === "." || $value === "..")) {
