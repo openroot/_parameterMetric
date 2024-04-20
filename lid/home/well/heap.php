@@ -242,11 +242,12 @@
 				foreach (scandir($this->DirectPath($path)) as $value) {
 					if (!($value === "." || $value === "..")) {
 						foreach ($parts as $part) {
-							if ($this->LetExisting("{$path}/{$value}", $part)) {
-								$name = $this->SeeName("{$path}/{$value}", $part);
+							$newPath = "{$path}/{$value}";
+							if ($this->LetExisting($newPath, $part)) {
+								$name = $this->SeeName($newPath, $part);
 								$result[$name] = null;
 								if ($depth) {
-									$returned = $this->CollectTree("{$path}/{$value}", $depth, $parts);
+									$returned = $this->CollectTree($newPath, $depth, $parts);
 									if (count($returned) > 0) {
 										$result[$name] = $returned;
 									}
