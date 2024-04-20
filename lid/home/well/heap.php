@@ -361,7 +361,7 @@
 				$pathParent = $this->SeePathParent($path);
 				$name = $this->SeeName($path);
 				if (!empty($pathParent) && !empty($name)) {
-					if ($this->LetDirectoryNameInPaths(array_keys($this->IndirectCollectTree($pathParent, true, array("directory"))), $name)) {
+					if ($this->SeePathHasName($pathParent, $name, "directory")) {
 						$this->Make($this->pathRecyclebin);
 						if ($this->LetExisting($this->pathRecyclebin)) {
 							return $this->Move($path, $this->pathRecyclebin, "{$name}" . $this->CurrentTimePlatformSafe());
