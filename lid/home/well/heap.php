@@ -285,6 +285,41 @@
 			return $result;
 		}
 
+		public function Make(string $path) {
+			if (!$this->LetExisting($path)) {
+				return mkdir($this->DirectPath($path));
+			}
+			return false;
+		}
+
+		public function Move(string $path, string $pathLocation, ?string $name = null) {
+			if ($this->LetExisting($path) && $this->LetExisting($pathLocation)) {
+				$pathParent = $this->SeePathParent($path);
+				$nameProvided = $this->SeeName($path);
+				if (!empty($pathParent) && !empty($nameProvided)) {
+					if ($this->SeePathHasName($pathParent, $nameProvided, "directory")) {
+						$name = empty($name) ? $this->SeeName($path) : $name;
+						return rename($this->DirectPath($path), $this->DirectPath($pathLocation) . "/{$name}");
+					}
+				}
+			}
+			return false;
+		}
+
+		public function Delete(string $path) {
+			$result = false;
+			if ($this->LetExisting($path)) {
+				$name = $this->SeeName($path);
+				if (!empty($name)) {
+					$this->Make($this->pathRecyclebin);
+					if ($this->LetExisting($this->pathRecyclebin)) {
+						return $this->Move($path, $this->pathRecyclebin, "{$name}" . $this->CurrentTimePlatformSafe());
+					}
+				}
+			}
+			return $result;
+		}
+
 		public function RefreshRecentDirectoriesIndepth(?string $path = null) {
 			$this->pathsRecent = array();
 			$this->CollectRecentDirectoriesIndepth(empty($path) ? "" : $path);
@@ -322,41 +357,6 @@
 				}
 			}
 			return $directoriesandfiles;
-		}
-
-		public function Make(string $path) {
-			if (!$this->LetExisting($path)) {
-				return mkdir($this->DirectPath($path));
-			}
-			return false;
-		}
-
-		public function Move(string $path, string $pathLocation, ?string $name = null) {
-			if ($this->LetExisting($path) && $this->LetExisting($pathLocation)) {
-				$pathParent = $this->SeePathParent($path);
-				$nameProvided = $this->SeeName($path);
-				if (!empty($pathParent) && !empty($nameProvided)) {
-					if ($this->SeePathHasName($pathParent, $nameProvided, "directory")) {
-						$name = empty($name) ? $this->SeeName($path) : $name;
-						return rename($this->DirectPath($path), $this->DirectPath($pathLocation) . "/{$name}");
-					}
-				}
-			}
-			return false;
-		}
-
-		public function Delete(string $path) {
-			$result = false;
-			if ($this->LetExisting($path)) {
-				$name = $this->SeeName($path);
-				if (!empty($name)) {
-					$this->Make($this->pathRecyclebin);
-					if ($this->LetExisting($this->pathRecyclebin)) {
-						return $this->Move($path, $this->pathRecyclebin, "{$name}" . $this->CurrentTimePlatformSafe());
-					}
-				}
-			}
-			return $result;
 		}
 
 		public function CopyLeaveIndepth(string $directoryPath, string $locationPath) {
