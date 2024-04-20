@@ -249,7 +249,9 @@
 		}
 
 		public function IndirectCollectTree(string $path, ?bool $depth = true, ?array $parts = array("directory", "file")) {
+			$result = array();
 
+			return $result;
 		}
 
 		public function LetDirectoryNameInPaths(array $paths, string $name) {
@@ -820,14 +822,19 @@
 			echo "<h6>7: Directory - LetDirectoryNameInPaths (home/margosa/now | home/margosa/spin, spin)</h6>";
 			echo $directory->LetDirectoryNameInPaths(array("home/margosa/now", "home/margosa/spin"), "spin") ? "Success" : "Unsuccess";
 
-			echo "<h6>7: Directory - TripPathsRecent</h6>";
-			echo "<pre>";
-			print_r($directory->TripPathsRecent());
-			echo "</pre>";
-
 			echo "<h6>7: Directory - CollectTree (home/well, true, directory | file)</h6>";
 			echo "<pre>";
 			print_r($directory->CollectTree("home/well", true, array("directory", "file")));
+			echo "</pre>";
+
+			echo "<h6>7: Directory - IndirectCollectTree (home/well, true, directory | file)</h6>";
+			echo "<pre>";
+			print_r($directory->IndirectCollectTree("home/well", true, array("directory", "file")));
+			echo "</pre>";
+
+			echo "<h6>7: Directory - TripPathsRecent</h6>";
+			echo "<pre>";
+			print_r($directory->TripPathsRecent());
 			echo "</pre>";
 
 			echo "<h6>8: Directory - ReadPathsRecent ()</h6>";
