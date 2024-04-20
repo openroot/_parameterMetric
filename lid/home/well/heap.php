@@ -285,18 +285,6 @@
 			return $result;
 		}
 
-		public function LetDirectoryNameInPaths(array $paths, string $name) {
-			$result = false;
-			$name = trim($name, "/");
-			foreach ($paths as $value) {
-				if (str_ends_with($value, "/{$name}") && $this->LetExisting($value)) {
-					$result = true;
-					break;
-				}
-			}
-			return $result;
-		}
-
 		public function RefreshRecentDirectoriesIndepth(?string $path = null) {
 			$this->pathsRecent = array();
 			$this->CollectRecentDirectoriesIndepth(empty($path) ? "" : $path);
