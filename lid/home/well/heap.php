@@ -148,14 +148,12 @@
 	class Directory extends lidjoint\Joint {
 		protected array $pathsRecent;
 		protected string $pathTop;
-		private string $pathTopDefault;
 		private string $pathRecyclebin;
 
-		public function __construct(?string $pathTop = null) {
+		public function __construct() {
 			$this->pathsRecent = array();
-			$this->pathTopDefault = "./lid";
+			$this->pathTop = "./lid";
 			$this->pathRecyclebin = "home/margosa/spin/algebrafate/recyclebin";
-			$this->pathTop = empty($pathTop) ? $this->pathTopDefault : $pathTop;
 			parent::__construct($this);
 		}
 
@@ -193,9 +191,21 @@
 			}
 		}
 
-		public function LetExisting($path, ?bool $file = false) {
+		public function LetExisting(string $path, string $part = "directory") {
 			$directPath = $this->DirectPath($path);
-			return file_exists($directPath) ? (!$file ? (is_dir($directPath) ? true : false) : (is_file($directPath) ? true : false)) : false;
+			if (file_exists($directPath)) {
+				switch ($part) {
+					case "directory":
+						return is_dir($directPath);
+						break;
+					case "file":
+						return is_file($directPath);
+						break;
+					default:
+						return false;
+				}
+			}
+			return false;
 		}
 
 		public function LetDirectory(array $paths, string $name) {
@@ -210,13 +220,13 @@
 			return $result;
 		}
 
-		public function SeePathParent(string $path) {
-			return $this->LetExisting($path) ? $this->IndirectPath(dirname($this->DirectPath($path))) : "";
+		public function SeePathParent (string $path, string $part = "directory") {
+			return $this->LetExisting($path, $part) ? $this->IndirectPath(dirname($this->DirectPath($path))) : "";
 		}
 
-		public function SeeName($path, ?bool $file = false) {
+		public function SeeName(string $path, string $part = "directory") {
 			$directPath = $this->DirectPath($path);
-			return $this->LetExisting($path, $file) ? substr($directPath, strrpos($directPath, "/") + 1) : "";
+			return $this->LetExisting($path, $part) ? substr($directPath, strrpos($directPath, "/") + 1) : "";
 		}
 
 		public function RefreshRecentDirectoriesIndepth(?string $path = null) {
@@ -225,28 +235,23 @@
 			return $this->pathsRecent;
 		}
 
-		public function CollectTree(string $path, ?bool $directory = true, ?bool $file = false, ?bool $depth = true) {
+		public function CollectTree(string $path, ?bool $depth = true, ?array $parts = array("directory", "file")) {
 			$result = array();
+			$parts = is_null($parts) ? array("directory") : $parts;
 			if ($this->LetExisting($path)) {
 				foreach (scandir($this->DirectPath($path)) as $value) {
 					if (!($value === "." || $value === "..")) {
-						if ($directory && $this->LetExisting("{$path}/{$value}")) {
-							$name = $this->SeeName("{$path}/{$value}");
-							if ($depth) {
-								$returned = $this->CollectTree("{$path}/{$value}", $directory, $file, $depth);
-								if (count($returned) > 0) {
-									$result[$name] = $returned;
-								}
-								else {
-									$result[$name] = null;
+						foreach ($parts as $part) {
+							if ($this->LetExisting("{$path}/{$value}", $part)) {
+								$name = $this->SeeName("{$path}/{$value}", $part);
+								$result[$name] = null;
+								if ($depth) {
+									$returned = $this->CollectTree("{$path}/{$value}", $depth, $parts);
+									if (count($returned) > 0) {
+										$result[$name] = $returned;
+									}
 								}
 							}
-							else {
-								array_push($result, $name);
-							}
-						}
-						if ($file && $this->LetExisting("{$path}/{$value}", true)) {
-							$result[$this->SeeName("{$path}/{$value}", true)] = null;
 						}
 					}
 				}
@@ -805,7 +810,7 @@
 
 			echo "<h6>7: Directory - CollectTree (home)</h6>";
 			echo "<pre>";
-			print_r($directory->CollectTree("home", true, true));
+			print_r($directory->CollectTree("home/well", true, array("directory", "file")));
 			echo "</pre>";
 
 			echo "<h6>8: Directory - ReadPathsRecent ()</h6>";
