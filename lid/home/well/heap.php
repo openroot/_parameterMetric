@@ -345,12 +345,8 @@
 
 		public function Move(string $path, string $pathLocation, ?string $name = null) {
 			if ($this->LetExisting($path) && $this->LetExisting($pathLocation)) {
-				if (empty($name)) {
-					$name = $this->SeeName($path);
-				}
-				if (!empty($name)) {
-					return rename($this->DirectPath($path), $this->DirectPath($pathLocation) . "/{$name}");
-				}
+				$name = empty($name) ? $this->SeeName($path) : $name;
+				return rename($this->DirectPath($path), $this->DirectPath($pathLocation) . "/{$name}");
 			}
 			return false;
 		}
