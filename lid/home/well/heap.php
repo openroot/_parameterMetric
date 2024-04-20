@@ -166,7 +166,7 @@
 		}
 
 		public function TripPathsRecent(?string $path =null, ?bool $depth = true, ?array $parts = array("directory")) {
-			$this->pathsRecent = $this->CollectTree((empty($path) ? "" : $path), $depth, $parts);
+			$this->pathsRecent = $this->IndirectCollectTree((empty($path) ? "" : $path), $depth, $parts);
 			return $this->pathsRecent;
 		}
 
@@ -222,7 +222,7 @@
 			return $this->LetExisting($path, $part) ? substr($directPath, strrpos($directPath, "/") + 1) : "";
 		}
 
-		public function CollectTree(string $path, ?bool $depth = true, ?array $parts = array("directory", "file")) {
+		public function DirectCollectTree(string $path, ?bool $depth = true, ?array $parts = array("directory", "file")) {
 			$result = array();
 			$parts = is_null($parts) ? array("directory") : $parts;
 			$depth = is_null($depth) ? true : $depth;
@@ -235,7 +235,7 @@
 								$name = $this->SeeName($newPath, $part);
 								$result[$name] = null;
 								if ($depth) {
-									$returned = $this->CollectTree($newPath, $depth, $parts);
+									$returned = $this->DirectCollectTree($newPath, $depth, $parts);
 									if (count($returned) > 0) {
 										$result[$name] = $returned;
 									}
@@ -250,7 +250,27 @@
 
 		public function IndirectCollectTree(string $path, ?bool $depth = true, ?array $parts = array("directory", "file")) {
 			$result = array();
-
+			$parts = is_null($parts) ? array("directory") : $parts;
+			$depth = is_null($depth) ? true : $depth;
+			if ($this->LetExisting($path)) {
+				foreach (scandir($this->DirectPath($path)) as $value) {
+					if (!($value === "." || $value === "..")) {
+						foreach ($parts as $part) {
+							$newPath = "{$path}/{$value}";
+							if ($this->LetExisting($newPath, $part)) {
+								$name = $this->SeeName($newPath, $part);
+								$result[$newPath] = null;
+								if ($depth) {
+									$returned = $this->IndirectCollectTree($newPath, $depth, $parts);
+									if (count($returned) > 0) {
+										$result = array_merge($result, $returned);
+									}
+								}
+							}
+						}
+					}
+				}
+			}
 			return $result;
 		}
 
@@ -331,7 +351,7 @@
 				echo $pathParent;
 				$name = $this->SeeName($path);
 				if (!empty($pathParent) && !empty($name)) {
-					if ($this->LetDirectoryNameInPaths($this->RefreshRecentDirectoriesIndepth($pathParent), $name)) {
+					if ($this->LetDirectoryNameInPaths(array_keys($this->IndirectCollectTree($pathParent, true, array("directory"))), $name)) {
 						$this->Make($this->pathRecyclebin);
 						if ($this->LetExisting($this->pathRecyclebin)) {
 							return $this->Move($path, $this->pathRecyclebin, "{$name}" . $this->CurrentTimePlatformSafe());
@@ -819,17 +839,17 @@
 			echo "<h6>6: Directory - IndirectPath (./lid/home/margosa/now)</h6>";
 			echo $directory->IndirectPath("./lid/home/margosa/now");
 
-			echo "<h6>7: Directory - LetDirectoryNameInPaths (home/margosa/now | home/margosa/spin, spin)</h6>";
-			echo $directory->LetDirectoryNameInPaths(array("home/margosa/now", "home/margosa/spin"), "spin") ? "Success" : "Unsuccess";
+			//echo "<h6>7: Directory - LetDirectoryNameInPaths (home/margosa/now | home/margosa/spin, spin)</h6>";
+			//echo $directory->LetDirectoryNameInPaths(array("home/margosa/now", "home/margosa/spin"), "spin") ? "Success" : "Unsuccess";
 
-			echo "<h6>7: Directory - CollectTree (home/well, true, directory | file)</h6>";
+			echo "<h6>7: Directory - DirectCollectTree (home/well, true, directory | file)</h6>";
 			echo "<pre>";
-			print_r($directory->CollectTree("home/well", true, array("directory", "file")));
+			print_r($directory->DirectCollectTree("home/well", true, array("directory", "file")));
 			echo "</pre>";
 
-			echo "<h6>7: Directory - IndirectCollectTree (home/well, true, directory | file)</h6>";
+			echo "<h6>7: Directory - IndirectCollectTree (home/well, true, directory)</h6>";
 			echo "<pre>";
-			print_r($directory->IndirectCollectTree("home/well", true, array("directory", "file")));
+			print_r($directory->IndirectCollectTree("home/well", true, array("directory")));
 			echo "</pre>";
 
 			echo "<h6>7: Directory - TripPathsRecent</h6>";
