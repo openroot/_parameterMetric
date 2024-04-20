@@ -222,6 +222,17 @@
 			return $this->LetExisting($path, $part) ? substr($directPath, strrpos($directPath, "/") + 1) : "";
 		}
 
+		public function SeePathHasName(string $path, string $name, string $part = "directory") {
+			if (!empty($name)) {
+				foreach (array_keys($this->IndirectCollectTree($path, false, array($part))) as $value) {
+					if (strcmp($this->SeeName($value, $part), $name) === 0) {
+						return true;
+					}
+				}
+			}
+			return false;
+		}
+
 		public function DirectCollectTree(string $path, ?bool $depth = true, ?array $parts = array("directory", "file")) {
 			$result = array();
 			$parts = is_null($parts) ? array("directory") : $parts;
@@ -348,7 +359,6 @@
 			$result = false;
 			if ($this->LetExisting($path)) {
 				$pathParent = $this->SeePathParent($path);
-				echo $pathParent;
 				$name = $this->SeeName($path);
 				if (!empty($pathParent) && !empty($name)) {
 					if ($this->LetDirectoryNameInPaths(array_keys($this->IndirectCollectTree($pathParent, true, array("directory"))), $name)) {
@@ -839,8 +849,8 @@
 			echo "<h6>6: Directory - IndirectPath (./lid/home/margosa/now)</h6>";
 			echo $directory->IndirectPath("./lid/home/margosa/now");
 
-			//echo "<h6>7: Directory - LetDirectoryNameInPaths (home/margosa/now | home/margosa/spin, spin)</h6>";
-			//echo $directory->LetDirectoryNameInPaths(array("home/margosa/now", "home/margosa/spin"), "spin") ? "Success" : "Unsuccess";
+			echo "<h6>7: Directory - SeePathHasName (home/margosa/now, Flower.php)</h6>";
+			echo $directory->SeePathHasName("home/margosa/now", "Flower.php", "file") ? "Success" : "Unsuccess";
 
 			echo "<h6>7: Directory - DirectCollectTree (home/well, true, directory | file)</h6>";
 			echo "<pre>";
