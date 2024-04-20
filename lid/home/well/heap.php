@@ -345,8 +345,14 @@
 
 		public function Move(string $path, string $pathLocation, ?string $name = null) {
 			if ($this->LetExisting($path) && $this->LetExisting($pathLocation)) {
-				$name = empty($name) ? $this->SeeName($path) : $name;
-				return rename($this->DirectPath($path), $this->DirectPath($pathLocation) . "/{$name}");
+				$pathParent = $this->SeePathParent($path);
+				$nameProvided = $this->SeeName($path);
+				if (!empty($pathParent) && !empty($nameProvided)) {
+					if ($this->SeePathHasName($pathParent, $nameProvided, "directory")) {
+						$name = empty($name) ? $this->SeeName($path) : $name;
+						return rename($this->DirectPath($path), $this->DirectPath($pathLocation) . "/{$name}");
+					}
+				}
 			}
 			return false;
 		}
@@ -354,14 +360,11 @@
 		public function Delete(string $path) {
 			$result = false;
 			if ($this->LetExisting($path)) {
-				$pathParent = $this->SeePathParent($path);
 				$name = $this->SeeName($path);
-				if (!empty($pathParent) && !empty($name)) {
-					if ($this->SeePathHasName($pathParent, $name, "directory")) {
-						$this->Make($this->pathRecyclebin);
-						if ($this->LetExisting($this->pathRecyclebin)) {
-							return $this->Move($path, $this->pathRecyclebin, "{$name}" . $this->CurrentTimePlatformSafe());
-						}
+				if (!empty($name)) {
+					$this->Make($this->pathRecyclebin);
+					if ($this->LetExisting($this->pathRecyclebin)) {
+						return $this->Move($path, $this->pathRecyclebin, "{$name}" . $this->CurrentTimePlatformSafe());
 					}
 				}
 			}
