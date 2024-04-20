@@ -165,6 +165,11 @@
 			return $this->pathsRecent;
 		}
 
+		public function TripPathsRecent(?string $path =null, ?bool $depth = true, ?array $parts = array("directory")) {
+			$this->pathsRecent = $this->CollectTree((empty($path) ? "" : $path), $depth, $parts);
+			return $this->pathsRecent;
+		}
+
 		public function DirectPath(string $path) {
 			$path = trim($path, "/");
 			if (empty($path)) {
@@ -208,18 +213,6 @@
 			return false;
 		}
 
-		public function LetDirectory(array $paths, string $name) {
-			$result = false;
-			$name = trim($name, "/");
-			foreach ($paths as $value) {
-				if (str_ends_with($value, "/{$name}") && $this->LetExisting($value)) {
-					$result = true;
-					break;
-				}
-			}
-			return $result;
-		}
-
 		public function SeePathParent (string $path, string $part = "directory") {
 			return $this->LetExisting($path, $part) ? $this->IndirectPath(dirname($this->DirectPath($path))) : "";
 		}
@@ -229,15 +222,10 @@
 			return $this->LetExisting($path, $part) ? substr($directPath, strrpos($directPath, "/") + 1) : "";
 		}
 
-		public function RefreshRecentDirectoriesIndepth(?string $path = null) {
-			$this->pathsRecent = array();
-			$this->CollectRecentDirectoriesIndepth(empty($path) ? "" : $path);
-			return $this->pathsRecent;
-		}
-
 		public function CollectTree(string $path, ?bool $depth = true, ?array $parts = array("directory", "file")) {
 			$result = array();
 			$parts = is_null($parts) ? array("directory") : $parts;
+			$depth = is_null($depth) ? true : $depth;
 			if ($this->LetExisting($path)) {
 				foreach (scandir($this->DirectPath($path)) as $value) {
 					if (!($value === "." || $value === "..")) {
@@ -258,6 +246,28 @@
 				}
 			}
 			return $result;
+		}
+
+		public function IndirectCollectTree(string $path, ?bool $depth = true, ?array $parts = array("directory", "file")) {
+
+		}
+
+		public function LetDirectoryNameInPaths(array $paths, string $name) {
+			$result = false;
+			$name = trim($name, "/");
+			foreach ($paths as $value) {
+				if (str_ends_with($value, "/{$name}") && $this->LetExisting($value)) {
+					$result = true;
+					break;
+				}
+			}
+			return $result;
+		}
+
+		public function RefreshRecentDirectoriesIndepth(?string $path = null) {
+			$this->pathsRecent = array();
+			$this->CollectRecentDirectoriesIndepth(empty($path) ? "" : $path);
+			return $this->pathsRecent;
 		}
 
 		public function CollectRecentDirectoriesIndepth(string $directoryPath) {
@@ -319,7 +329,7 @@
 				echo $pathParent;
 				$name = $this->SeeName($path);
 				if (!empty($pathParent) && !empty($name)) {
-					if ($this->LetDirectory($this->RefreshRecentDirectoriesIndepth($pathParent), $name)) {
+					if ($this->LetDirectoryNameInPaths($this->RefreshRecentDirectoriesIndepth($pathParent), $name)) {
 						$this->Make($this->pathRecyclebin);
 						if ($this->LetExisting($this->pathRecyclebin)) {
 							return $this->Move($path, $this->pathRecyclebin, "{$name}" . $this->CurrentTimePlatformSafe());
@@ -788,6 +798,7 @@
 		private function ChainSampling(lidheap\Platform $platform, lidheap\Directory $directory, lidheap\File $file, lidheap\Compute $compute) {
 			$street = $platform->ReadStreet();
 			$lamp = $platform->ReadLamp();
+
 			echo "<h6>1: Platform - RequireonceDirectory (home/margosa/now)</h6>";
 			echo $platform->RequireonceDirectory("home/margosa/now") ? "Success" : "Unsuccess";
 
@@ -806,10 +817,15 @@
 			echo "<h6>6: Directory - IndirectPath (./lid/home/margosa/now)</h6>";
 			echo $directory->IndirectPath("./lid/home/margosa/now");
 
-			echo "<h6>7: Directory - LetDirectory (home/margosa/now | home/margosa/spin, spin)</h6>";
-			echo $directory->LetDirectory(array("home/margosa/now", "home/margosa/spin"), "spin") ? "Success" : "Unsuccess";
+			echo "<h6>7: Directory - LetDirectoryNameInPaths (home/margosa/now | home/margosa/spin, spin)</h6>";
+			echo $directory->LetDirectoryNameInPaths(array("home/margosa/now", "home/margosa/spin"), "spin") ? "Success" : "Unsuccess";
 
-			echo "<h6>7: Directory - CollectTree (home)</h6>";
+			echo "<h6>7: Directory - TripPathsRecent</h6>";
+			echo "<pre>";
+			print_r($directory->TripPathsRecent());
+			echo "</pre>";
+
+			echo "<h6>7: Directory - CollectTree (home/well, true, directory | file)</h6>";
 			echo "<pre>";
 			print_r($directory->CollectTree("home/well", true, array("directory", "file")));
 			echo "</pre>";
