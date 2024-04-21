@@ -233,7 +233,7 @@
 			return false;
 		}
 
-		public function DirectCollectTree(string $path, ?bool $depth = true, ?array $parts = array("directory", "file")) {
+		public function DirectCollectTree(string $path, ?bool $depth = true, ?array $parts = array("directory")) {
 			$result = array();
 			$parts = is_null($parts) ? array("directory") : $parts;
 			$depth = is_null($depth) ? true : $depth;
@@ -259,7 +259,7 @@
 			return $result;
 		}
 
-		public function IndirectCollectTree(string $path, ?bool $depth = true, ?array $parts = array("directory", "file")) {
+		public function IndirectCollectTree(string $path, ?bool $depth = true, ?array $parts = array("directory")) {
 			$result = array();
 			$parts = is_null($parts) ? array("directory") : $parts;
 			$depth = is_null($depth) ? true : $depth;
@@ -270,7 +270,7 @@
 							$newPath = "{$path}/{$value}";
 							if ($this->LetExisting($newPath, $part)) {
 								$name = $this->SeeName($newPath, $part);
-								$result[$newPath] = null;
+								$result[trim($newPath, "/")] = null;
 								if ($depth) {
 									$returned = $this->IndirectCollectTree($newPath, $depth, $parts);
 									if (count($returned) > 0) {
@@ -664,24 +664,24 @@
 			$result1 = array();
 			$result2 = array();
 			$brickFlats = $this->brick->ReadFlats();
-			$directoryPaths = $this->platform->ReadDirectory()->RefreshRecentDirectoriesIndepth();
+			$paths = array_keys($this->platform->ReadDirectory()->IndirectCollectTree(""));
 			if ($onlyPrimaryDirectory) {
-				foreach ($brickFlats as $index => $value) {
-					if ($this->SeeStringInArrayRow($directoryPaths, $value)) {
-						array_push($result1, $value);
+				foreach ($brickFlats as $flat) {
+					if ($this->SeeStringInArrayRow($paths, $flat)) {
+						array_push($result1, $flat);
 					}
 					else {
-						array_push($result2, $value);
+						array_push($result2, $flat);
 					}
 				}
 			}
 			else {
-				foreach ($directoryPaths as $index => $value) {
-					if ($this->SeeStringInArrayRow($brickFlats, $value)) {
-						array_push($result1, $value);
+				foreach ($paths as $path) {
+					if ($this->SeeStringInArrayRow($brickFlats, $path)) {
+						array_push($result1, $path);
 					}
 					else {
-						array_push($result2, $value);
+						array_push($result2, $path);
 					}
 				}
 			}
@@ -693,10 +693,10 @@
 
 		public function LensFiles(bool $onlyPrimaryDirectory = true) {
 			$result = array();
-			foreach (array_merge($this->LensDirectories($onlyPrimaryDirectory)[0], $this->LensDirectories($onlyPrimaryDirectory)[1]) as $index => $value) {
-				$fileNames = $this->platform->ReadFile()->CollectNamesInPath($value);
-				if (count($fileNames) > 0) {
-					$result[$value] = $fileNames;
+			foreach (array_merge($this->LensDirectories($onlyPrimaryDirectory)[0], $this->LensDirectories($onlyPrimaryDirectory)[1]) as $path) {
+				$names = $this->platform->ReadFile()->CollectNamesInPath($path);
+				if (count($names) > 0) {
+					$result[$path] = $names;
 				}
 			}
 			return $result;
@@ -705,9 +705,9 @@
 		public function LensTextSlip(bool $onlyPrimaryDirectory = true, ?string $slipType = null) {
 			$result = array();
 			$slipType = empty($slipType) ? "text" : $slipType;
-			foreach ($this->LensFiles($onlyPrimaryDirectory) as $index1 => $value1) {
-				foreach ($value1 as $index2 => $value2) {
-					$slipPath = "{$index1}/{$value2}";
+			foreach ($this->LensFiles($onlyPrimaryDirectory) as $path => $names) {
+				foreach ($names as $name) {
+					$slipPath = "{$path}/{$name}";
 					$textSlip = null;
 					switch ($slipType) {
 						case "text":
@@ -736,17 +736,17 @@
 		public function LensPhpCodeClasses(bool $onlyPrimaryDirectory = true) {
 			$result = array();
 			$slipLines = $this->LensTextSlip($onlyPrimaryDirectory, "phpcodetextslip");
-			foreach ($slipLines as $index1 => $value1) {
+			foreach ($slipLines as $slipPath => $lines) {
 				$classNames = array();
 				$namespacePath = "";
-				foreach ($value1 as $index2 => $value2) {
-					$value2 = trim($value2);
-					if (str_starts_with($value2, "namespace") && str_ends_with($value2, ";")) {
-						$temp = ltrim($value2, "namespace ");
+				foreach ($lines as $line) {
+					$line = trim($line);
+					if (str_starts_with($line, "namespace") && str_ends_with($line, ";")) {
+						$temp = ltrim($line, "namespace ");
 						$namespacePath = rtrim($temp, ";");
 					}
-					else if (str_starts_with($value2, "class")) {
-						$temp = ltrim($value2, "class ");
+					else if (str_starts_with($line, "class")) {
+						$temp = ltrim($line, "class ");
 						$className = explode(" ", $temp, 2)[0];
 						array_push($classNames, $className);
 					}
@@ -757,11 +757,11 @@
 						$classNamesWithNamespace = $classNames;
 					}
 					else {
-						foreach ($classNames as $index => $value) {
-							array_push($classNamesWithNamespace, "{$namespacePath}\\{$value}");
+						foreach ($classNames as $className) {
+							array_push($classNamesWithNamespace, "{$namespacePath}\\{$className}");
 						}
 					}
-					$result[$index1] = $classNamesWithNamespace;
+					$result[$slipPath] = $classNamesWithNamespace;
 				}
 			}
 			return $result;
@@ -772,12 +772,12 @@
 			$joint = new lidjoint\Joint(null);
 			if ($this->platform->SipRequireonceDirectory($this->brick->ReadFlats())) {
 				$phpClasses = $this->LensPhpCodeClasses();
-				foreach ($phpClasses as $index1 => $value1) {
+				foreach ($phpClasses as $slipPath => $classes) {
 					$classStructures = array();
-					foreach ($value1 as $index2 => $value2) {
-						array_push($classStructures, $joint->Signature($value2));
+					foreach ($classes as $class) {
+						array_push($classStructures, $joint->Signature($class));
 					}
-					$result[$index1] = $classStructures;
+					$result[$slipPath] = $classStructures;
 				}
 			}
 			return $result;
