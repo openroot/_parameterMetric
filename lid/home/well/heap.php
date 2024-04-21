@@ -667,7 +667,7 @@
 			$paths = array_keys($this->platform->ReadDirectory()->IndirectCollectTree(""));
 			if ($onlyPrimaryDirectory) {
 				foreach ($brickFlats as $flat) {
-					if ($this->SeeStringInArrayRow($paths, $flat)) {
+					if ($this->SeeArrayRowHasString($paths, $flat)) {
 						array_push($result1, $flat);
 					}
 					else {
@@ -677,7 +677,7 @@
 			}
 			else {
 				foreach ($paths as $path) {
-					if ($this->SeeStringInArrayRow($brickFlats, $path)) {
+					if ($this->SeeArrayRowHasString($brickFlats, $path)) {
 						array_push($result1, $path);
 					}
 					else {
@@ -783,7 +783,7 @@
 			return $result;
 		}
 
-		private function SeeStringInArrayRow(array $arrayRow, string $search) {
+		private function SeeArrayRowHasString(array $arrayRow, string $search) {
 			if (count($arrayRow) > 0) {
 				foreach ($arrayRow as $index => $value) {
 					if ($value === $search) {
