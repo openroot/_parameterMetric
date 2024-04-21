@@ -849,24 +849,14 @@
 			print_r($directory->IndirectCollectTree("home/well", true, array("directory")));
 			echo "</pre>";
 
-			echo "<h6>7: Directory - TripPathsRecent</h6>";
-			echo "<pre>";
-			print_r($directory->TripPathsRecent());
-			echo "</pre>";
-
 			echo "<h6>8: Directory - ReadPathsRecent ()</h6>";
 			echo "<pre>";
 			print_r($directory->ReadPathsRecent());
 			echo "</pre>";
-			
-			echo "<h6>9: Directory - RefreshRecentDirectoriesIndepth (home/margosa)</h6>";
-			echo "<pre>";
-			print_r($directory->RefreshRecentDirectoriesIndepth("home/margosa"));
-			echo "</pre>";
 
-			echo "<h6>10: Directory - ReadPathsRecent ()</h6>";
+			echo "<h6>7: Directory - TripPathsRecent</h6>";
 			echo "<pre>";
-			print_r($directory->ReadPathsRecent());
+			print_r($directory->TripPathsRecent());
 			echo "</pre>";
 
 			echo "<h6>11: Directory - Make (home/margosa/spin/algebrafate/ARandomDirectory)</h6>";
@@ -874,11 +864,6 @@
 			
 			echo "<h6>12: Directory - Delete (home/margosa/spin/algebrafate/ARandomDirectory)</h6>";
 			echo $directory->Delete("home/margosa/spin/algebrafate/ARandomDirectory") ? "Success" : "Directory not deleted or not exists";
-		
-			echo "<h6>13: Directory - RefreshRecentDirectoriesIndepth ()</h6>";
-			echo "<pre>";
-			print_r($directory->RefreshRecentDirectoriesIndepth());
-			echo "</pre>";
 
 			echo "<h6>14: File - LetFile (home/margosa/now/flower.php | home/margosa/now/leaf.php, Leaf.php)</h6>";
 			echo $file->LetFile(array("home/margosa/now/flower.php", "home/margosa/now/leaf.php"), "Leaf.php") ? "Success" : "Unsuccess";
