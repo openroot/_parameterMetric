@@ -320,6 +320,10 @@
 			return $result;
 		}
 
+		public function Copy1(string $path, string$pathLocation, ?string $name =null, ?string $clause = "leave", ?bool $depth = true, ?array $parts = array("directory")) {
+
+		}
+
 		public function RefreshRecentDirectoriesIndepth(?string $path = null) {
 			$this->pathsRecent = array();
 			$this->CollectRecentDirectoriesIndepth(empty($path) ? "" : $path);
@@ -864,6 +868,12 @@
 			
 			echo "<h6>12: Directory - Delete (home/margosa/spin/algebrafate/ARandomDirectory)</h6>";
 			echo $directory->Delete("home/margosa/spin/algebrafate/ARandomDirectory") ? "Success" : "Directory not deleted or not exists";
+
+			echo "<h6>12: Directory - Copy1 (home/margosa/spin/algebrafate/ADirectoryToCopy, home/margosa/spin/algebrafate/recyclebin)</h6>";
+			echo "<pre>";
+			$directory->Make("home/margosa/spin/algebrafate/ADirectoryToCopy");
+			print_r($directory->Copy1("home/margosa/spin/algebrafate/ADirectoryToCopy", "home/margosa/spin/algebrafate/recyclebin"));
+			echo "</pre>";
 
 			echo "<h6>14: File - LetFile (home/margosa/now/flower.php | home/margosa/now/leaf.php, Leaf.php)</h6>";
 			echo $file->LetFile(array("home/margosa/now/flower.php", "home/margosa/now/leaf.php"), "Leaf.php") ? "Success" : "Unsuccess";
