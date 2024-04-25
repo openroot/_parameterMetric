@@ -321,7 +321,7 @@
 		}
 
 		public function Copy1(string $path, string$pathLocation, ?string $name =null, ?string $clause = "leave", ?bool $depth = true, ?array $parts = array("directory")) {
-
+			
 		}
 
 		public function RefreshRecentDirectoriesIndepth(?string $path = null) {
