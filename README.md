@@ -1,5 +1,5 @@
-# parametermetric
- Web program pronounce as 'ParameterMetric' try to provide a play-mate eco syetem.
+# _parameterMetric
+ Web program pronounce as 'Parameter Metric' try to provide a play-mate eco syetem.
 
 ### Information and best design practices
 1. The basic version of codes are arranged inside directory '<webroot or htdocs or www>/lid/home/well'.
