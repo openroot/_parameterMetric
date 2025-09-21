@@ -8,7 +8,7 @@
 	$extractToDirectory = "swaps";
 	$backupDirectoryName = "backups";
 	$backupFilePreponeName = "backup";
-	$githubRepositoryName = "parametermetric";
+	$githubRepositoryName = "_parameterMetric";
 	$repositoryBranch = "main";
 	$fileUrl = "https://github.com/openroot/{$githubRepositoryName}/archive/refs/heads/{$repositoryBranch}.zip";
 	$fileName = basename($fileUrl);
